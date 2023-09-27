@@ -1,8 +1,44 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
+using Projector.Core;
+using Projector.Core.Users;
+using Projector.Core.Users.DTO;
+using Projector.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// ALLOW ACCESS TO HTTP CONTEXT
+builder.Services.AddHttpContextAccessor();
+
+// ADD DATABASE SERVICE
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<ProjectorDbContext>(options =>
+    options.UseSqlServer(connectionString)
+);
+
+// DEPENDENCY INJECTION of services
+builder.Services.AddScoped<ProjectorDbContext>(sp => new ProjectorDbContext());
+builder.Services.AddScoped<IUsersService, UsersService>();
+builder.Services.AddScoped<ICommandBus, CommandBus>();
+
+// REGISTRATION OF COMMAND HANDLERS
+builder.Services.AddScoped<ICommandHandler<SignInCommand>, SignInCommandHandler>();
+
+builder.Services.AddAuthentication(
+    CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(
+        options =>
+        {
+            options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+            options.SlidingExpiration = true;
+            options.AccessDeniedPath = "/Forbidden/";
+            options.LoginPath = "/projector/signin";
+            options.LogoutPath = "/projector/signout";
+        });
+// BUILDING THE APP
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -13,15 +49,18 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseCookiePolicy(new CookiePolicyOptions(){
+    MinimumSameSitePolicy = SameSiteMode.Strict
+});
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapControllers();
 
 app.Run();
