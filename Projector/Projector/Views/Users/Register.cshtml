@@ -1,0 +1,30 @@
+﻿@model RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register User";
+}
+
+<div>
+    <h2>Register</h2>
+</div>
+
+@if (Model.Errors.Any())
+{
+    <div class="alert alert-danger alert-dismissible fade slow" role="alert">
+        <strong>Errors occured.</strong>
+        <ul>
+            @foreach(var error in Model.Errors)
+            {
+                <li>@error</li>
+            }
+        </ul>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<!-- FORM -->
+<div class="row">
+    <div class="col-md-4">
+        <partial name="_RegisterInput" model="Model.NewUser" />
+    </div>
+</div>
