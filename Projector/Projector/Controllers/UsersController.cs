@@ -61,5 +61,12 @@ namespace Projector.Controllers
 
             return View(new SignInViewModel(user, result.Errors));
         }
+
+        [Route("/projector/register")]
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View(new RegisterViewModel());
+        }
     }
 }
