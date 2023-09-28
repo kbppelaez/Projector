@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Projector.Core;
+using Projector.Core.Persons;
 using Projector.Core.Users.DTO;
+using Projector.Data;
 using Projector.Models;
 
 namespace Projector.Controllers
@@ -46,17 +48,14 @@ namespace Projector.Controllers
 
             if (result.IsSuccessful)
             {
-                // TODO:
-                // Get Person Associated with the User
-                await _usersService.PersistLogin(user);
+                Person userPerson = (Person)result.Result;
                 user.Password = string.Empty;
 
-                if(returnUrl == null)
-                {
-                    return Redirect("/projector/projects");
-                }
+                await _usersService.PersistLogin(new PersonData(userPerson));
 
-                return LocalRedirect(returnUrl);
+                return returnUrl == null ?
+                    RedirectToAction("Projects", "Projects") :
+                    LocalRedirect(returnUrl);
             }
 
             return View(new SignInViewModel(user, result.Errors));
@@ -67,6 +66,38 @@ namespace Projector.Controllers
         public IActionResult Register()
         {
             return View(new RegisterViewModel());
+        }
+
+        [Route("/projector/register")]
+        [HttpPost]
+        public async Task<IActionResult> Register([FromForm] NewUserData newUser, [FromQuery] string returnUrl = null) {
+            if (!ModelState.IsValid)
+            {
+                return View("Register", new RegisterViewModel(newUser, null));
+            }
+
+            CommandResult result = await _commands.ExecuteAsync(
+                new RegisterCommand
+                {
+                    Details = newUser
+                });
+
+            if(result.IsSuccessful)
+            {
+                return returnUrl == null ?
+                    RedirectToAction("Projects", "Projects") :
+                    LocalRedirect(returnUrl);
+            }
+
+            return View(new RegisterViewModel(newUser, result.Errors));
+        }
+
+        [Route("/projector/logout")]
+        [HttpGet]
+        public async Task<IActionResult> LogOut()
+        {
+            await _usersService.RemoveLogin();
+            return RedirectToAction("SignIn", "Users");
         }
     }
 }
