@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Projector.Data
 {
@@ -14,15 +15,16 @@ namespace Projector.Data
 
         [Required]
         [Unicode(false)]
-        [StringLength(11, MinimumLength = 7)]
+        [StringLength(512)]
         public string Password { get; set; }
 
+        [Required]
+        public Person Person { get; set; }
         /*
         public bool isVerified { get; set; }
          
         public string linkHash { get; set; }
 
-        public int PersonID { get; set; }
          */
     }
 }

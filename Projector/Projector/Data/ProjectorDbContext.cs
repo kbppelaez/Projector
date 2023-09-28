@@ -13,6 +13,7 @@ namespace Projector.Data
 
         /* PROPERTIES */
         public DbSet<User> Users { get; set; }
+        public DbSet<Person> Persons { get; set; }
 
         /* METHODS */
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -21,6 +22,15 @@ namespace Projector.Data
             {
                 optionsBuilder.UseSqlServer(@"Server=.\SQLExpress;Database=Projector;Trusted_Connection=True;TrustServerCertificate=True;");
             }
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+                .HasOne(p => p.Person)
+                .WithOne(u => u.User)
+                .HasForeignKey<Person>(p => p.UserId)
+                .IsRequired();
         }
     }
 }
