@@ -1,4 +1,5 @@
-﻿using Projector.Core.Users.DTO;
+﻿using Projector.Core.Persons;
+using Projector.Core.Users.DTO;
 
 namespace Projector.Core
 {
@@ -6,6 +7,7 @@ namespace Projector.Core
     {
         bool VerifyPassword(string hashed, string input);
         string HashPassword(string password);
-        Task PersistLogin(UserData user);
+        Task PersistLogin(PersonData user);
+        Task RemoveLogin();
     }
 }
