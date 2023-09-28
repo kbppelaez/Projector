@@ -26,6 +26,7 @@ builder.Services.AddScoped<ICommandBus, CommandBus>();
 
 // REGISTRATION OF COMMAND HANDLERS
 builder.Services.AddScoped<ICommandHandler<SignInCommand>, SignInCommandHandler>();
+builder.Services.AddScoped<ICommandHandler<RegisterCommand>, RegisterCommandHandler>();
 
 builder.Services.AddAuthentication(
     CookieAuthenticationDefaults.AuthenticationScheme)
