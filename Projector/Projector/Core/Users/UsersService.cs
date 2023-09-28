@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Projector.Core.Persons;
 using Projector.Core.Users.DTO;
+using Projector.Data;
 using System.Security.Claims;
 using System.Security.Cryptography;
 
@@ -12,6 +14,8 @@ namespace Projector.Core.Users
 
         public UsersService(IHttpContextAccessor httpContextAccessor) =>
             _httpContextAccessor = httpContextAccessor;
+
+        /* METHODS */
         public string HashPassword(string password)
         {
             byte[] salt;
@@ -51,14 +55,13 @@ namespace Projector.Core.Users
             return buffer3.SequenceEqual(buffer4);
         }
 
-        public async Task PersistLogin(UserData user)
+        public async Task PersistLogin(PersonData user)
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.UserName)
-                //TODO
-                //include claim for user's fullname
-                //user's PID
+                new Claim(ClaimTypes.Name, user.FullName),
+                new Claim("UserId", user.UserId.ToString()),
+                new Claim("PersonId", user.Id.ToString())
             };
 
             var claimsIdentity = new ClaimsIdentity(claims,
