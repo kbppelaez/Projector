@@ -32,21 +32,30 @@ namespace Projector.Core.Users
                 {
                     // TODO:
                     // Check if account is verified
-                    
+
                     // IF NOT VERIFIED
-                        //IF LINK EXPIRED
-                            //return CommandResult.Error("Account is not verified. Please contact your administrator.");
-                        //IF LINK NOT EXPIRED
-                            //return CommandResult.Error("Account is not verified. Please check your email for the verification link.");
+                    //IF LINK EXPIRED
+                    //return CommandResult.Error("Account is not verified. Please contact your administrator.");
+                    //IF LINK NOT EXPIRED
+                    //return CommandResult.Error("Account is not verified. Please check your email for the verification link.");
 
                     // IF VERIFIED:
-                    return CommandResult.Success(existingUser);
+                    // Get Existing Person Record
+                    Person existingPerson = await getPerson(existingUser.Id);
+                    return CommandResult.Success(existingPerson);
                 }
 
                 return CommandResult.Error("Invalid credentials given.");
             }
 
             return CommandResult.Error("Invalid credentials given.");            
+        }
+
+        private async Task<Person> getPerson(int id)
+        {
+            return await _db.Persons
+                .Where(p => p.UserId == id)
+                .FirstOrDefaultAsync();
         }
     }
 }
