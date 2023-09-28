@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Projector.Data;
 
@@ -10,9 +11,11 @@ using Projector.Data;
 namespace Projector.Migrations
 {
     [DbContext(typeof(ProjectorDbContext))]
-    partial class ProjectorDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230928030932_AddPersonsTable")]
+    partial class AddPersonsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,13 +42,7 @@ namespace Projector.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
 
                     b.ToTable("Persons");
                 });
@@ -60,9 +57,9 @@ namespace Projector.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(512)
+                        .HasMaxLength(11)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(512)");
+                        .HasColumnType("varchar(11)");
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -73,23 +70,6 @@ namespace Projector.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("Projector.Data.Person", b =>
-                {
-                    b.HasOne("Projector.Data.User", "User")
-                        .WithOne("Person")
-                        .HasForeignKey("Projector.Data.Person", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Projector.Data.User", b =>
-                {
-                    b.Navigation("Person")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

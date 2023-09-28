@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Projector.Data;
 
@@ -10,9 +11,11 @@ using Projector.Data;
 namespace Projector.Migrations
 {
     [DbContext(typeof(ProjectorDbContext))]
-    partial class ProjectorDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230928051746_addUserFK")]
+    partial class addUserFK
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,9 +63,9 @@ namespace Projector.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(512)
+                        .HasMaxLength(11)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(512)");
+                        .HasColumnType("varchar(11)");
 
                     b.Property<string>("UserName")
                         .IsRequired()
