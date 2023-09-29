@@ -1,8 +1,67 @@
-﻿@{
+﻿@using System.Globalization;
+@model ProjectsListViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<form method="GET" asp-controller="Projects" asp-action="Projects">
+    <div class="input-group mb-3">
+        @if (Model.Args == null || string.IsNullOrEmpty(Model.Args.Term))
+        {
+            <input type="text" class="form-control" value="" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2" name="term">
+        }
+        else
+        {
+            <input type="text" class="form-control" value="@Model.Args.Term" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2" name="term">
+        }
+        <div class="input-group-append">
+            <input type="submit" class="btn btn-primary" value="Search" />
+        </div>
+    </div>
+</form>
+
+@if (Model.Projects.Length == 0)
+{
+    <div align="center">
+        <h2>No Projects Available</h2>
+    </div>
+}
+else
+{
+    <div class="list-group" id="list-tab" role="tablist">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">CODE</th>
+                    <th scope="col">PROJECT NAME</th>
+                    <th scope="col">BUDGET</th>
+                    <th scope="col">REMARKS</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Projects)
+                {
+                    <tr>
+                        <th scope="row">@item.Code</th>
+                        <td>@item.Name</td>
+                        <td>@item.Budget.ToString("C2", CultureInfo.CurrentCulture)</td>
+                        <td>@item.Remarks</td>
+                        <td>Assignments Link</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <br />
+    <div align="center">
+        <div>
+            <nav aria-label="pagination">
+                <ul class="pagination">
+                    Pagination here
+                </ul>
+            </nav>
+        </div>
+    </div>
+}
