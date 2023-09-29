@@ -10,5 +10,9 @@ namespace Projector.Data
             return users.Any(user => user.UserName == username);
         }
 
+        public static bool CodeOrProjectNameExists(this DbSet<Project> project, string pName, string pCode)
+        {
+            return project.Any(p => p.Code == pCode || p.Name == pName);
+        }
     }
 }
