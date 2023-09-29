@@ -14,6 +14,7 @@ namespace Projector.Data
         /* PROPERTIES */
         public DbSet<User> Users { get; set; }
         public DbSet<Person> Persons { get; set; }
+        public DbSet<Project> Projects { get; set; }
 
         /* METHODS */
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
