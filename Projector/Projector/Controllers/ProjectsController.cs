@@ -75,23 +75,21 @@ namespace Projector.Controllers
             if(result.IsSuccessful)
             {
                 int newProject = (int) result.Result;
-
-                //TODO:
-                //Better to just return a View with an initialized model, given projectId and personId are accessible here
-                
-                //from Assignments function, we can just put a form on the button click of assignments with a hidden input-type
-                return RedirectToAction("Assignments", "Projects", new { pId = newProject });
+                return RedirectToAction("Assignments", "Projects", new { projectId = newProject });
             }
 
             return View(new CreateProjectViewModel(project, result.Errors));
         }
 
-        [Route("/projector/projects/assignments")]
+        [Route("/projector/projects/assignments/{projectId:int}")]
         [HttpGet]
         [Authorize]
 
-        public IActionResult Assignments(int projectId)
+        public async Task<IActionResult> Assignments(int projectId)
         {
+            var vm = new ProjectAssignmentsViewModel(_projectsService);
+            await vm.Initialize(projectId);
+
             return View(projectId);
         }
     }
