@@ -48,7 +48,9 @@ else
                         <td>@item.Name</td>
                         <td>@item.Budget.ToString("C2", CultureInfo.CurrentCulture)</td>
                         <td>@item.Remarks</td>
-                        <td>Assignments Link</td>
+                        <td>
+                            <a asp-controller="Projects" asp-action="Assignments" asp-route-projectId="@item.Id" class="btn btn-primary">Assignments</a>
+                        </td>
                     </tr>
                 }
             </tbody>
