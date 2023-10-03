@@ -15,7 +15,7 @@ namespace Projector.Data
         public string LastName { get; set; }
 
         public int UserId { get; set; }
-        public User User { get; set; }
+        public virtual User User { get; set; }
         public virtual ICollection<Project> Projects { get; set; } = new List<Project>();
     }
 }
