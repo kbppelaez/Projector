@@ -1,0 +1,49 @@
+﻿@using System.Globalization;
+@model DeleteProjectViewModel
+
+@{
+    ViewData["Title"] = "Delete Project";
+    var EmptyRemarks = "None";
+}
+
+<div class="alert alert-danger fade show" role="alert">
+    <strong>Are you sure you want to delete this project?</strong>
+</div>
+
+<div>
+    <h3>@Model.Project.Name</h3>
+    <dl>
+        <!--
+        <dt class="col-sm">Name</dt>
+        <dd class="col-sm">@Model.Project.Name</dd>
+        -->
+
+        <dt class="col-sm">Code</dt>
+        <dd class="col-sm">@Model.Project.Code</dd>
+
+        <dt class="col-sm">Budget</dt>
+        <dd class="col-sm">@Model.Project.Budget.ToString("C2", CultureInfo.CurrentCulture)</dd>
+
+        <dt class="col-sm">Remarks</dt>
+        <dd class="col-sm">
+            @if (string.IsNullOrEmpty(@Model.Project.Remarks))
+            {
+                @EmptyRemarks
+            }
+            else
+            {
+                @Model.Project.Remarks
+            }
+        </dd>
+    </dl>
+</div>
+<div>
+    <form method="POST" asp-controller="Projects" asp-action="DeleteConfirmed">
+        <div class="form-group">
+            <input asp-for="@Model.Project.Id" type="hidden" class="form-control" />
+            <input type="submit" value="Yes, Delete" class="btn btn-danger" />
+            <a asp-controller="Projects" asp-action="Projects" class="btn btn-secondary">Back to List</a>
+            <a asp-controller="Projects" asp-action="Assignments" asp-route-projectId="@Model.Project.Id" class="btn btn-secondary">Go to Project</a>
+        </div>
+    </form>
+</div>
