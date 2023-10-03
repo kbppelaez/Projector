@@ -6,7 +6,7 @@ namespace Projector.Core.Projects.DTO
 {
     public class ProjectData
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Required]
         [RegularExpression(@"^[!-~]{2,50}$", ErrorMessage = "Only basic punctuation marks are allowed, excluding spaces.")]
