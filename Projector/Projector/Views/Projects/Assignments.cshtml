@@ -7,6 +7,11 @@
     <div class="row">
         <div class="col-sm-5">
             <partial name="_ProjectDetails" model="@Model.Details" />
+            <a asp-controller="Projects" asp-action="Edit" asp-route-projectId="@Model.Details.Id" class="btn btn-primary">Edit</a>
+            <a asp-controller="Projects" asp-action="Delete" asp-route-projectId="@Model.Details.Id" class="btn btn-danger">Delete</a>
+            <br />
+            <br />
+            <a asp-controller="Projects" asp-action="Projects" class="btn btn-secondary">Back to List</a>
         </div>
         <div class="col-sm-7">
             <div class="row" id="Unassigned">
