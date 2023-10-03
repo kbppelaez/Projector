@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Projector.Core;
 using Projector.Core.Persons;
 using Projector.Core.Projects.DTO;
+using Projector.Data;
 using Projector.Models;
 using System.Security.Claims;
 
@@ -119,7 +120,44 @@ namespace Projector.Controllers
                 NotFound() :
                 View(new EditProjectViewModel(project, result.Errors));
         }
-        
+
+        [Route("/projector/projects/{projectId:int}/delete")]
+        [HttpGet]
+        public async Task<IActionResult> DeleteConfirmed(int projectId)
+        {
+            var personId = int.Parse(HttpContext.User.FindFirst("PersonId").Value);
+            var vm = new DeleteProjectViewModel(_projectsService);
+            await vm.Initialize(projectId, personId);
+
+            if (vm.ProjectExists)
+            {
+                return View("Delete", vm);
+            }
+            return NotFound();
+        }
+
+        [Route("/projector/projects/{projectId:int}/delete")]
+        [HttpPost]
+        public async Task<IActionResult> Delete(int projectId)
+        {
+            var personId = int.Parse(HttpContext.User.FindFirst("PersonId").Value);
+
+            CommandResult result = await _commands.ExecuteAsync(
+                    new DeleteProjectCommand
+                    {
+                        Project = await _projectsService.GetProjectDetails(projectId, personId)
+                    }
+                );
+
+            if(result.IsSuccessful)
+            {
+                return RedirectToAction("Projects", "Projects");
+            }
+
+            return result.Errors[0] == "404" ?
+                NotFound() :
+                View(new EditProjectViewModel((ProjectData) result.Result, result.Errors));
+        }
 
         [Route("/projector/projects/assignments/{projectId:int}")]
         [HttpGet]
