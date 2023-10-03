@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Projector.Core;
-using Projector.Core.Persons;
+using Projector.Core.Persons.DTO;
 using Projector.Core.Users.DTO;
 using Projector.Data;
 using Projector.Models;
