@@ -1,7 +1,6 @@
 ﻿using Projector.Core;
-using Projector.Core.Persons;
-using Projector.Core.Projects;
-using Projector.Data;
+using Projector.Core.Persons.DTO;
+using Projector.Core.Projects.DTO;
 
 namespace Projector.Models
 {
@@ -17,14 +16,24 @@ namespace Projector.Models
         }
 
         /* PROPERTIES */
-        public bool Exists {  get; set; }
+        public bool ProjectExists {  get; set; }
         public ProjectDetailsData Details { get; set; }
+        public UnassignedPersonsData People { get; set; }
 
         /* METHODS */
         public async Task Initialize(int projectId)
         {
             Details = await _projectsService.GetProjectDetails(projectId);
-            Exists = Details != null;
+            ProjectExists = Details != null;
+
+            People = new UnassignedPersonsData
+            {
+                Unassigned = ProjectExists ?
+                    await _projectsService.GetUnassigned(projectId) :
+                    Array.Empty<PersonData>(),
+                UnassignedProjectId = projectId
+            };
+            
         }
     }
 }
