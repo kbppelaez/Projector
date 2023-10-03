@@ -79,7 +79,7 @@ namespace Projector.Controllers
             return View(new CreateProjectViewModel(project, result.Errors));
         }
 
-        [Route("/projector/projects/edit/{projectId:int}")]
+        [Route("/projector/projects/{projectId:int}/edit")]
         [HttpGet]
         public async Task<IActionResult> Edit(int projectId)
         {
@@ -92,7 +92,7 @@ namespace Projector.Controllers
                 NotFound();
         }
 
-        [Route("/projector/projects/edit/{projectId:int}")]
+        [Route("/projector/projects/{projectId:int}/edit")]
         [HttpPost]
         public async Task<IActionResult> Edit([FromForm] ProjectData project)
         {
