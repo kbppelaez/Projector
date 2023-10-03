@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Projector.Core.Persons;
+using Projector.Core.Persons.DTO;
 using Projector.Core.Users.DTO;
 using Projector.Data;
 using System.Security.Claims;
