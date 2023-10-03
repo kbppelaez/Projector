@@ -2,8 +2,11 @@
 {
     public class ProjectSearchResult
     {
+
+        public ProjectSearchResult() { }
+
         public ProjectData[] Projects { get; set; }
 
-        public int Count => Projects.Length;
+        public int TotalProjects;
     }
 }
