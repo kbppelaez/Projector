@@ -30,17 +30,11 @@ namespace Projector.Core.Users
 
                 if (passwordMatched)
                 {
-                    // TODO:
-                    // Check if account is verified
+                    if (!existingUser.IsVerified)
+                    {
+                        return CommandResult.Error("Account is not verified. Please contact your administrator.");
+                    }
 
-                    // IF NOT VERIFIED
-                    //IF LINK EXPIRED
-                    //return CommandResult.Error("Account is not verified. Please contact your administrator.");
-                    //IF LINK NOT EXPIRED
-                    //return CommandResult.Error("Account is not verified. Please check your email for the verification link.");
-
-                    // IF VERIFIED:
-                    // Get Existing Person Record
                     Person existingPerson = await getPerson(existingUser.Id);
                     return CommandResult.Success(existingPerson);
                 }
