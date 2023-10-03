@@ -1,4 +1,4 @@
-﻿using Projector.Core.Projects;
+﻿using Projector.Core.Projects.DTO;
 
 namespace Projector.Models
 {
