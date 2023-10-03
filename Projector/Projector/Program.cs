@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Projector.Core;
+using Projector.Core.Persons;
+using Projector.Core.Persons.DTO;
 using Projector.Core.Projects;
 using Projector.Core.Projects.DTO;
 using Projector.Core.Users;
@@ -25,12 +27,14 @@ builder.Services.AddDbContext<ProjectorDbContext>(options =>
 builder.Services.AddScoped<ProjectorDbContext>(sp => new ProjectorDbContext());
 builder.Services.AddScoped<IUsersService, UsersService>();
 builder.Services.AddScoped<IProjectsService, ProjectsService>();
+builder.Services.AddScoped<IPersonsService, PersonsService>();
 builder.Services.AddScoped<ICommandBus, CommandBus>();
 
 // REGISTRATION OF COMMAND HANDLERS
 builder.Services.AddScoped<ICommandHandler<SignInCommand>, SignInCommandHandler>();
 builder.Services.AddScoped<ICommandHandler<RegisterCommand>, RegisterCommandHandler>();
 builder.Services.AddScoped<ICommandHandler<CreateProjectCommand>, CreateProjectCommandHandler>();
+builder.Services.AddScoped<ICommandHandler<CreatePersonCommand>, CreatePersonCommandHandler>();
 
 builder.Services.AddAuthentication(
     CookieAuthenticationDefaults.AuthenticationScheme)
