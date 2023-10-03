@@ -1,0 +1,38 @@
+﻿@using Projector.Core.Projects.DTO
+@using System.Globalization;
+@model ProjectDetailsData
+
+@{
+    var EmptyRemarks = "None";
+}
+
+<h3>@Model.Name</h3>
+<dl>
+    <!--
+    <dt class="col-sm">Name</dt>
+    <dd class="col-sm">@Model.Name</dd>
+    -->
+
+    <dt class="col-sm">Code</dt>
+    <dd class="col-sm">@Model.Code</dd>
+
+    <dt class="col-sm">Budget</dt>
+    <dd class="col-sm">@Model.Budget.ToString("C2", CultureInfo.CurrentCulture)</dd>
+
+    <dt class="col-sm">Remarks</dt>
+    <dd class="col-sm">
+        @if (string.IsNullOrEmpty(@Model.Remarks))
+        {
+            @EmptyRemarks
+        }
+        else
+        {
+            @Model.Remarks
+        }
+    </dd>
+</dl>
+<a asp-controller="Projects" asp-action="Edit" asp-route-projectId="@Model.Id" class="btn btn-primary">Edit</a>
+<a asp-controller="Projects" asp-action="Delete" asp-route-projectId="@Model.Id" class="btn btn-danger">Delete</a>
+<br />
+<br />
+<a asp-controller="Projects" asp-action="Projects" class="btn btn-secondary">Back to List</a>

@@ -1,0 +1,23 @@
+﻿@using Projector.Core.Projects.DTO
+@model ProjectDetailsData
+
+<h6><strong>Assigned Employees</strong></h6>
+<ul class="list-group">
+    @foreach (var member in Model.Assigned)
+    {
+        <li class="list-group-item">
+            <form method="POST">
+                <div class="row">
+                    <div class="col align-self-center" style="width:80%">
+                        <label>@member.FullName</label>
+                        <input type="hidden" value="@member.Id" id="personId" />
+                        <input type="hidden" value="@Model.Id" id="projectId" />
+                    </div>
+                    <div class="col-2" style="width:20%">
+                        <input style="width:100%" type="submit" value="Remove" class="btn btn-danger" />
+                    </div>
+                </div>
+            </form>
+        </li>
+    }
+</ul>
