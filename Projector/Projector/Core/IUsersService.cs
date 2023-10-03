@@ -1,5 +1,4 @@
-﻿using Projector.Core.Persons;
-using Projector.Core.Users.DTO;
+﻿using Projector.Core.Persons.DTO;
 
 namespace Projector.Core
 {
