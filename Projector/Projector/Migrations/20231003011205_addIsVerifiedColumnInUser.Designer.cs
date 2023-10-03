@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Projector.Data;
 
@@ -10,9 +11,11 @@ using Projector.Data;
 namespace Projector.Migrations
 {
     [DbContext(typeof(ProjectorDbContext))]
-    partial class ProjectorDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231003011205_addIsVerifiedColumnInUser")]
+    partial class addIsVerifiedColumnInUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,8 +107,8 @@ namespace Projector.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("IsVerified")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsVerified")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Password")
                         .IsRequired()
