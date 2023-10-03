@@ -21,6 +21,8 @@ namespace Projector.Core.Projects
                 return CommandResult.Error("Invalid Project Name or Code given.");
             }
 
+            newProject.Project.Code = newProject.Project.Code.ToUpper();
+
             var duplicateCodeName = _db.Projects.CodeOrProjectNameExists(newProject.Project.Name, newProject.Project.Code);
             if (duplicateCodeName)
             {
