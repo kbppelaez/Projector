@@ -7,6 +7,7 @@ namespace Projector.Core
     {
         Task<ProjectSearchResult> GetPersonProjects(ProjectSearchQuery args);
         Task<ProjectDetailsData> GetProjectDetails(int projectId);
+        Task<ProjectData> GetProjectDetails(int projectId, int personId);
         Task<PersonData[]> GetAssigned(int projectId);
         Task<PersonData[]> GetUnassigned(int projectId);
     }

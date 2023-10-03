@@ -58,7 +58,7 @@ namespace Projector.Core.Projects
                 .Where(p => p.Id == projectId)
                 .FirstOrDefaultAsync();
 
-            if(project == null)
+            if (project == null)
             {
                 return null;
             }
@@ -75,6 +75,27 @@ namespace Projector.Core.Projects
             data.Assigned = await GetAssigned(project.Id);
 
             return data;
+        }
+
+        public async Task<ProjectData> GetProjectDetails(int projectId, int personId)
+        {
+            Project project = await _db.Projects
+                .Where(p => p.Id == projectId)
+                .Where(p => p.Assignees
+                        .Any(e => e.Id == personId))
+                .FirstOrDefaultAsync();
+
+            return project == null ?
+                null :
+                new ProjectData
+                {
+                    Id = project.Id,
+                    Code = project.Code,
+                    Name = project.Name,
+                    Budget = project.Budget,
+                    BudgetString = project.Budget.ToString("N2"),
+                    Remarks = project.Remarks
+                };
         }
 
         public async Task<PersonData[]> GetAssigned(int projectId)
