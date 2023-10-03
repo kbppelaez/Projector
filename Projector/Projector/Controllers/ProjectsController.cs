@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Projector.Core;
+using Projector.Core.Persons;
 using Projector.Core.Projects;
 using Projector.Core.Projects.DTO;
 using Projector.Models;
@@ -90,7 +91,45 @@ namespace Projector.Controllers
             var vm = new ProjectAssignmentsViewModel(_projectsService);
             await vm.Initialize(projectId);
 
-            return View(projectId);
+            if(!vm.Exists)
+            {
+                return NotFound();
+            }
+
+            return View(vm);
         }
+
+        /*
+
+        [Route("/projector/projects/assignments/{projectId:int}/add")]
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> AddAssignedPerson([FromBody]AddAssignedPersonCommand args)
+        {
+            // in the frontend, make sure that proper headers are set
+            //   -  Content-Type: application/json
+            //   -  Accepts: [ application/json | text/html ]
+
+            CommandResult result = await _commands.ExecuteAsync(args);
+
+            // return JSON response?
+            // return Json(result); // maybe a viewmodel??
+
+            // perhaps use HTMX?
+            return PartialView("_ProjectAssignments", result);
+        }
+
+        public class AddAssignedPersonCommand
+        {
+            public int ProjectId { get; set; }
+            public int PersonId { get; set; }
+        }
+
+        public class ProjectAssignmentStateData
+        {
+            public PersonData[] Assigned { get; set; }
+            public PersonData[] Unassigned { get; set; }
+        }
+        */
     }
 }
