@@ -2,13 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Projector.Core;
 using Projector.Core.Persons;
-using Projector.Core.Projects;
 using Projector.Core.Projects.DTO;
 using Projector.Models;
 using System.Security.Claims;
 
 namespace Projector.Controllers
 {
+    [Authorize]
     public class ProjectsController : Controller
     {
         /* INTERFACE VARIABLES */
@@ -33,7 +33,6 @@ namespace Projector.Controllers
 
         [Route("projector/")]
         [Route("projector/projects")]
-        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Projects([FromQuery] ProjectSearchQuery args = null)
         {
@@ -49,7 +48,6 @@ namespace Projector.Controllers
         }
 
         [Route("/projector/projects/create")]
-        [Authorize]
         [HttpGet]
         public IActionResult Create()
         {
@@ -57,7 +55,6 @@ namespace Projector.Controllers
         }
 
         [Route("/projector/projects/create")]
-        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] ProjectData project)
         {
@@ -84,14 +81,12 @@ namespace Projector.Controllers
 
         [Route("/projector/projects/assignments/{projectId:int}")]
         [HttpGet]
-        [Authorize]
-
         public async Task<IActionResult> Assignments(int projectId)
         {
             var vm = new ProjectAssignmentsViewModel(_projectsService);
             await vm.Initialize(projectId);
 
-            if(!vm.Exists)
+            if(!vm.ProjectExists)
             {
                 return NotFound();
             }
