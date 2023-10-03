@@ -32,6 +32,10 @@ namespace Projector.Data
                 .WithOne(u => u.User)
                 .HasForeignKey<Person>(p => p.UserId)
                 .IsRequired();
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.IsVerified)
+                .HasConversion<int>();
         }
     }
 }
