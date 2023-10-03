@@ -79,10 +79,53 @@ namespace Projector.Controllers
             return View(new CreateProjectViewModel(project, result.Errors));
         }
 
+        [Route("/projector/projects/edit/{projectId:int}")]
+        [HttpGet]
+        public async Task<IActionResult> Edit(int projectId)
+        {
+            var personId = int.Parse(HttpContext.User.FindFirst("PersonId").Value);
+            var vm = new EditProjectViewModel(_projectsService);
+            await vm.Initialize(projectId, personId);
+            
+            return vm.ProjectExists ?
+                View("Edit", vm) :
+                NotFound();
+        }
+
+        [Route("/projector/projects/edit/{projectId:int}")]
+        [HttpPost]
+        public async Task<IActionResult> Edit([FromForm] ProjectData project)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(new EditProjectViewModel(project, null));
+            }
+
+            var personId = int.Parse(HttpContext.User.FindFirst("PersonId").Value);
+            CommandResult result = await _commands.ExecuteAsync(
+                    new EditProjectCommand
+                    {
+                        PersonId = personId,
+                        Project = project
+                    }
+                );
+
+            if(result.IsSuccessful)
+            {
+                return RedirectToAction("Assignments", "Projects", new { projectId = project.Id });
+            }
+
+            return result.Errors[0] == "404" ?
+                NotFound() :
+                View(new EditProjectViewModel(project, result.Errors));
+        }
+        
+
         [Route("/projector/projects/assignments/{projectId:int}")]
         [HttpGet]
         public async Task<IActionResult> Assignments(int projectId)
         {
+            //TODO check if current user's ID is included in assignees
             var vm = new ProjectAssignmentsViewModel(_projectsService);
             await vm.Initialize(projectId);
 
