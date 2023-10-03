@@ -1,0 +1,31 @@
+﻿@model EditProjectViewModel
+
+@{
+    ViewData["Title"] = "Edit Project";
+}
+
+@if (Model.Errors.Any())
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Errors occured.</strong>
+        <ul>
+            @foreach(var error in Model.Errors)
+            {
+                <li>@error</li>
+            }
+        </ul>
+        <button type="button" class="btn-close" data-bs-dismissible="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="POST" asp-controller="Projects" asp-action="Edit">
+            <partial name="_CreateProjectInput" model="@Model.Project" />
+            <div class="form-group">
+                <input type="submit" value="Edit" class="btn btn-primary" />
+                <a asp-controller="Projects" asp-action="Projects" class="btn btn-secondary">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
