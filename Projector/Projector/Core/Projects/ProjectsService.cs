@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Projector.Core.Persons;
 using Projector.Core.Projects.DTO;
 using Projector.Data;
 
@@ -38,22 +39,68 @@ namespace Projector.Core.Projects
                 .ToArrayAsync();
         }
 
-        public async Task<ProjectData> GetProject(int projectId)
+        public async Task<ProjectDetailsData> GetProjectDetails(int projectId)
         {
             Project project = await _db.Projects
                 .Where(p => p.Id == projectId)
                 .FirstOrDefaultAsync();
 
-            return project == null ?
-                null :
-                new ProjectData
-                {
-                    Id = project.Id,
-                    Code = project.Code,
-                    Name = project.Name,
-                    Budget = project.Budget,
-                    Remarks = project.Remarks
-                };
+            if(project == null)
+            {
+                return null;
+            }
+
+            ProjectDetailsData data = new ProjectDetailsData
+            {
+                Id = project.Id,
+                Code = project.Code,
+                Name = project.Name,
+                Budget = project.Budget,
+                Remarks = project.Remarks
+            };
+
+            data.Assignees = await getAssignees(project);
+            data.UnassignedEmployees = await getUnassignedEmployees(project);
+
+            return data;
         }
+
+        private async Task<List<PersonData>> getAssignees(Project project)
+        {
+            var personsQuery = _db.Persons
+                .Where(
+                    p => p.Projects
+                        .Any(proj => proj.Id == project.Id)
+                );
+
+            return await personsQuery
+                .Select(p => new PersonData
+                {
+                    Id = p.Id,
+                    FirstName = p.FirstName,
+                    LastName = p.LastName,
+                    UserId = p.UserId,
+                })
+                .ToListAsync();
+        }
+        private async Task<List<PersonData>> getUnassignedEmployees(Project project)
+        {
+            var personsQuery = _db.Persons
+                .Where(
+                    p => p.Projects
+                        .All(proj => proj.Id != project.Id)
+                );
+
+            return await personsQuery
+                .Select(p => new PersonData
+                {
+                    Id = p.Id,
+                    FirstName = p.FirstName,
+                    LastName = p.LastName,
+                    UserId = p.UserId,
+                })
+                .ToListAsync();
+        }
+
     }
 }

@@ -18,21 +18,13 @@ namespace Projector.Models
 
         /* PROPERTIES */
         public bool Exists {  get; set; }
-        public ProjectData Details { get; set; }
-        public List<PersonData> Assignees { get; set; }
-        public List<PersonData> UnassignedEmployees { get; set; }
+        public ProjectDetailsData Details { get; set; }
 
         /* METHODS */
         public async Task Initialize(int projectId)
         {
-            Details = await _projectsService.GetProject(projectId);
-            if(Details == null)
-            {
-                Exists = false;
-                return;
-            }
-
-
+            Details = await _projectsService.GetProjectDetails(projectId);
+            Exists = Details != null;
         }
     }
 }

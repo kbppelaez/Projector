@@ -1,5 +1,38 @@
-﻿
+﻿@model ProjectAssignmentsViewModel
 @{
     ViewData["Title"] = "Assignments";
 }
 
+<h2>[@Model.Details.Code] @Model.Details.Name</h2>
+
+<h5>Add New Member</h5>
+@if(Model.Details.UnassignedEmployees == null || Model.Details.UnassignedEmployees.Count == 0)
+{
+    <form method="POST">
+        <select name="member" id="member" disabled>
+            <option>No employee available</option>
+        </select>
+        <input type="submit" disabled value="Add to Project" class="btn btn-secondary" />
+    </form>
+}
+else
+{
+    <form method="POST">
+        <select name="member" id="member">
+            @foreach (var employee in Model.Details.UnassignedEmployees)
+            {
+                <option value="@employee.Id">@employee.FullName</option>
+            }
+        </select>
+        <input type="submit" value="Add to Project" class="btn btn-primary" />
+    </form>
+}
+
+<br />
+<h5>Current Members</h5>
+<ul>
+    @foreach(var member in Model.Details.Assignees)
+    {
+        <li>@member.FullName</li>
+    }
+</ul>

@@ -6,6 +6,6 @@ namespace Projector.Core
     public interface IProjectsService
     {
         Task<ProjectData[]> GetPersonProjects(ProjectSearchQuery args);
-        Task<ProjectData> GetProject(int projectId);
+        Task<ProjectDetailsData> GetProjectDetails(int projectId);
     }
 }
