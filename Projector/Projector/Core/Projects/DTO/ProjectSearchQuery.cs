@@ -4,7 +4,7 @@
     {
         public string Term { get; set; }
         public int Page { get; set; }
-        public int PageSize { get; set; } = 2;
+        public int PageSize { get; set; } = 5;
         public int PersonId { get; set; }
         public int ViewPage
         {
