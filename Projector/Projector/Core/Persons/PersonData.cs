@@ -25,6 +25,8 @@ namespace Projector.Core.Persons
             }
         }
 
+        public PersonData() { }
+
         public PersonData(Person person) {
             Id = person.Id;
             FirstName = person.FirstName;
