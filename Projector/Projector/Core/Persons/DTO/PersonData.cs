@@ -1,7 +1,7 @@
 ﻿using Projector.Data;
 using System.ComponentModel.DataAnnotations;
 
-namespace Projector.Core.Persons
+namespace Projector.Core.Persons.DTO
 {
     public class PersonData
     {
@@ -27,7 +27,8 @@ namespace Projector.Core.Persons
 
         public PersonData() { }
 
-        public PersonData(Person person) {
+        public PersonData(Person person)
+        {
             Id = person.Id;
             FirstName = person.FirstName;
             LastName = person.LastName;
