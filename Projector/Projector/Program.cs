@@ -35,6 +35,7 @@ builder.Services.AddScoped<ICommandHandler<SignInCommand>, SignInCommandHandler>
 builder.Services.AddScoped<ICommandHandler<RegisterCommand>, RegisterCommandHandler>();
 builder.Services.AddScoped<ICommandHandler<CreateProjectCommand>, CreateProjectCommandHandler>();
 builder.Services.AddScoped<ICommandHandler<CreatePersonCommand>, CreatePersonCommandHandler>();
+builder.Services.AddScoped<ICommandHandler<EditProjectCommand>, EditProjectCommandHandler>();
 
 builder.Services.AddAuthentication(
     CookieAuthenticationDefaults.AuthenticationScheme)
