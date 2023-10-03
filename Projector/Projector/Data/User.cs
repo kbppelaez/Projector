@@ -18,13 +18,7 @@ namespace Projector.Data
         [StringLength(512)]
         public string Password { get; set; }
 
-        [Required]
-        public Person Person { get; set; }
-        /*
-        public bool isVerified { get; set; }
-         
-        public string linkHash { get; set; }
-
-         */
+        public virtual Person Person { get; set; }
+        public bool IsVerified { get; set; } = false;
     }
 }
