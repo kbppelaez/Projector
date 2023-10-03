@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Projector.Core.Persons;
+using Projector.Core.Persons.DTO;
 using Projector.Core.Projects.DTO;
 using Projector.Data;
 
@@ -13,7 +13,7 @@ namespace Projector.Core.Projects
             _db = db;
         }
 
-        public async Task<ProjectData[]> GetPersonProjects(ProjectSearchQuery args)
+        public async Task<ProjectSearchResult> GetPersonProjects(ProjectSearchQuery args)
         {
             var projectsQuery = _db.Projects
                 .Where(proj => proj.Assignees
@@ -27,16 +27,29 @@ namespace Projector.Core.Projects
                         || proj.Code.Contains(args.Term));
             }
 
-            return await projectsQuery
-                .Select(proj => new ProjectData
-                {
-                    Id = proj.Id,
-                    Code = proj.Code,
-                    Name = proj.Name,
-                    Budget = proj.Budget,
-                    Remarks = proj.Remarks
-                })
-                .ToArrayAsync();
+            int totalProjects = projectsQuery.Count();
+
+            projectsQuery = projectsQuery.OrderBy(proj => proj.Code);
+            projectsQuery = skipProjects(projectsQuery, args.Page, args.PageSize);
+
+            return new ProjectSearchResult{
+                Projects = await projectsQuery
+                                .Select(proj => new ProjectData
+                                {
+                                    Id = proj.Id,
+                                    Code = proj.Code,
+                                    Name = proj.Name,
+                                    Budget = proj.Budget,
+                                    Remarks = proj.Remarks
+                                })
+                                .ToArrayAsync(),
+                TotalProjects = totalProjects
+            };
+        }
+
+        private IQueryable<Project> skipProjects(IQueryable<Project> query, int page, int pageSize)
+        {
+            return query.Skip(page * pageSize).Take(pageSize);
         }
 
         public async Task<ProjectDetailsData> GetProjectDetails(int projectId)
@@ -59,18 +72,16 @@ namespace Projector.Core.Projects
                 Remarks = project.Remarks
             };
 
-            data.Assignees = await getAssignees(project);
-            data.UnassignedEmployees = await getUnassignedEmployees(project);
+            data.Assigned = await GetAssigned(project.Id);
 
             return data;
         }
 
-        private async Task<List<PersonData>> getAssignees(Project project)
+        public async Task<PersonData[]> GetAssigned(int projectId)
         {
             var personsQuery = _db.Persons
-                .Where(
-                    p => p.Projects
-                        .Any(proj => proj.Id == project.Id)
+                .Where(p => p.Projects
+                        .Any(proj => proj.Id == projectId)
                 );
 
             return await personsQuery
@@ -81,14 +92,15 @@ namespace Projector.Core.Projects
                     LastName = p.LastName,
                     UserId = p.UserId,
                 })
-                .ToListAsync();
+                .ToArrayAsync();
         }
-        private async Task<List<PersonData>> getUnassignedEmployees(Project project)
+
+        public async Task<PersonData[]> GetUnassigned(int projectId)
         {
             var personsQuery = _db.Persons
                 .Where(
                     p => p.Projects
-                        .All(proj => proj.Id != project.Id)
+                        .All(proj => proj.Id != projectId)
                 );
 
             return await personsQuery
@@ -99,7 +111,7 @@ namespace Projector.Core.Projects
                     LastName = p.LastName,
                     UserId = p.UserId,
                 })
-                .ToListAsync();
+                .ToArrayAsync();
         }
 
     }

@@ -1,11 +1,13 @@
-﻿using Projector.Core.Projects;
+﻿using Projector.Core.Persons.DTO;
 using Projector.Core.Projects.DTO;
 
 namespace Projector.Core
 {
     public interface IProjectsService
     {
-        Task<ProjectData[]> GetPersonProjects(ProjectSearchQuery args);
+        Task<ProjectSearchResult> GetPersonProjects(ProjectSearchQuery args);
         Task<ProjectDetailsData> GetProjectDetails(int projectId);
+        Task<PersonData[]> GetAssigned(int projectId);
+        Task<PersonData[]> GetUnassigned(int projectId);
     }
 }
