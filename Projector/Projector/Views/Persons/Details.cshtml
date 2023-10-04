@@ -1,0 +1,57 @@
+﻿@model PersonDetailsViewModel
+
+@{
+    ViewData["Title"] = "Details - " + Model.Details.FullName;
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h2>@Model.Details.FullName</h2>
+            <dl>
+                <dt>First Name</dt>
+                <dd>@Model.Details.FirstName</dd>
+                <dt>Last Name</dt>
+                <dd>@Model.Details.LastName</dd>
+                <dt>Email Address</dt>
+                <dd>
+                    @Model.Details.User.UserName
+                    @if (Model.Details.User.IsVerified)
+                    {
+                        <span class="badge alert-success">Verified</span>
+                    }
+                    else
+                    {
+                        <span class="badge alert-danger">Not Verified</span>
+                    }
+                </dd>
+            </dl>
+            @if (Model.Details.Id != Model.UserPersonId)
+            {
+                <a asp-controller="Persons" asp-action="Edit" asp-route-personId="@Model.Details.Id" class="btn btn-primary">Edit</a>
+                <a asp-controller="Persons" asp-action="ConfirmDelete" asp-route-personId="@Model.Details.Id" class="btn btn-danger">Delete</a>
+                <br />
+                <br />
+            }
+            <a asp-controller="Persons" asp-action="Persons" class="btn btn-secondary">Back to List</a>
+        </div>
+        <div class="col">
+            <h4>Current Projects</h4>
+            @if(Model.Details.Projects == null || Model.Details.Projects.Length == 0)
+            {
+                <h6>Not Assigned to Any Projects</h6>
+            }
+            else
+            {
+                <ul class="list-group">
+                    @foreach (var proj in Model.Details.Projects)
+                    {
+                        <li class="list-group-item">
+                            [@proj.Code] @proj.Name
+                        </li>
+                    }
+                </ul>
+            }
+        </div>
+    </div>
+</div>
