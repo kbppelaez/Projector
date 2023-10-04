@@ -6,6 +6,7 @@ using Projector.Models;
 
 namespace Projector.Controllers
 {
+    [Authorize]
     public class PersonsController : Controller
     {
         private readonly ICommandBus _commands;
@@ -18,9 +19,19 @@ namespace Projector.Controllers
             _logger = logger;
         }
 
+        [Route("/projector/persons/")]
+        [HttpGet]
+        public async Task<IActionResult> Persons([FromQuery] PersonSearchQuery args)
+        {
+            var personId = int.Parse(HttpContext.User.FindFirst("PersonId").Value);
+            var vm = new PersonsListViewModel(_personsService);
+            await vm.Initialize(args, personId);
+
+            return View("Persons", vm);
+        }
+
         [Route("/projector/persons/create")]
         [HttpGet]
-        [Authorize]
         public IActionResult Create()
         {
             return View(new CreatePersonViewModel());
@@ -28,7 +39,6 @@ namespace Projector.Controllers
 
         [Route("/projector/persons/create")]
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> Create([FromForm] NewPersonData newPerson)
         {
             if(!ModelState.IsValid)
@@ -44,7 +54,7 @@ namespace Projector.Controllers
 
             if(result.IsSuccessful)
             {
-                return RedirectToAction("Projects", "Projects");
+                return RedirectToAction("Persons", "Persons");
             }
 
             return View("Create", new CreatePersonViewModel(newPerson, result.Errors));
