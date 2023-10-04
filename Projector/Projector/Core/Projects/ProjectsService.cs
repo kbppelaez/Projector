@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Projector.Core.Persons.DTO;
 using Projector.Core.Projects.DTO;
+using Projector.Core.Users.DTO;
 using Projector.Data;
 
 namespace Projector.Core.Projects
@@ -114,7 +115,7 @@ namespace Projector.Core.Projects
                     Id = p.Id,
                     FirstName = p.FirstName,
                     LastName = p.LastName,
-                    UserId = p.UserId,
+                    User = new UserData(p.User)
                 })
                 .ToArrayAsync();
         }
@@ -134,7 +135,7 @@ namespace Projector.Core.Projects
                     Id = p.Id,
                     FirstName = p.FirstName,
                     LastName = p.LastName,
-                    UserId = p.UserId,
+                    User = new UserData(p.User),
                 })
                 .ToArrayAsync();
         }

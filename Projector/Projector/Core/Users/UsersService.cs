@@ -60,7 +60,6 @@ namespace Projector.Core.Users
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.FullName),
-                new Claim("UserId", user.UserId.ToString()),
                 new Claim("PersonId", user.Id.ToString())
             };
 
