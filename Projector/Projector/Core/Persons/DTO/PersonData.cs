@@ -1,4 +1,5 @@
-﻿using Projector.Data;
+﻿using Projector.Core.Users.DTO;
+using Projector.Data;
 using System.ComponentModel.DataAnnotations;
 
 namespace Projector.Core.Persons.DTO
@@ -15,7 +16,7 @@ namespace Projector.Core.Persons.DTO
         [StringLength(50, MinimumLength = 2)]
         public string LastName { get; set; }
 
-        public int UserId { get; set; }
+        public UserData User { get; set; }
 
         public string FullName
         {
@@ -32,7 +33,7 @@ namespace Projector.Core.Persons.DTO
             Id = person.Id;
             FirstName = person.FirstName;
             LastName = person.LastName;
-            UserId = person.UserId;
+            User = new UserData(person.User);
         }
     }
 }
