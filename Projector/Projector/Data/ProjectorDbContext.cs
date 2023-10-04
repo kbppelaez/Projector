@@ -21,7 +21,8 @@ namespace Projector.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"Server=.\SQLExpress;Database=Projector;Trusted_Connection=True;TrustServerCertificate=True;");
+                    //optionsBuilder.UseSqlServer(@"Server=.\SQLExpress;Database=Projector;Trusted_Connection=True;TrustServerCertificate=True;");
+                    optionsBuilder.UseSqlServer(@"Data Source =.\MSSQL2022; Initial Catalog = Projector; Integrated Security = True;Trusted_Connection=True;TrustServerCertificate=True;");
             }
         }
 
