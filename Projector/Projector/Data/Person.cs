@@ -15,6 +15,9 @@ namespace Projector.Data
         public string LastName { get; set; }
 
         public int UserId { get; set; }
+        public bool IsDeleted { get; set; }
+
+        /* NAVIGATION */
         public virtual User User { get; set; }
         public virtual ICollection<Project> Projects { get; set; } = new List<Project>();
     }

@@ -19,8 +19,11 @@ namespace Projector.Data
         [Required]
         [Precision(18,4)]
         public decimal Budget { get; set; }
-        public string Remarks { get; set; }
 
+        public string Remarks { get; set; }
+        public bool IsDeleted { get; set; }
+
+        /* NAVIGATION */
         public virtual ICollection<Person> Assignees { get; set; } = new List<Person>();
     }
 }
