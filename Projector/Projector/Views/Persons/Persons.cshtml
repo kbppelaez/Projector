@@ -55,7 +55,7 @@ else
                         </th>
                         <td>@person.User.UserName</td>
                         <td>
-                            <a asp-controller="Persons" asp-action="Projects" asp-route-personId="@person.Id" class="btn btn-primary">Projects</a>
+                            <a asp-controller="Persons" asp-action="Details" asp-route-personId="@person.Id" class="btn btn-primary">Projects</a>
 
                             @if(Model.PersonId != person.Id)
                             {

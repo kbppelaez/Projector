@@ -21,7 +21,7 @@
             <input asp-for="@Model.Person.Id" type="hidden" class="form-control" />
             <input type="submit" value="Yes, Delete" class="btn btn-danger" />
             <a asp-controller="Persons" asp-action="Persons" class="btn btn-secondary">Back to List</a>
-            <a asp-controller="Projects" asp-action="Details" asp-route-projectId="@Model.Person.Id" class="btn btn-secondary">View Details</a>
+            <a asp-controller="Persons" asp-action="Details" asp-route-personId="@Model.Person.Id" class="btn btn-secondary">View Details</a>
         </div>
     </form>
 </div>
