@@ -45,6 +45,7 @@ namespace Projector.Core.Projects
                 Name = newProject.Project.Name,
                 Budget = newProject.Project.Budget,
                 Remarks = newProject.Project.Remarks,
+                IsDeleted = false,
                 Assignees = new List<Person> { creator }
             };
 
