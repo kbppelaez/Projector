@@ -4,6 +4,7 @@ namespace Projector.Core
 {
     public interface IPersonsService
     {
+        Task<PersonData> GetPerson(int personId);
         Task<PersonSearchResult> GetPersons(PersonSearchQuery query);
     }
 }

@@ -50,5 +50,24 @@ namespace Projector.Core.Users
         {
             return query.Skip(page * pageSize).Take(pageSize);
         }
+
+        public async Task<PersonData> GetPerson(int personId)
+        {
+            Person person = await _db.Persons
+                .Where(p => !p.IsDeleted
+                            && p.Id == personId)
+                .Include(p => p.User)
+                .FirstOrDefaultAsync();
+
+            return person == null ?
+                null :
+                new PersonData
+                {
+                    Id = person.Id,
+                    FirstName = person.FirstName,
+                    LastName = person.LastName,
+                    User = new UserData(person.User)
+                };
+        }
     }
 }
