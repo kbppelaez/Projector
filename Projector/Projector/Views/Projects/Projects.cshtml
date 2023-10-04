@@ -51,7 +51,7 @@ else
                         <td>
                             <a asp-controller="Projects" asp-action="Assignments" asp-route-projectId="@item.Id" class="btn btn-primary">Details</a>
                             <a asp-controller="Projects" asp-action="Edit" asp-route-projectId="@item.Id" class="btn btn-primary">Edit</a>
-                            <a asp-controller="Projects" asp-action="Delete" asp-route-projectId="@item.Id" class="btn btn-danger">Delete</a>
+                            <a asp-controller="Projects" asp-action="ConfirmDelete" asp-route-projectId="@item.Id" class="btn btn-danger">Delete</a>
                         </td>
                     </tr>
                 }
