@@ -1,9 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Projector.Data;
+using System.ComponentModel.DataAnnotations;
 
 namespace Projector.Core.Users.DTO
 {
     public class UserData
     {
+        public UserData() { }
+        public UserData(User user)
+        {
+            Id = user.Id;
+            UserName = user.UserName;
+            Password = string.Empty;
+            IsVerified = user.IsVerified;
+        }
+
         /* PROPERTIES */
         public int Id { get; set; }
 
@@ -16,5 +26,8 @@ namespace Projector.Core.Users.DTO
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+
+        public bool IsVerified {  get; set; }
+
     }
 }
