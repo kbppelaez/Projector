@@ -35,7 +35,7 @@ namespace Projector.Models
 
             if (!PersonExists)
                 return;
-
+            PersonId = personId;
             EditableValues = createNewPersonData(person);
         }
 
