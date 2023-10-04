@@ -52,12 +52,37 @@ namespace Projector.Controllers
                     NewPerson = newPerson
                 });
 
-            if(result.IsSuccessful)
-            {
-                return RedirectToAction("Persons", "Persons");
-            }
+            return result.IsSuccessful ?
+                RedirectToAction("Persons", "Persons") :
+                View("Create", new CreatePersonViewModel(newPerson, result.Errors));
+        }
 
-            return View("Create", new CreatePersonViewModel(newPerson, result.Errors));
+        [Route("/projector/persons/{personId:int}/edit")]
+        [HttpGet]
+        public async Task<IActionResult> Edit(int personId)
+        {
+            var vm = new EditPersonViewModel(_personsService);
+            await vm.Initialize(personId);
+
+            return vm.PersonExists ?
+                View("Edit", vm) :
+                NotFound();
+        }
+
+        [Route("/projector/persons/{personId:int}/edit")]
+        [HttpPost]
+        public async Task<IActionResult> Edit([FromForm] NewPersonData person, int personId)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View("Edit", new EditPersonViewModel(person, null));
+            }
+            var vm = new EditPersonViewModel(_personsService);
+            await vm.Initialize(personId);
+
+            return vm.PersonExists ?
+                View("Edit", vm) :
+                NotFound();
         }
     }
 }
