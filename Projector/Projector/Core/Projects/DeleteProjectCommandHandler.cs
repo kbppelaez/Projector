@@ -1,5 +1,7 @@
-﻿using Projector.Core.Projects.DTO;
+﻿using Microsoft.EntityFrameworkCore;
+using Projector.Core.Projects.DTO;
 using Projector.Data;
+using System.Collections;
 
 namespace Projector.Core.Projects
 {
@@ -22,13 +24,20 @@ namespace Projector.Core.Projects
                 return CommandResult.Error("404");
             }
 
+            /* IF PersonProject entry should be deleted */
+            /*
+            Project project = await _db.Projects.Include(p => p.Assignees)
+                .Where(p => p.Id == cmd.Project.Id)
+                .FirstOrDefaultAsync();
             //delete dependencies first
-            Project project = await _db.Projects.FindAsync(cmd.Project.Id);
             project.Assignees.Clear();
+            */
+
+            /* IF PersonProject entry should NOT be deletd */
+            Project project = await _db.Projects.FindAsync(cmd.Project.Id);
+            project.IsDeleted = true;
             _db.Projects.Update(project);
 
-            //delete project
-            _db.Projects.Remove(project);
             await _db.SaveChangesAsync();
 
             return CommandResult.Success(cmd.Project);
