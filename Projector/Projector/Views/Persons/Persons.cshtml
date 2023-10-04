@@ -55,9 +55,9 @@ else
                         </th>
                         <td>@person.User.UserName</td>
                         <td>
-                            <a asp-controller="Persons" asp-action="Projects" asp-route-projectId="@person.Id" class="btn btn-primary">Projects</a>
-                            <a asp-controller="Persons" asp-action="Edit" asp-route-projectId="@person.Id" class="btn btn-primary">Edit</a>
-                            <a asp-controller="Persons" asp-action="Delete" asp-route-projectId="@person.Id" class="btn btn-danger">Delete</a>
+                            <a asp-controller="Persons" asp-action="Projects" asp-route-personId="@person.Id" class="btn btn-primary">Projects</a>
+                            <a asp-controller="Persons" asp-action="Edit" asp-route-personId="@person.Id" class="btn btn-primary">Edit</a>
+                            <a asp-controller="Persons" asp-action="Delete" asp-route-personId="@person.Id" class="btn btn-danger">Delete</a>
                         </td>
                     </tr>
                 }
