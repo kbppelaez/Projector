@@ -1,0 +1,27 @@
+﻿@model DeletePersonViewModel
+
+@{
+    ViewData["Title"] = "Delete Person";
+}
+
+<div class="alert alert-danger fade show" role="alert">
+    <strong>Are you sure you want to delete this person?</strong>
+</div>
+
+<div>
+    <h3>@Model.Person.FullName</h3>
+    <dl>
+        <dt class="col-sm">Email Address</dt>
+        <dd class="col-sm">@Model.Person.User.UserName</dd>
+    </dl>
+</div>
+<div>
+    <form method="POST" asp-controller="Persons" asp-action="Delete">
+        <div class="form-group">
+            <input asp-for="@Model.Person.Id" type="hidden" class="form-control" />
+            <input type="submit" value="Yes, Delete" class="btn btn-danger" />
+            <a asp-controller="Persons" asp-action="Persons" class="btn btn-secondary">Back to List</a>
+            <a asp-controller="Projects" asp-action="Details" asp-route-projectId="@Model.Person.Id" class="btn btn-secondary">View Details</a>
+        </div>
+    </form>
+</div>
