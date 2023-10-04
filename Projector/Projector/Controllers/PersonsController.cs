@@ -77,12 +77,22 @@ namespace Projector.Controllers
             {
                 return View("Edit", new EditPersonViewModel(person, null));
             }
-            var vm = new EditPersonViewModel(_personsService);
-            await vm.Initialize(personId);
 
-            return vm.PersonExists ?
-                View("Edit", vm) :
-                NotFound();
+            CommandResult result = await _commands.ExecuteAsync(
+                    new EditPersonCommand
+                    {
+                        EditedPerson = person,
+                        PersonId = personId
+                    }
+                );
+
+            if(result.IsSuccessful)
+            {
+                return RedirectToAction("Persons", "Persons");
+                //Redirect to View of Person
+            }
+
+            return View("Edit", new EditPersonViewModel(person, result.Errors) );
         }
     }
 }
