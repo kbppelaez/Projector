@@ -1,0 +1,112 @@
+﻿@model PersonsListViewModel
+
+@{
+    ViewData["Title"] = "List of Persons";
+}
+
+<form method="GET" asp-controller="Persons" asp-action="Persons">
+    <div class="input-group mb-3">
+        @if (Model.Args == null || string.IsNullOrEmpty(Model.Args.Term))
+        {
+            <input type="text" class="form-control" value="" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2" name="term">
+        }
+        else
+        {
+            <input type="text" class="form-control" value="@Model.Args.Term" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2" name="term">
+        }
+        <div class="input-group-append">
+            <input type="submit" class="btn btn-primary" value="Search" />
+        </div>
+    </div>
+</form>
+
+@if (Model.Results.TotalPersons == 0)
+{
+    <div align="center">
+        <h2>No Person Available</h2>
+    </div>
+    <!-- Impossible ?? since the current user is a person -->
+}
+else
+{
+    <div class="list-group" id="list-tab" role="tablist">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">FULL NAME</th>
+                    <th scope="col">EMAIL</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var person in Model.Results.People)
+                {
+                    <tr>
+                        <th scope="row">
+                            @person.FullName
+                            @if (person.User.IsVerified)
+                            {
+                            <span class="badge alert-success">Verified</span>
+                            }
+                            else
+                            {
+                            <span class="badge alert-danger">Not Verified</span>
+                            }
+                        </th>
+                        <td>@person.User.UserName</td>
+                        <td>
+                            <a asp-controller="Persons" asp-action="Projects" asp-route-projectId="@person.Id" class="btn btn-primary">Projects</a>
+                            <a asp-controller="Persons" asp-action="Edit" asp-route-projectId="@person.Id" class="btn btn-primary">Edit</a>
+                            <a asp-controller="Persons" asp-action="Delete" asp-route-projectId="@person.Id" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <br />
+    <div>
+        <div>
+            <nav aria-label="pagination">
+                <ul class="pagination">
+                    @if (Model.PageArgs.Count > 0)
+                    {
+                        @for (int i = 0; i < Model.PageArgs.Count; i += 1)
+                        {
+                            //if previous button
+                            if (i == 0 && Model.HasPreviousPage)
+                            {
+                                <li class="page-item">
+                                    <a asp-controller="Persons" asp-action="Persons" asp-all-route-data="@Model.PageArgs[i]" class="page-link">Previous</a>
+                                </li>
+                                continue;
+                            }
+                            //if current page
+                            if (Model.Args.Page.ToString() == Model.PageArgs[i]["Page"])
+                            {
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#">@Model.Args.ViewPage</a>
+                                </li>
+                                continue;
+                            }
+                            //if next button
+                            if (i == Model.PageArgs.Count - 1 && Model.HasNextPage)
+                            {
+                                <li class="page-item">
+                                    <a asp-controller="Persons" asp-action="Persons" asp-all-route-data="@Model.PageArgs[i]" class="page-link">Next</a>
+                                </li>
+                                continue;
+                            }
+
+                            <li class="page-item">
+                                <a asp-controller="Persons" asp-action="Persons" asp-all-route-data="@Model.PageArgs[i]" class="page-link">@Model.GetPageNumber(Model.PageArgs[i]["Page"])</a>
+                            </li>
+                        }
+                    }
+                </ul>
+            </nav>
+            <a asp-controller="Persons" asp-action="Persons" asp-route-PageSize="5" asp-route-Term="@Model.Args.Term">View 5</a>
+            <a asp-controller="Persons" asp-action="Persons" asp-route-PageSize="10" asp-route-Term="@Model.Args.Term">View 10</a>
+        </div>
+    </div>
+}
