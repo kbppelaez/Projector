@@ -123,17 +123,15 @@ namespace Projector.Controllers
 
         [Route("/projector/projects/{projectId:int}/delete")]
         [HttpGet]
-        public async Task<IActionResult> DeleteConfirmed(int projectId)
+        public async Task<IActionResult> ConfirmDelete(int projectId)
         {
             var personId = int.Parse(HttpContext.User.FindFirst("PersonId").Value);
             var vm = new DeleteProjectViewModel(_projectsService);
             await vm.Initialize(projectId, personId);
 
-            if (vm.ProjectExists)
-            {
-                return View("Delete", vm);
-            }
-            return NotFound();
+            return vm.ProjectExists ?
+                View("Delete", vm):
+                NotFound();
         }
 
         [Route("/projector/projects/{projectId:int}/delete")]
@@ -149,14 +147,9 @@ namespace Projector.Controllers
                     }
                 );
 
-            if(result.IsSuccessful)
-            {
-                return RedirectToAction("Projects", "Projects");
-            }
-
-            return result.Errors[0] == "404" ?
-                NotFound() :
-                View(new EditProjectViewModel((ProjectData) result.Result, result.Errors));
+            return result.IsSuccessful ?
+                RedirectToAction("Projects", "Projects") :
+                NotFound(result.Errors);
         }
 
         [Route("/projector/projects/assignments/{projectId:int}")]
