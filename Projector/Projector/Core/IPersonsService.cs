@@ -6,5 +6,6 @@ namespace Projector.Core
     {
         Task<PersonData> GetPerson(int personId);
         Task<PersonSearchResult> GetPersons(PersonSearchQuery query);
+        Task<PersonDetailsData> GetPersonWithProject(int personId);
     }
 }

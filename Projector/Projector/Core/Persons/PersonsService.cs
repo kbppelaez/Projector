@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Projector.Core.Persons.DTO;
+using Projector.Core.Projects.DTO;
 using Projector.Core.Users.DTO;
 using Projector.Data;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
@@ -68,6 +69,49 @@ namespace Projector.Core.Users
                     LastName = person.LastName,
                     User = new UserData(person.User)
                 };
+        }
+
+        public async Task<PersonDetailsData> GetPersonWithProject(int personId)
+        {
+            Person person = await _db.Persons
+                .Where(p => !p.IsDeleted
+                            && p.Id == personId)
+                .Include(p => p.User)
+                .Include(p => p.Projects)
+                .FirstOrDefaultAsync();
+
+            return person == null ?
+                null :
+                new PersonDetailsData
+                {
+                    Id = person.Id,
+                    FirstName = person.FirstName,
+                    LastName = person.LastName,
+                    User = new UserData(person.User),
+                    Projects = toProjectDataArray(person.Projects)
+                };
+        }
+
+        private ProjectData[] toProjectDataArray(ICollection<Project> projects)
+        {
+            if (projects.Count == 0)
+            {
+                return Array.Empty<ProjectData>();
+            }
+
+            ProjectData[] temp = new ProjectData[projects.Count];
+            int i = 0;
+
+            foreach (var proj in projects)
+            {
+                temp[i++] = new ProjectData
+                {
+                    Id = proj.Id,
+                    Code = proj.Code,
+                    Name = proj.Name
+                };
+            }
+            return temp;
         }
     }
 }
