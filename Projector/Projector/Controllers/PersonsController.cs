@@ -93,7 +93,7 @@ namespace Projector.Controllers
                 );
 
             return result.IsSuccessful ?
-                RedirectToAction("Persons", "Details", new {personId = personId}) :
+                RedirectToAction("Details", "Persons", new {personId = personId}) :
                 View("Edit", new EditPersonViewModel(person, result.Errors) );
         }
 
@@ -134,6 +134,19 @@ namespace Projector.Controllers
             return result.IsSuccessful ?
                 RedirectToAction("Persons", "Persons") :
                 NotFound(result.Errors);
+        }
+
+        [Route("/projector/persons/{personId:int}")]
+        [HttpGet]
+        public async Task<IActionResult> Details(int personId)
+        {
+            var userPersonId = int.Parse(HttpContext.User.FindFirst("PersonId").Value);
+            var vm = new PersonDetailsViewModel(_personsService);
+            await vm.Initialize(personId, userPersonId);
+
+            return vm.PersonExists ?
+                View("Details", vm) :
+                NotFound();
         }
     }
 }
