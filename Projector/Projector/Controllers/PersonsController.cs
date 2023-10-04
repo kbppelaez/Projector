@@ -73,6 +73,12 @@ namespace Projector.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit([FromForm] NewPersonData person, int personId)
         {
+            var currPersonId = int.Parse(HttpContext.User.FindFirst("PersonId").Value);
+            if(currPersonId == personId)
+            {
+                return NotFound();
+            }
+
             if(!ModelState.IsValid)
             {
                 return View("Edit", new EditPersonViewModel(person, null));
@@ -86,13 +92,48 @@ namespace Projector.Controllers
                     }
                 );
 
-            if(result.IsSuccessful)
+            return result.IsSuccessful ?
+                RedirectToAction("Persons", "Details", new {personId = personId}) :
+                View("Edit", new EditPersonViewModel(person, result.Errors) );
+        }
+
+        [Route("/projector/persons/{personId:int}/delete")]
+        [HttpGet]
+        public async Task<IActionResult> ConfirmDelete(int personId)
+        {
+            var currPersonId = int.Parse(HttpContext.User.FindFirst("PersonId").Value);
+            if (currPersonId == personId)
             {
-                return RedirectToAction("Persons", "Persons");
-                //Redirect to View of Person
+                return NotFound();
+            }
+            var vm = new DeletePersonViewModel(_personsService);
+            await vm.Initialize(personId);
+
+            return vm.PersonExists ?
+                View("Delete", vm) :
+                NotFound();
+        }
+
+        [Route("/projector/persons/{personId:int}/delete")]
+        [HttpPost]
+        public async Task<IActionResult> Delete(int personId)
+        {
+            var currPersonId = int.Parse(HttpContext.User.FindFirst("PersonId").Value);
+            if (currPersonId == personId)
+            {
+                return NotFound();
             }
 
-            return View("Edit", new EditPersonViewModel(person, result.Errors) );
+            CommandResult result = await _commands.ExecuteAsync(
+                    new DeletePersonCommand
+                    {
+                        Person = await _personsService.GetPerson(personId)
+                    }
+                );
+
+            return result.IsSuccessful ?
+                RedirectToAction("Persons", "Persons") :
+                NotFound(result.Errors);
         }
     }
 }
