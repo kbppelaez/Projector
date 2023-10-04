@@ -7,11 +7,13 @@ namespace Projector.Core.Persons
     {
         private readonly ProjectorDbContext _db;
         private readonly IPersonsService _personsService;
+        private readonly IUsersService _usersService;
 
-        public CreatePersonCommandHandler(ProjectorDbContext context, IPersonsService personsService)
+        public CreatePersonCommandHandler(ProjectorDbContext context, IPersonsService personsService, IUsersService usersService)
         {
             _db = context;
             _personsService = personsService;
+            _usersService = usersService;
         }
         public async Task<CommandResult> Execute(CreatePersonCommand args)
         {
@@ -24,12 +26,13 @@ namespace Projector.Core.Persons
             User newUser = new User
             {
                 UserName = args.NewPerson.UserName,
-                Password = "temp",
+                Password = _usersService.HashPassword(args.NewPerson.UserName+DateTime.Now.ToString()),
+                IsVerified = false
             };
 
-            // TODO
-            // Add isverified column
-            // generate temporary password
+            //TODO:
+            //SendEmail Feature
+                //create table for key-value pair
 
             _db.Users.Add(newUser);
             await _db.SaveChangesAsync();
