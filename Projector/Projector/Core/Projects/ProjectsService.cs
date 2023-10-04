@@ -85,7 +85,8 @@ namespace Projector.Core.Projects
             Project project = await _db.Projects
                 .Where(p => p.Id == projectId && !p.IsDeleted)
                 .Where(p => p.Assignees
-                        .Any(e => e.Id == personId))
+                        .Any(e => e.Id == personId
+                                && !e.IsDeleted))
                 .FirstOrDefaultAsync();
 
             return project == null ?
@@ -106,7 +107,8 @@ namespace Projector.Core.Projects
             var personsQuery = _db.Persons
                 .Where(p => !p.IsDeleted)
                 .Where(p => p.Projects
-                        .Any(proj => proj.Id == projectId)
+                        .Any(proj => proj.Id == projectId
+                                    && !proj.IsDeleted)
                 );
 
             return await personsQuery
@@ -126,7 +128,8 @@ namespace Projector.Core.Projects
                 .Where(p => !p.IsDeleted)
                 .Where(
                     p => p.Projects
-                        .All(proj => proj.Id != projectId)
+                        .All(proj => proj.Id != projectId
+                                    && !proj.IsDeleted)
                 );
 
             return await personsQuery
