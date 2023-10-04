@@ -36,6 +36,14 @@ namespace Projector.Data
             modelBuilder.Entity<User>()
                 .Property(u => u.IsVerified)
                 .HasConversion<int>();
+
+            modelBuilder.Entity<Person>()
+                .Property(p => p.IsDeleted)
+                .HasConversion<int>();
+
+            modelBuilder.Entity<Project>()
+                .Property(p => p.IsDeleted)
+                .HasConversion<int>();
         }
     }
 }
