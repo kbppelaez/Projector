@@ -16,6 +16,7 @@ namespace Projector.Core.Projects
         public async Task<ProjectSearchResult> GetPersonProjects(ProjectSearchQuery args)
         {
             var projectsQuery = _db.Projects
+                .Where(proj => !proj.IsDeleted)
                 .Where(proj => proj.Assignees
                     .Any(person => person.Id == args.PersonId)
                 );
@@ -55,7 +56,8 @@ namespace Projector.Core.Projects
         public async Task<ProjectDetailsData> GetProjectDetails(int projectId)
         {
             Project project = await _db.Projects
-                .Where(p => p.Id == projectId)
+                .Where(p => p.Id == projectId
+                            && !p.IsDeleted)
                 .FirstOrDefaultAsync();
 
             if (project == null)
@@ -80,7 +82,7 @@ namespace Projector.Core.Projects
         public async Task<ProjectData> GetProjectDetails(int projectId, int personId)
         {
             Project project = await _db.Projects
-                .Where(p => p.Id == projectId)
+                .Where(p => p.Id == projectId && !p.IsDeleted)
                 .Where(p => p.Assignees
                         .Any(e => e.Id == personId))
                 .FirstOrDefaultAsync();
@@ -101,6 +103,7 @@ namespace Projector.Core.Projects
         public async Task<PersonData[]> GetAssigned(int projectId)
         {
             var personsQuery = _db.Persons
+                .Where(p => !p.IsDeleted)
                 .Where(p => p.Projects
                         .Any(proj => proj.Id == projectId)
                 );
@@ -119,6 +122,7 @@ namespace Projector.Core.Projects
         public async Task<PersonData[]> GetUnassigned(int projectId)
         {
             var personsQuery = _db.Persons
+                .Where(p => !p.IsDeleted)
                 .Where(
                     p => p.Projects
                         .All(proj => proj.Id != projectId)
