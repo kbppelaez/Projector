@@ -41,7 +41,8 @@ namespace Projector.Core.Persons
             {
                 FirstName = args.NewPerson.FirstName,
                 LastName = args.NewPerson.LastName,
-                UserId = newUser.Id
+                UserId = newUser.Id,
+                IsDeleted = false
             };
 
             _db.Persons.Add(newPerson);
