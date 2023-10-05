@@ -176,14 +176,10 @@ namespace Projector.Controllers
 
         [Route("/projector/projects/assignments/add")]
         [HttpPost]
-        public async Task<IActionResult> Assign(int projectId, int personId)
+        public async Task<JsonResult> Assign([FromBody] AssigneeData change)
         {
             CommandResult result = await _commands.ExecuteAsync(
-                new AssignPersonCommand
-                {
-                    PersonId = personId,
-                    ProjectId = projectId
-                });
+                new AssignPersonCommand(change));
 
             if(!result.IsSuccessful)
             {
@@ -191,7 +187,7 @@ namespace Projector.Controllers
             }
 
             var vm = new AssignRemoveViewModel(_projectsService, HttpContext.RequestServices);
-            await vm.Initialize(projectId);
+            await vm.Initialize(change.ProjectId);
 
             vm.Unassigned = await vm.Render(PartialView("_UnassignedEmployees", vm.UnassignedPersons), ControllerContext);
             vm.Assigned = await vm.Render(PartialView("_AssignedEmployees", vm.Details), ControllerContext);
