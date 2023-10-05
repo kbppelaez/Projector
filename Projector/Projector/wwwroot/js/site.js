@@ -14,13 +14,24 @@ function AddEmployee(urlAction) {
         document.getElementById("selectError").innerHTML = "Please select an employee."
     } else {
         document.getElementById("selectError").innerHTML = "";
+        var data = {
+            "projectId": projId,
+            "personId": persId
+        };
+
         $.ajax({
             url: urlAction,
-            type: 'POST',
-            data: {
-                "projectId": projId,
-                "personId": persId
+            contentType: 'application/json; charset=utf-8',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
             },
+            dataType: 'json',
+            type: 'POST',
+            headers: {
+                "Accepts": "application/json"
+            },
+            data: JSON.stringify(data),
             success: function (response) {
                 //temp = response;
                 if (response.status == "SUCCESS") {
@@ -33,7 +44,7 @@ function AddEmployee(urlAction) {
             error: function (response) {
                 document.getElementById("selectError").innerHTML = "An error occured."
                 //temp = response;
-                alert(response);
+                //alert(response);
             }
         });
     }
