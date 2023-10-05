@@ -15,7 +15,7 @@
                     </div>
                     <div class="col-2" style="width:20%">
                         @Html.AntiForgeryToken()
-                        <input style="width:100%" type="button" value="Remove" class="btn btn-danger" onclick="RemoveEmployee('@Url.Action("Assign", "Projects")', @member.Id)" />
+                        <input style="width:100%" type="button" value="Remove" class="btn btn-danger" onclick="RemoveEmployee('@Url.Action("Remove", "Projects")', @member.Id)" />
                     </div>
                 </div>
             </form>
