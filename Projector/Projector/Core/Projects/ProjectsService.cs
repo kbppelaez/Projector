@@ -184,5 +184,41 @@ namespace Projector.Core.Projects
             return project.Assignees.Any(p => p.Id == personId);
         }
 
+        public async Task<string> RemovePersonFromProject(int personId, int projectId)
+        {
+            Project project = _db.Projects
+                .Where(p => !p.IsDeleted)
+                .Where(p => p.Id == projectId)
+                .Include(p => p.Assignees)
+                .FirstOrDefault();
+
+            if (project == null)
+            {
+                return "Project does not exist.";
+            }
+
+            Person person = _db.Persons
+                .Where(p => !p.IsDeleted)
+                .Where(p => p.Id == personId)
+                .FirstOrDefault();
+
+            if (person == null)
+            {
+                return "Person does not exist.";
+            }
+
+            if (!isPersonAssigned(project, personId))
+            {
+                return "Person is not assigned to the project!";
+            }
+
+            project.Assignees.Remove(person);
+            _db.Projects.Update(project);
+
+            await _db.SaveChangesAsync();
+
+            return "OK";
+        }
+
     }
 }
