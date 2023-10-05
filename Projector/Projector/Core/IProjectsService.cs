@@ -10,5 +10,6 @@ namespace Projector.Core
         Task<ProjectData> GetProjectDetails(int projectId, int personId);
         Task<PersonData[]> GetAssigned(int projectId);
         Task<PersonData[]> GetUnassigned(int projectId);
+        Task<string> AssignPersonToProject(int personId, int projectId);
     }
 }
