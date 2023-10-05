@@ -1,7 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.Extensions.Options;
 using Projector.Core;
 using Projector.Core.Persons;
+using Projector.Core.Persons.DTO;
 using Projector.Core.Projects.DTO;
 using Projector.Data;
 using Projector.Models;
@@ -166,6 +172,35 @@ namespace Projector.Controllers
             }
 
             return View(vm);
+        }
+
+        [Route("/projector/projects/assignments/add")]
+        [HttpPost]
+        public async Task<IActionResult> Assign(int projectId, int personId)
+        {
+            CommandResult result = await _commands.ExecuteAsync(
+                new AssignPersonCommand
+                {
+                    PersonId = personId,
+                    ProjectId = projectId
+                });
+
+            if(!result.IsSuccessful)
+            {
+                return Json(new { status = "FAIL", error = result.Errors[0] });
+            }
+
+            var vm = new AssignRemoveViewModel(_projectsService, HttpContext.RequestServices);
+            await vm.Initialize(projectId);
+
+            vm.Unassigned = await vm.Render(PartialView("_UnassignedEmployees", vm.UnassignedPersons), ControllerContext);
+            vm.Assigned = await vm.Render(PartialView("_AssignedEmployees", vm.Details), ControllerContext);
+
+            return Json(new {
+                unassignedView = vm.Unassigned,
+                assignedView = vm.Assigned,
+                status = "SUCCESS"
+            });
         }
 
         /*
