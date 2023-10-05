@@ -40,6 +40,7 @@ builder.Services.AddScoped<ICommandHandler<DeleteProjectCommand>, DeleteProjectC
 builder.Services.AddScoped<ICommandHandler<EditPersonCommand>, EditPersonCommandHandler>();
 builder.Services.AddScoped<ICommandHandler<DeletePersonCommand>, DeletePersonCommandHandler>();
 builder.Services.AddScoped<ICommandHandler<AssignPersonCommand>, AssignPersonCommandHandler>();
+builder.Services.AddScoped<ICommandHandler<RemovePersonCommand>, RemovePersonCommandHandler>();
 
 builder.Services.AddAuthentication(
     CookieAuthenticationDefaults.AuthenticationScheme)
