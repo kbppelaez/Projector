@@ -211,28 +211,26 @@ namespace Projector.Controllers
                 return Json(new { status = "FAIL", error = result.Errors[0] });
             }
 
-            var currUser = int.Parse(HttpContext.User.FindFirst("PersonId").Value);
-
-            if(currUser == change.PersonId)
-            {
-                return Json(new {
-                    redirectUrl = Url.Action("Projects", "Projects"),
-                    status = "REDIRECT"
-                });
-            }
-
             var vm = new AssignRemoveViewModel(_projectsService, HttpContext.RequestServices);
             await vm.Initialize(change.ProjectId);
 
             vm.Unassigned = await vm.Render(PartialView("_UnassignedEmployees", vm.UnassignedPersons), ControllerContext);
             vm.Assigned = await vm.Render(PartialView("_AssignedEmployees", vm.Details), ControllerContext);
 
-            return Json(new
-            {
-                unassignedView = vm.Unassigned,
-                assignedView = vm.Assigned,
-                status = "SUCCESS"
-            });
+            var currUser = int.Parse(HttpContext.User.FindFirst("PersonId").Value);
+
+            return currUser == change.PersonId?
+                Json(new {
+                    unassignedView = vm.Unassigned,
+                    assignedView = vm.Assigned,
+                    redirectUrl = Url.Action("Projects", "Projects"),
+                    status = "REDIRECT"
+                }) :
+                Json(new {
+                    unassignedView = vm.Unassigned,
+                    assignedView = vm.Assigned,
+                    status = "SUCCESS"
+                });
         }
 
         /*
