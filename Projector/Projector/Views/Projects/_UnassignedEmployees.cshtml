@@ -14,19 +14,20 @@
     }
     else
     {
-        <form method="POST">
-            <input type="hidden" value="@Model.UnassignedProjectId" />
+        <form>
+            <input type="hidden" id="projectId" name="projectId" value="@Model.UnassignedProjectId" />
             <div class="input-group">
                 <select class="custom-select" id="addPerson" style="width:50%">
-                    <option selected>Choose Employee...</option>
+                    <option selected value="0">Choose Employee...</option>
                     @foreach (var employee in Model.Unassigned)
                     {
                         <option value="@employee.Id">@employee.FullName</option>
                     }
                 </select>
                 <div class="input-group-append" style="width:50%">
-                    <button style="width:100%" class="btn btn-primary" type="submit">Add Employee to Project</button>
+                <button style="width:100%" class="btn btn-primary" type="button" onclick="AddEmployee('@Url.Action("Assign", "Projects")')">Add Employee to Project</button>
                 </div>
             </div>
+            <span id="selectError" class="text-danger"></span>
         </form>
     }
