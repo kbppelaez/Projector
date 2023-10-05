@@ -15,6 +15,7 @@
     else
     {
         <form>
+            @Html.AntiForgeryToken()
             <input type="hidden" id="projectId" name="projectId" value="@Model.UnassignedProjectId" />
             <div class="input-group">
                 <select class="custom-select" id="addPerson" style="width:50%">
