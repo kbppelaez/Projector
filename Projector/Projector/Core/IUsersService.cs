@@ -8,5 +8,9 @@ namespace Projector.Core
         string HashPassword(string password);
         Task PersistLogin(PersonData user);
         Task RemoveLogin();
+        string GenerateActivationToken(string email, DateTime now);
+        bool UserExists(int userId);
+        bool VerificationValid(int id, string token);
+        bool isVerified(int userId);
     }
 }

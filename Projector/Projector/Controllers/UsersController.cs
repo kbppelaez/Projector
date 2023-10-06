@@ -99,5 +99,60 @@ namespace Projector.Controllers
             await _usersService.RemoveLogin();
             return RedirectToAction("SignIn", "Users");
         }
+
+        [Route("/projector/resetpassword/{userId}")]
+        [HttpGet]
+        //public async Task<IActionResult> ResetPassword(int userId, [FromQuery] string v)
+        public IActionResult ResetPassword(int userId, [FromQuery] string v)
+        {
+            if (string.IsNullOrEmpty(v))
+            {
+                return NotFound();
+            }
+
+            var vm = new ResetPasswordViewModel(_usersService);
+            vm.Initialize(userId, v);
+
+            return vm.UserExists && vm.VerificationValid ?
+                View("ResetPassword", vm) :
+                NotFound();
+        }
+
+        [Route("/projector/resetpassword/{userId}")]
+        [HttpPost]
+        //public async Task<IActionResult> ResetPassword(int userId, [FromQuery] string v)
+        public async Task<IActionResult> ResetPassword(int userId, [FromForm] PasswordData passwordData)
+        {
+            if (!ModelState.IsValid)
+            {
+                passwordData.Password = passwordData.ConfirmPassword = string.Empty;
+                return View(new ResetPasswordViewModel(passwordData, null));
+            }
+
+            CommandResult result = await _commands.ExecuteAsync(
+                    new ResetPasswordCommand
+                    {
+                        Password = passwordData,
+                        UserId = userId
+                    });
+
+            if (result.IsSuccessful)
+            {
+                return RedirectToAction("SignIn", "Users");
+            }
+
+            passwordData.Password = passwordData.ConfirmPassword = string.Empty;
+            return result.Errors[0] == "INVALID" ?
+                NotFound() :
+                View("ResetPassword", new ResetPasswordViewModel(passwordData, result.Errors));
+        }
+
+
+        [Route("/projector/verify/{userId}")]
+        [HttpGet]
+        public IActionResult Verify(int userId, [FromQuery] string v)
+        {
+            return View(new { query = v, id = userId });
+        }
     }
 }
