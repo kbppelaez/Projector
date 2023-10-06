@@ -45,22 +45,13 @@ namespace Projector.Core.Users
                     _db.Persons.Add(person);
                     await _db.SaveChangesAsync();
 
-                    //TODO:
                     //GENERATE LINK
-                    var timeNow = DateTime.Now.AddDays(1);
-                    string activationToken = _usersService.GenerateActivationToken(newUser.Details.UserName, timeNow);
-                    string url = "https://localhost:7125" + "/projector/verify/" + userData.Id + "?v=" +  HttpUtility.UrlEncode(activationToken);
+                    userData.VerificationLink = _usersService.GenerateVerificationLink(userData.UserName, userData.Id);
 
-                    userData.VerificationLink = new VerificationLink
-                    {
-                        Id = userData.Id,
-                        ActivationToken = activationToken,
-                        ActivationLink = url,
-                        ExpiryDate = timeNow
-                    };
                     _db.Users.Update(userData);
                     await _db.SaveChangesAsync();
 
+                    //TODO:
                     //SEND LINK VIA EMAIL
 
 

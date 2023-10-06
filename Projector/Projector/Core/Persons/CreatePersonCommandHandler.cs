@@ -46,22 +46,13 @@ namespace Projector.Core.Persons
             _db.Persons.Add(newPerson);
             await _db.SaveChangesAsync();
 
-            //TODO:
-            //GENERATE TOKEN
-            var timeNow = DateTime.Now.AddDays(1);
-            string activationToken = _usersService.GenerateActivationToken(newUser.UserName, timeNow);
-            string url = "https://localhost:7125" + "/projector/resetpassword/" + newUser.Id + "?v=" + HttpUtility.UrlEncode(activationToken);
+            //GENERATE VERIFICATION LINK
+            newUser.VerificationLink = _usersService.GenerateVerificationLink(newUser.UserName, newUser.Id);
 
-            newUser.VerificationLink = new VerificationLink
-            {
-                Id = newUser.Id,
-                ActivationToken = activationToken,
-                ActivationLink = url,
-                ExpiryDate = timeNow
-            };
             _db.Users.Update(newUser);
             await _db.SaveChangesAsync();
-            
+
+            //TODO:
             //SEND EMAIL
 
             return CommandResult.Success(newPerson);
