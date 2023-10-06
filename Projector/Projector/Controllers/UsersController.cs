@@ -154,5 +154,27 @@ namespace Projector.Controllers
         {
             return View(new { query = v, id = userId });
         }
+
+        [Route("/projector/forgotpassword")]
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [Route("/projector/forgotpassword")]
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword([FromForm] string emailAdd)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            await _commands.ExecuteAsync(new ForgotPasswordCommand {
+                EmailAddress = emailAdd});
+
+            return View("EmailSent", new { emailAddress = emailAdd });
+        } 
     }
 }
