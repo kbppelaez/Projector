@@ -10,10 +10,14 @@ namespace Projector.Core.Users
 {
     public class UsersService : IUsersService
     {
+        private readonly ProjectorDbContext _db;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UsersService(IHttpContextAccessor httpContextAccessor) =>
+        public UsersService(ProjectorDbContext context, IHttpContextAccessor httpContextAccessor)
+        {
+            _db = context;
             _httpContextAccessor = httpContextAccessor;
+        }
 
         /* METHODS */
         public string HashPassword(string password)
@@ -55,6 +59,11 @@ namespace Projector.Core.Users
             return buffer3.SequenceEqual(buffer4);
         }
 
+        public string GenerateActivationToken(string email, DateTime timeNow)
+        {
+            return HashPassword(email + timeNow.ToString());
+        }
+
         public async Task PersistLogin(PersonData user)
         {
             var claims = new List<Claim>
@@ -83,6 +92,40 @@ namespace Projector.Core.Users
             await _httpContextAccessor.HttpContext.SignOutAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme);
 
+        }
+
+        public bool UserExists(int userId)
+        {
+            return _db.Users.Any(u => u.Id == userId);
+        }
+
+        public bool VerificationValid(int id, string token)
+        {
+            var verLink = _db.VerificationLinks
+                .Where(v => v.Id == id)
+                .FirstOrDefault();
+
+            if (verLink == null)
+            {
+                return false;
+            }
+
+            var timeNow = DateTime.Now;
+            if (timeNow > verLink.ExpiryDate)
+            {
+                return false;
+            }
+
+            return verLink.ActivationToken.Equals(token) ?
+                true : false;
+        }
+
+        public bool isVerified(int userId)
+        {
+            return _db.Users
+                .Where(u => u.Id == userId)
+                .FirstOrDefault()
+                .IsVerified;
         }
     }
 }
