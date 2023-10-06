@@ -41,6 +41,7 @@ builder.Services.AddScoped<ICommandHandler<EditPersonCommand>, EditPersonCommand
 builder.Services.AddScoped<ICommandHandler<DeletePersonCommand>, DeletePersonCommandHandler>();
 builder.Services.AddScoped<ICommandHandler<AssignPersonCommand>, AssignPersonCommandHandler>();
 builder.Services.AddScoped<ICommandHandler<RemovePersonCommand>, RemovePersonCommandHandler>();
+builder.Services.AddScoped<ICommandHandler<ResetPasswordCommand>, ResetPasswordCommandHandler>();
 
 builder.Services.AddAuthentication(
     CookieAuthenticationDefaults.AuthenticationScheme)
