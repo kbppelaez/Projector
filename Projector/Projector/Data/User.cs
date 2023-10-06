@@ -19,6 +19,7 @@ namespace Projector.Data
         public string Password { get; set; }
 
         public virtual Person Person { get; set; }
+        public virtual VerificationLink VerificationLink { get; set; }
         public bool IsVerified { get; set; } = false;
     }
 }

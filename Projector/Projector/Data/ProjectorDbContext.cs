@@ -15,6 +15,7 @@ namespace Projector.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Person> Persons { get; set; }
         public DbSet<Project> Projects { get; set; }
+        public DbSet<VerificationLink> VerificationLinks { get; set; }
 
         /* METHODS */
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -45,6 +46,12 @@ namespace Projector.Data
             modelBuilder.Entity<Project>()
                 .Property(p => p.IsDeleted)
                 .HasConversion<int>();
+
+            modelBuilder.Entity<VerificationLink>()
+                .HasOne(v => v.User)
+                .WithOne(u => u.VerificationLink)
+                .HasForeignKey<VerificationLink>(u => u.Id)
+                .IsRequired();
         }
     }
 }
