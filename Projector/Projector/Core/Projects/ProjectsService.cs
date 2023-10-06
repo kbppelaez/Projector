@@ -107,8 +107,7 @@ namespace Projector.Core.Projects
             var personsQuery = _db.Persons
                 .Where(p => !p.IsDeleted)
                 .Where(p => p.Projects
-                        .Any(proj => proj.Id == projectId
-                                    && !proj.IsDeleted)
+                        .Any(proj => proj.Id == projectId)
                 );
 
             return await personsQuery
@@ -128,8 +127,7 @@ namespace Projector.Core.Projects
                 .Where(p => !p.IsDeleted)
                 .Where(
                     p => p.Projects
-                        .All(proj => proj.Id != projectId
-                                    && !proj.IsDeleted)
+                        .All(proj => proj.Id != projectId)
                 );
 
             return await personsQuery
