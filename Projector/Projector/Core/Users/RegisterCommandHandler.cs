@@ -1,6 +1,8 @@
 ﻿using Projector.Core.Users.DTO;
 using Projector.Data;
+using System.Security.Policy;
 using System.Text.RegularExpressions;
+using System.Web;
 
 namespace Projector.Core.Users
 {
@@ -33,11 +35,6 @@ namespace Projector.Core.Users
                 if(isValidPassword(newUser.Details.Password))
                 {
                     //VALID USER
-
-                    //TODO:
-                    //GENERATE LINK
-                    //SEND LINK VIA EMAIL
-
                     //SAVE USER TO THE DATABASE
                     User userData = createUser(newUser.Details);
                     _db.Users.Add(userData);
@@ -47,6 +44,25 @@ namespace Projector.Core.Users
                     Person person = createPerson(newUser.Details, userData.Id);
                     _db.Persons.Add(person);
                     await _db.SaveChangesAsync();
+
+                    //TODO:
+                    //GENERATE LINK
+                    var timeNow = DateTime.Now.AddDays(1);
+                    string activationToken = _usersService.GenerateActivationToken(newUser.Details.UserName, timeNow);
+                    string url = "https://localhost:7125" + "/projector/verify/" + userData.Id + "?v=" +  HttpUtility.UrlEncode(activationToken);
+
+                    userData.VerificationLink = new VerificationLink
+                    {
+                        Id = userData.Id,
+                        ActivationToken = activationToken,
+                        ActivationLink = url,
+                        ExpiryDate = timeNow
+                    };
+                    _db.Users.Update(userData);
+                    await _db.SaveChangesAsync();
+
+                    //SEND LINK VIA EMAIL
+
 
                     return CommandResult.Success(person);
                 }

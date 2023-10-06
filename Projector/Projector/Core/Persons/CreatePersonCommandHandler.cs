@@ -1,5 +1,7 @@
 ﻿using Projector.Core.Persons.DTO;
+using Projector.Core.Users.DTO;
 using Projector.Data;
+using System.Web;
 
 namespace Projector.Core.Persons
 {
@@ -30,10 +32,6 @@ namespace Projector.Core.Persons
                 IsVerified = false
             };
 
-            //TODO:
-            //SendEmail Feature
-                //create table for key-value pair
-
             _db.Users.Add(newUser);
             await _db.SaveChangesAsync();
 
@@ -47,6 +45,24 @@ namespace Projector.Core.Persons
 
             _db.Persons.Add(newPerson);
             await _db.SaveChangesAsync();
+
+            //TODO:
+            //GENERATE TOKEN
+            var timeNow = DateTime.Now.AddDays(1);
+            string activationToken = _usersService.GenerateActivationToken(newUser.UserName, timeNow);
+            string url = "https://localhost:7125" + "/projector/resetpassword/" + newUser.Id + "?v=" + HttpUtility.UrlEncode(activationToken);
+
+            newUser.VerificationLink = new VerificationLink
+            {
+                Id = newUser.Id,
+                ActivationToken = activationToken,
+                ActivationLink = url,
+                ExpiryDate = timeNow
+            };
+            _db.Users.Update(newUser);
+            await _db.SaveChangesAsync();
+            
+            //SEND EMAIL
 
             return CommandResult.Success(newPerson);
         }
