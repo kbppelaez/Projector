@@ -5,6 +5,7 @@ using Projector.Core.Users.DTO;
 using Projector.Data;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Web;
 
 namespace Projector.Core.Users
 {
@@ -126,6 +127,21 @@ namespace Projector.Core.Users
                 .Where(u => u.Id == userId)
                 .FirstOrDefault()
                 .IsVerified;
+        }
+
+        public VerificationLink GenerateVerificationLink(string userName, int id)
+        {
+            var timeNow = DateTime.Now.AddDays(1);
+            string activationToken = GenerateActivationToken(userName, timeNow);
+            string url = "https://localhost:7125" + "/projector/resetpassword/" + id + "?v=" + HttpUtility.UrlEncode(activationToken);
+
+            return new VerificationLink
+            {
+                Id = id,
+                ActivationToken = activationToken,
+                ActivationLink = url,
+                ExpiryDate = timeNow
+            };
         }
     }
 }

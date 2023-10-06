@@ -1,4 +1,5 @@
 ﻿using Projector.Core.Persons.DTO;
+using Projector.Data;
 
 namespace Projector.Core
 {
@@ -12,5 +13,6 @@ namespace Projector.Core
         bool UserExists(int userId);
         bool VerificationValid(int id, string token);
         bool isVerified(int userId);
+        VerificationLink GenerateVerificationLink(string userName, int id);
     }
 }
