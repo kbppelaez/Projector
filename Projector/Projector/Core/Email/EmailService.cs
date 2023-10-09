@@ -1,10 +1,15 @@
-﻿using System.Net.Mail;
+﻿using Microsoft.AspNetCore.Routing;
+using System.Net.Mail;
 
 namespace Projector.Core.Email
 {
     public class EmailService : IEmailService
     {
-        public EmailService() { }
+        private readonly LinkGenerator _linkGenerator;
+
+        public EmailService(LinkGenerator generator) {
+            _linkGenerator = generator;
+        }
 
         public void SendEmail(EmailContentData email)
         {
@@ -35,6 +40,11 @@ namespace Projector.Core.Email
             smtpClient.EnableSsl = false;
 
             return smtpClient;
+        }
+
+        public string GetRoute(string actionName, string controllerName, object routeValues)
+        {
+            return _linkGenerator.GetPathByAction(actionName, controllerName, routeValues);
         }
     }
 }
