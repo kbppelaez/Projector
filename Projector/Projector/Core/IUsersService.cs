@@ -11,8 +11,11 @@ namespace Projector.Core
         Task RemoveLogin();
         string GenerateActivationToken(string email, DateTime now);
         bool UserExists(int userId);
-        bool VerificationValid(int id, string token);
+        bool VerificationLinkValid(int id, string token);
+        bool VerificationTokenValid(int id, string token);
         bool isVerified(int userId);
-        VerificationLink GenerateVerificationLink(string userName, int id);
+        VerificationLink GenerateVerificationLink(string userName, int id, int type);
+        bool VerifyRegistration(int id, string link, string subcode);
+        User GetUser(int userId);
     }
 }

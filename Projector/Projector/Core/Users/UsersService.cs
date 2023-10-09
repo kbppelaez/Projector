@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
 using Projector.Core.Persons.DTO;
 using Projector.Core.Users.DTO;
 using Projector.Data;
@@ -100,7 +101,35 @@ namespace Projector.Core.Users
             return _db.Users.Any(u => u.Id == userId);
         }
 
-        public bool VerificationValid(int id, string token)
+        public User GetUser(int userId)
+        {
+            return _db.Users.Where(u => u.Id == userId)
+                .Include(u => u.VerificationLink)
+                .FirstOrDefault();
+        }
+
+        public bool VerificationLinkValid(int id, string token)
+        {
+            var verLink = _db.VerificationLinks
+                .Where(v => v.Id == id)
+                .FirstOrDefault();
+
+            if (verLink == null)
+            {
+                return false;
+            }
+
+            var timeNow = DateTime.Now;
+            if (timeNow > verLink.ExpiryDate)
+            {
+                return false;
+            }
+
+            return verLink.ActivationLink.Equals(token) ?
+                true : false;
+        }
+
+        public bool VerificationTokenValid(int id, string token)
         {
             var verLink = _db.VerificationLinks
                 .Where(v => v.Id == id)
@@ -121,6 +150,27 @@ namespace Projector.Core.Users
                 true : false;
         }
 
+        public bool VerifyRegistration(int id, string link, string subcode)
+        {
+            var verLink = _db.VerificationLinks
+                .Where(v => v.Id == id)
+                .FirstOrDefault();
+
+            if (verLink == null)
+            {
+                return false;
+            }
+
+            var timeNow = DateTime.Now;
+            if (timeNow > verLink.ExpiryDate)
+            {
+                return false;
+            }
+
+            return verLink.ActivationLink.Equals(link) && verLink.ActivationToken.Substring(0,10).Equals(subcode) ?
+                true : false;
+        }
+
         public bool isVerified(int userId)
         {
             return _db.Users
@@ -129,11 +179,17 @@ namespace Projector.Core.Users
                 .IsVerified;
         }
 
-        public VerificationLink GenerateVerificationLink(string userName, int id)
+        public VerificationLink GenerateVerificationLink(string userName, int id, int type)
         {
             var timeNow = DateTime.Now.AddDays(1);
             string activationToken = GenerateActivationToken(userName, timeNow);
-            string url = "https://localhost:7125" + "/projector/resetpassword/" + id + "?v=" + HttpUtility.UrlEncode(activationToken);
+
+            // TYPE: 1 needs password, 0 already has password
+            string route = type == 1 ?
+                    "/projector/resetpassword/" :
+                    "/projector/verify/";
+
+            string url = "https://localhost:7125" + route + id + "?v=" + HttpUtility.UrlEncode(activationToken);
 
             return new VerificationLink
             {
