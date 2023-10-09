@@ -1,5 +1,17 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model VerifyUserViewModel
 @{
+    ViewData["Verify Email"] = "Verify Account";
 }
+
+<h2>Verify Email Address</h2>
+<form method="POST" asp-action="Verify" asp-controller="Users">
+    <input type="hidden" asp-for="@Model.Token" />
+    <input type="hidden" asp-for="@Model.UserId" />
+    <div class="form-group">
+        <label asp-for="@Model.Code">Verification Code</label>
+        <input type="text" required asp-for="@Model.Code" class="form-control" />
+        <span asp-validation-for="@Model.Code" class="text-danger"></span>
+    </div>
+    <br />
+    <input type="submit" value="Verify Account" class="btn btn-primary" />
+</form>
