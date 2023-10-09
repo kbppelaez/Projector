@@ -2,6 +2,7 @@
 using Projector.Core.Email;
 using Projector.Core.Users.DTO;
 using Projector.Data;
+using System.Web;
 
 namespace Projector.Core.Users
 {
@@ -10,13 +11,15 @@ namespace Projector.Core.Users
         private readonly ProjectorDbContext _db;
         private readonly IUsersService _usersService;
         private readonly IEmailService _emailService;
+        private readonly IAuthenticationService _authService;
 
         public ForgotPasswordCommandHandler() { }
 
-        public ForgotPasswordCommandHandler(ProjectorDbContext context, IUsersService usersService, IEmailService emailService) {
+        public ForgotPasswordCommandHandler(ProjectorDbContext context, IUsersService usersService, IEmailService emailService, IAuthenticationService authenticationService) {
             _db = context;
             _usersService = usersService;
             _emailService = emailService;
+            _authService = authenticationService;
         }
 
         public async Task<CommandResult> Execute(ForgotPasswordCommand args)
@@ -40,13 +43,13 @@ namespace Projector.Core.Users
 
             if(existingUser.VerificationLink == null)
             {
-                existingUser.VerificationLink = _usersService
-                    .GenerateVerificationLink(email, existingUser.Id, 1);
+                existingUser.VerificationLink = UsersHelper
+                    .GenerateVerificationLink(email, existingUser.Id);
             }
             else
             {
-                var temporaryLink = _usersService
-                .GenerateVerificationLink(email, existingUser.Id, 1);
+                var temporaryLink = UsersHelper
+                .GenerateVerificationLink(email, existingUser.Id);
 
                 existingUser.VerificationLink.ActivationToken = temporaryLink.ActivationToken;
                 existingUser.VerificationLink.ActivationLink = temporaryLink.ActivationLink;
@@ -58,12 +61,12 @@ namespace Projector.Core.Users
 
             //TODO
             //SEND EMAIL HERE
-            SendEmail(existingUser);
+            SendEmail(existingUser, _authService.GetRoute("ResetPassword","Users", new {userId = existingUser.Id}));
 
             return CommandResult.Success(email);
         }
 
-        private void SendEmail(User existingUser)
+        private void SendEmail(User existingUser, string route)
         {
             EmailContentData emailContentData = new EmailContentData
             {
@@ -71,9 +74,11 @@ namespace Projector.Core.Users
                 Subject = "Reset Password Link"
             };
 
+            var link = UsersHelper.CreateLink(route, HttpUtility.UrlEncode(existingUser.VerificationLink.ActivationLink));
+
             var content = "<h3>Reset Password Link</h3><br/>";
             content += "<p>To reset your password, please clink this link: ";
-            content += "<a href='" + existingUser.VerificationLink.ActivationLink + "'>Reset Password</a>.</p>";
+            content += "<a href='" + link + "'>Reset Password</a>.</p>";
             content += "<p>If you did not request this reset password link, kindly disregard this email.</p>";
 
             emailContentData.Content = content;
