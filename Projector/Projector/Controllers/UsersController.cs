@@ -100,9 +100,54 @@ namespace Projector.Controllers
             return RedirectToAction("SignIn", "Users");
         }
 
+        [Route("/projector/createpassword/{userId}")]
+        [HttpGet]
+        public IActionResult CreatePassword(int userId, [FromQuery] string v)
+        {
+            if (string.IsNullOrEmpty(v))
+            {
+                return NotFound();
+            }
+
+            var vm = new ResetPasswordViewModel(_usersService);
+            vm.Initialize(userId, v, 1);
+
+            return vm.UserExists && vm.VerificationValid ?
+                View("CreatePassword", vm) :
+                NotFound();
+        }
+
+        [Route("/projector/createpassword/{userId}")]
+        [HttpPost]
+        public async Task<IActionResult> CreatePassword(int userId, [FromForm] PasswordData passwordData)
+        {
+            if (!ModelState.IsValid)
+            {
+                passwordData.Password = passwordData.ConfirmPassword = string.Empty;
+                return View(new ResetPasswordViewModel(passwordData, null));
+            }
+
+            CommandResult result = await _commands.ExecuteAsync(
+                    new ResetPasswordCommand
+                    {
+                        Password = passwordData,
+                        UserId = userId,
+                        FromModule = 1  //from Create
+                    });
+
+            if (result.IsSuccessful)
+            {
+                return RedirectToAction("SignIn", "Users");
+            }
+
+            passwordData.Password = passwordData.ConfirmPassword = string.Empty;
+            return result.Errors[0] == "INVALID" ?
+                NotFound() :
+                View("ResetPassword", new ResetPasswordViewModel(passwordData, result.Errors));
+        }
+
         [Route("/projector/resetpassword/{userId}")]
         [HttpGet]
-        //public async Task<IActionResult> ResetPassword(int userId, [FromQuery] string v)
         public IActionResult ResetPassword(int userId, [FromQuery] string v)
         {
             if (string.IsNullOrEmpty(v))
@@ -111,7 +156,7 @@ namespace Projector.Controllers
             }
 
             var vm = new ResetPasswordViewModel(_usersService);
-            vm.Initialize(userId, v);
+            vm.Initialize(userId, v, 0);
 
             return vm.UserExists && vm.VerificationValid ?
                 View("ResetPassword", vm) :
@@ -120,7 +165,6 @@ namespace Projector.Controllers
 
         [Route("/projector/resetpassword/{userId}")]
         [HttpPost]
-        //public async Task<IActionResult> ResetPassword(int userId, [FromQuery] string v)
         public async Task<IActionResult> ResetPassword(int userId, [FromForm] PasswordData passwordData)
         {
             if (!ModelState.IsValid)
@@ -133,7 +177,8 @@ namespace Projector.Controllers
                     new ResetPasswordCommand
                     {
                         Password = passwordData,
-                        UserId = userId
+                        UserId = userId,
+                        FromModule = 0  //from ResetPassword
                     });
 
             if (result.IsSuccessful)
@@ -152,7 +197,30 @@ namespace Projector.Controllers
         [HttpGet]
         public IActionResult Verify(int userId, [FromQuery] string v)
         {
-            return View(new { query = v, id = userId });
+            return View(new VerifyUserViewModel
+            {
+                Token = v, UserId = userId
+            });
+        }
+
+        [Route("/projector/verify/{userId}")]
+        [HttpPost]
+        public async Task<IActionResult> Verify(int userId, [FromForm] UserValidationData vData)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(new VerifyUserViewModel(vData, null));
+            }
+
+            CommandResult result = await _commands.ExecuteAsync(
+                new VerifyUserCommand
+                {
+                    ValidationData = vData
+                });
+
+            return result.IsSuccessful ?
+                RedirectToAction("SignIn", "Users") :
+                NotFound();
         }
 
         [Route("/projector/forgotpassword")]
