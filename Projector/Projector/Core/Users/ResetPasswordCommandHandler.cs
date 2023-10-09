@@ -17,6 +17,12 @@ namespace Projector.Core.Users
         }
         public async Task<CommandResult> Execute(ResetPasswordCommand args)
         {
+            //if route is appropriate with account status, i.e., verified or not
+            if(args.FromModule != args.Password.Status)
+            {
+                return CommandResult.Error("INVALID");
+            }
+
             //password matches
             if (args.Password.Password != args.Password.ConfirmPassword)
             {
@@ -30,15 +36,15 @@ namespace Projector.Core.Users
             }
             
             //verification valid?
-            if(!_usersService.VerificationValid(args.UserId, args.Password.Token))
+            if(!_usersService.VerificationTokenValid(args.UserId, args.Password.Token))
             {
                 return CommandResult.Error("INVALID");
             }
 
-            return await changePassword(args);
+            return await ChangePassword(args);
         }
 
-        private async Task<CommandResult> changePassword(ResetPasswordCommand args)
+        private async Task<CommandResult> ChangePassword(ResetPasswordCommand args)
         {
             User user = _db.Users
                 .Where(u => u.Id == args.UserId)

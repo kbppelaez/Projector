@@ -1,5 +1,6 @@
 ﻿using Projector.Core;
 using Projector.Core.Users.DTO;
+using Projector.Data;
 
 namespace Projector.Models
 {
@@ -28,8 +29,12 @@ namespace Projector.Models
         public bool UserExists { get; set; }
         public bool VerificationValid {  get; set; }
 
-        public void Initialize(int userId, string token) {
-            if(!_usersService.UserExists(userId))
+        private const int CREATEPASSWORD = 1;
+
+        public void Initialize(int userId, string token, int from) {
+            User existingUser = _usersService.GetUser(userId);
+
+            if (existingUser == null)
             {
                 UserExists = false;
                 return;
@@ -37,18 +42,23 @@ namespace Projector.Models
             UserExists = true;
             UserId = userId;
 
-            var isNew = ! _usersService.isVerified(userId);
+            var isNew = !existingUser.IsVerified;
+            if(isNew && from != CREATEPASSWORD) {
+                VerificationValid = false;
+                return;
+            }
 
-            if (!_usersService.VerificationValid(userId, token))
+            if (!_usersService.VerificationLinkValid(userId, token))
             {
                 VerificationValid = false;
                 return;
             }
+
             VerificationValid = true;
             NewPassword = new PasswordData
             {
-                Token = token,
-                Status = isNew ? 1 : 0,
+                Token = existingUser.VerificationLink.ActivationToken,
+                Status = from,
             };
         }
     }
