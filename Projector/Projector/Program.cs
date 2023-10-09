@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Projector.Core;
 using Projector.Core.Authentication;
+using Projector.Core.Email;
 using Projector.Core.Persons;
 using Projector.Core.Persons.DTO;
 using Projector.Core.Projects;
@@ -29,6 +30,7 @@ builder.Services.AddScoped<ProjectorDbContext>(sp => new ProjectorDbContext());
 builder.Services.AddScoped<IUsersService, UsersService>();
 builder.Services.AddScoped<IProjectsService, ProjectsService>();
 builder.Services.AddScoped<IPersonsService, PersonsService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IAuthenticationService, HttpContextAuthenticationService>();
 builder.Services.AddScoped<ICommandBus, CommandBus>();
 
