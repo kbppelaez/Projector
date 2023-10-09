@@ -91,17 +91,22 @@ namespace Projector.Controllers
         public async Task<IActionResult> Edit(int projectId)
         {
             var personId = int.Parse(HttpContext.User.FindFirst("PersonId").Value);
-            var vm = new EditProjectViewModel(_projectsService);
-            await vm.Initialize(projectId, personId);
-            
-            return vm.ProjectExists ?
-                View("Edit", vm) :
-                NotFound();
+
+            if (_projectsService.PersonBelongsToProject(personId, projectId))
+            {
+                var vm = new EditProjectViewModel(_projectsService);
+                await vm.Initialize(projectId, personId);
+
+                return vm.ProjectExists ?
+                    View("Edit", vm) :
+                    NotFound();
+            }
+            return NotFound();
         }
 
         [Route("/projector/projects/{projectId:int}/edit")]
         [HttpPost]
-        public async Task<IActionResult> Edit([FromForm] ProjectData project)
+        public async Task<IActionResult> Edit(int projectId, [FromForm] ProjectData project)
         {
             if (!ModelState.IsValid)
             {
@@ -109,7 +114,9 @@ namespace Projector.Controllers
             }
 
             var personId = int.Parse(HttpContext.User.FindFirst("PersonId").Value);
-            CommandResult result = await _commands.ExecuteAsync(
+            if (_projectsService.PersonBelongsToProject(personId, projectId))
+            {
+                CommandResult result = await _commands.ExecuteAsync(
                     new EditProjectCommand
                     {
                         PersonId = personId,
@@ -117,14 +124,17 @@ namespace Projector.Controllers
                     }
                 );
 
-            if(result.IsSuccessful)
-            {
-                return RedirectToAction("ProjectDetails", "Projects", new { projectId = project.Id });
+                if (result.IsSuccessful)
+                {
+                    return RedirectToAction("ProjectDetails", "Projects", new { projectId = project.Id });
+                }
+
+                return result.Errors[0] == "404" ?
+                    NotFound() :
+                    View(new EditProjectViewModel(project, result.Errors));
             }
 
-            return result.Errors[0] == "404" ?
-                NotFound() :
-                View(new EditProjectViewModel(project, result.Errors));
+            return NotFound();
         }
 
         [Route("/projector/projects/{projectId:int}/delete")]
@@ -132,12 +142,16 @@ namespace Projector.Controllers
         public async Task<IActionResult> ConfirmDelete(int projectId)
         {
             var personId = int.Parse(HttpContext.User.FindFirst("PersonId").Value);
-            var vm = new DeleteProjectViewModel(_projectsService);
-            await vm.Initialize(projectId, personId);
+            if (_projectsService.PersonBelongsToProject(personId, projectId))
+            {
+                var vm = new DeleteProjectViewModel(_projectsService);
+                await vm.Initialize(projectId, personId);
 
-            return vm.ProjectExists ?
-                View("Delete", vm):
-                NotFound();
+                return vm.ProjectExists ?
+                    View("Delete", vm) :
+                    NotFound();
+            }
+            return NotFound();
         }
 
         [Route("/projector/projects/{projectId:int}/delete")]
@@ -146,32 +160,42 @@ namespace Projector.Controllers
         {
             var personId = int.Parse(HttpContext.User.FindFirst("PersonId").Value);
 
-            CommandResult result = await _commands.ExecuteAsync(
+            if (_projectsService.PersonBelongsToProject(personId, projectId))
+            {
+                CommandResult result = await _commands.ExecuteAsync(
                     new DeleteProjectCommand
                     {
                         Project = await _projectsService.GetProjectDetails(projectId, personId)
                     }
                 );
 
-            return result.IsSuccessful ?
-                RedirectToAction("Projects", "Projects") :
-                NotFound(result.Errors);
+                return result.IsSuccessful ?
+                    RedirectToAction("Projects", "Projects") :
+                    NotFound(result.Errors);
+            }
+
+            return NotFound();
         }
 
         [Route("/projector/projects/assignments/{projectId:int}")]
         [HttpGet]
         public async Task<IActionResult> ProjectDetails(int projectId)
         {
-            //TODO check if current user's ID is included in assignees
-            var vm = new ProjectDetailsViewModel(_projectsService);
-            await vm.Initialize(projectId);
-
-            if(!vm.ProjectExists)
+            var personId = int.Parse(HttpContext.User.FindFirst("PersonId").Value);
+            if (_projectsService.PersonBelongsToProject(personId, projectId))
             {
-                return NotFound();
+                var vm = new ProjectDetailsViewModel(_projectsService);
+                await vm.Initialize(projectId);
+
+                if (!vm.ProjectExists)
+                {
+                    return NotFound();
+                }
+
+                return View(vm);
             }
 
-            return View(vm);
+            return NotFound();
         }
 
         [Route("/projector/projects/assignments/add")]
