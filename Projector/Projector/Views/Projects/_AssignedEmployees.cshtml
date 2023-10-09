@@ -6,16 +6,18 @@
     @foreach (var member in Model.Assigned)
     {
         <li class="list-group-item">
-            <form>
-                <span id="removeError" class="text-danger"></span>
+            <form id="Remove-@member.Id" class="RemovePersonFromProjectForm" method="post" asp-action="Remove" asp-controller="Projects">
+                <span id="removeError-@member.Id" class="text-danger RemoveError"></span>
                 <div class="row">
                     <div class="col align-self-center" style="width:80%">
                         <label>@member.FullName</label>
-                        <input type="hidden" value="@member.Id" />
                     </div>
                     <div class="col-2" style="width:20%">
                         @Html.AntiForgeryToken()
-                        <input style="width:100%" type="button" value="Remove" class="btn btn-danger" onclick="RemoveEmployee('@Url.Action("Remove", "Projects")', @member.Id)" />
+                        <input type="hidden" id="projectId-@member.Id" class="projectId" value="@Model.Id" />
+                        <button style="width:100%" class="btn btn-danger RemoveButton" type="button" value="@member.Id">
+                            Remove
+                        </button>
                     </div>
                 </div>
             </form>
