@@ -80,7 +80,7 @@ namespace Projector.Controllers
             if(result.IsSuccessful)
             {
                 int newProject = (int) result.Result;
-                return RedirectToAction("Assignments", "Projects", new { projectId = newProject });
+                return RedirectToAction("ProjectDetails", "Projects", new { projectId = newProject });
             }
 
             return View(new CreateProjectViewModel(project, result.Errors));
@@ -119,7 +119,7 @@ namespace Projector.Controllers
 
             if(result.IsSuccessful)
             {
-                return RedirectToAction("Assignments", "Projects", new { projectId = project.Id });
+                return RedirectToAction("ProjectDetails", "Projects", new { projectId = project.Id });
             }
 
             return result.Errors[0] == "404" ?
@@ -160,10 +160,10 @@ namespace Projector.Controllers
 
         [Route("/projector/projects/assignments/{projectId:int}")]
         [HttpGet]
-        public async Task<IActionResult> Assignments(int projectId)
+        public async Task<IActionResult> ProjectDetails(int projectId)
         {
             //TODO check if current user's ID is included in assignees
-            var vm = new ProjectAssignmentsViewModel(_projectsService);
+            var vm = new ProjectDetailsViewModel(_projectsService);
             await vm.Initialize(projectId);
 
             if(!vm.ProjectExists)
@@ -176,61 +176,44 @@ namespace Projector.Controllers
 
         [Route("/projector/projects/assignments/add")]
         [HttpPost]
-        public async Task<JsonResult> Assign([FromBody] AssigneeData change)
+        public async Task<IActionResult> Assign([FromBody] AssigneeData change)
         {
             CommandResult result = await _commands.ExecuteAsync(
                 new AssignPersonCommand(change));
 
             if(!result.IsSuccessful)
             {
-                return Json(new { status = "FAIL", error = result.Errors[0] });
+                return BadRequest(result.Errors[0]);
             }
 
-            var vm = new AssignRemoveViewModel(_projectsService, HttpContext.RequestServices);
+            var vm = new ProjectDetailsViewModel(_projectsService);
             await vm.Initialize(change.ProjectId);
 
-            vm.Unassigned = await vm.Render(PartialView("_UnassignedEmployees", vm.UnassignedPersons), ControllerContext);
-            vm.Assigned = await vm.Render(PartialView("_AssignedEmployees", vm.Details), ControllerContext);
-
-            return Json(new {
-                unassignedView = vm.Unassigned,
-                assignedView = vm.Assigned,
-                status = "SUCCESS"
-            });
+            return PartialView("_Assignments", vm);
         }
 
         [Route("/projector/projects/assignments/remove")]
         [HttpPost]
-        public async Task<JsonResult> Remove([FromBody] AssigneeData change)
+        public async Task<IActionResult> Remove([FromBody] AssigneeData change)
         {
             CommandResult result = await _commands.ExecuteAsync(
                 new RemovePersonCommand(change));
 
             if (!result.IsSuccessful)
             {
-                return Json(new { status = "FAIL", error = result.Errors[0] });
+                return BadRequest(result.Errors[0]);
             }
 
-            var vm = new AssignRemoveViewModel(_projectsService, HttpContext.RequestServices);
+            var currUser = int.Parse(HttpContext.User.FindFirst("PersonId").Value);
+            if(currUser == change.PersonId)
+            {
+                return Content(Url.Action("Projects", "Projects"), "text/html");
+            }
+
+            var vm = new ProjectDetailsViewModel(_projectsService);
             await vm.Initialize(change.ProjectId);
 
-            vm.Unassigned = await vm.Render(PartialView("_UnassignedEmployees", vm.UnassignedPersons), ControllerContext);
-            vm.Assigned = await vm.Render(PartialView("_AssignedEmployees", vm.Details), ControllerContext);
-
-            var currUser = int.Parse(HttpContext.User.FindFirst("PersonId").Value);
-
-            return currUser == change.PersonId?
-                Json(new {
-                    unassignedView = vm.Unassigned,
-                    assignedView = vm.Assigned,
-                    redirectUrl = Url.Action("Projects", "Projects"),
-                    status = "REDIRECT"
-                }) :
-                Json(new {
-                    unassignedView = vm.Unassigned,
-                    assignedView = vm.Assigned,
-                    status = "SUCCESS"
-                });
+            return PartialView("_Assignments", vm);
         }
 
         /*
