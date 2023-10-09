@@ -1,5 +1,6 @@
-﻿using Projector.Core.Persons.DTO;
-using Projector.Core.Users.DTO;
+﻿using Projector.Core.Email;
+using Projector.Core.Persons.DTO;
+using Projector.Core.Users;
 using Projector.Data;
 using System.Web;
 
@@ -8,14 +9,14 @@ namespace Projector.Core.Persons
     public class CreatePersonCommandHandler : ICommandHandler<CreatePersonCommand>
     {
         private readonly ProjectorDbContext _db;
-        private readonly IPersonsService _personsService;
-        private readonly IUsersService _usersService;
+        private readonly IEmailService _emailService;
+        private readonly IAuthenticationService _authService;
 
-        public CreatePersonCommandHandler(ProjectorDbContext context, IPersonsService personsService, IUsersService usersService)
+        public CreatePersonCommandHandler(ProjectorDbContext context, IEmailService emailService, IAuthenticationService authenticationService)
         {
             _db = context;
-            _personsService = personsService;
-            _usersService = usersService;
+            _emailService = emailService;
+            _authService = authenticationService;
         }
         public async Task<CommandResult> Execute(CreatePersonCommand args)
         {
@@ -28,7 +29,7 @@ namespace Projector.Core.Persons
             User newUser = new User
             {
                 UserName = args.NewPerson.UserName,
-                Password = _usersService.HashPassword(args.NewPerson.UserName+DateTime.Now.ToString()),
+                Password = UsersHelper.HashPassword(args.NewPerson.UserName+DateTime.Now.ToString()),
                 IsVerified = false
             };
 
@@ -47,15 +48,37 @@ namespace Projector.Core.Persons
             await _db.SaveChangesAsync();
 
             //GENERATE VERIFICATION LINK
-            newUser.VerificationLink = _usersService.GenerateVerificationLink(newUser.UserName, newUser.Id);
+            newUser.VerificationLink = UsersHelper
+                .GenerateVerificationLink(newUser.UserName, newUser.Id);
 
             _db.Users.Update(newUser);
             await _db.SaveChangesAsync();
 
             //TODO:
             //SEND EMAIL
+            SendEmail(newUser, _authService.GetRoute("CreatePassword", "Users", new {userId = newUser.Id}));
 
             return CommandResult.Success(newPerson);
+        }
+
+        private void SendEmail(User newUser, string route)
+        {
+            EmailContentData emailContentData = new EmailContentData
+            {
+                Recipient = newUser.UserName,
+                Subject = "Account Verification and Password Creation Link"
+            };
+
+            var link = UsersHelper.CreateLink(route, HttpUtility.UrlEncode(newUser.VerificationLink.ActivationLink));
+
+            var content = "<h3>Verify your Account</h3><br/>";
+            content += "<p>To start using your account, please verify your email and create a password by clicking this link: ";
+            content += "<a href='" + link + "'>Create Password</a>.</p>";
+            content += "<p>If you did not request this account verification, kindly disregard this email.</p>";
+
+            emailContentData.Content = content;
+
+            _emailService.SendEmail(emailContentData);
         }
     }
 }
