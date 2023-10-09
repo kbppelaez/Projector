@@ -43,7 +43,7 @@
             <input asp-for="@Model.Project.Id" type="hidden" class="form-control" />
             <input type="submit" value="Yes, Delete" class="btn btn-danger" />
             <a asp-controller="Projects" asp-action="Projects" class="btn btn-secondary">Back to List</a>
-            <a asp-controller="Projects" asp-action="Assignments" asp-route-projectId="@Model.Project.Id" class="btn btn-secondary">Go to Project</a>
+            <a asp-controller="Projects" asp-action="ProjectDetails" asp-route-projectId="@Model.Project.Id" class="btn btn-secondary">Go to Project</a>
         </div>
     </form>
 </div>
