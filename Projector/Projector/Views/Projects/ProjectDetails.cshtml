@@ -1,26 +1,27 @@
-﻿@model ProjectAssignmentsViewModel
+﻿@model ProjectDetailsViewModel
 @{
-    ViewData["Title"] = "Assignments";
+    ViewData["Title"] = "ProjectDetails";
 }
 
 <div class="container">
     <div class="row">
         <div class="col-sm-5">
-            <partial name="_ProjectDetails" model="@Model.Details" />
+            <partial name="_ProjectInformation" model="@Model.Details" />
             <a asp-controller="Projects" asp-action="Edit" asp-route-projectId="@Model.Details.Id" class="btn btn-primary">Edit</a>
             <a asp-controller="Projects" asp-action="Delete" asp-route-projectId="@Model.Details.Id" class="btn btn-danger">Delete</a>
             <br />
             <br />
             <a asp-controller="Projects" asp-action="Projects" class="btn btn-secondary">Back to List</a>
         </div>
-        <div class="col-sm-7">
-            <div class="row" id="Unassigned">
-                <partial name="_UnassignedEmployees" model="@Model.People" />
-            </div>
-            <hr />
-            <div class="row" id="Assigned">
-                <partial name="_AssignedEmployees" model="@Model.Details" />
-            </div>
+        <div id="Assignments" class="col-sm-7">
+            <partial name="_Assignments" model="@Model" />
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/js/ProjectDetailsView.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        window.projectDetailsView.initialize();
+    </script>
+}

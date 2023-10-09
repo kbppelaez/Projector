@@ -4,15 +4,21 @@ using Projector.Core.Projects.DTO;
 
 namespace Projector.Models
 {
-    public class ProjectAssignmentsViewModel
+    public class ProjectDetailsViewModel
     {
         private readonly IProjectsService _projectsService;
 
         /* CONSTRUCTORS */
-        public ProjectAssignmentsViewModel() { }
+        public ProjectDetailsViewModel() { }
 
-        public ProjectAssignmentsViewModel(IProjectsService projectsService) {
+        public ProjectDetailsViewModel(IProjectsService projectsService) {
             _projectsService = projectsService;
+        }
+
+        public ProjectDetailsViewModel(PersonData[] assigned, UnassignedPersonsData unassigned)
+        {
+            Details = new ProjectDetailsData { Assigned = assigned };
+            People = unassigned;
         }
 
         /* PROPERTIES */

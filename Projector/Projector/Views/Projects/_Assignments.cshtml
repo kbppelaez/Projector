@@ -1,0 +1,11 @@
+﻿@model ProjectDetailsViewModel
+
+<div class="col">
+    <div class="row" id="Unassigned">
+        <partial name="_UnassignedEmployees" model="@Model.People" />
+    </div>
+    <hr />
+    <div class="row" id="Assigned">
+        <partial name="_AssignedEmployees" model="@Model.Details" />
+    </div>
+</div>
