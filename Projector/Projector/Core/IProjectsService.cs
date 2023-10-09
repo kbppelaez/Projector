@@ -12,5 +12,6 @@ namespace Projector.Core
         Task<PersonData[]> GetUnassigned(int projectId);
         Task<string> AssignPersonToProject(int personId, int projectId);
         Task<string> RemovePersonFromProject(int personId, int projectId);
+        bool PersonBelongsToProject(int personId, int projectId);
     }
 }

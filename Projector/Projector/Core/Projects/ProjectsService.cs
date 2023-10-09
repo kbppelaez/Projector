@@ -110,6 +110,8 @@ namespace Projector.Core.Projects
                         .Any(proj => proj.Id == projectId)
                 );
 
+            personsQuery = personsQuery.OrderBy(p => p.LastName);
+
             return await personsQuery
                 .Select(p => new PersonData
                 {
@@ -129,6 +131,8 @@ namespace Projector.Core.Projects
                     p => p.Projects
                         .All(proj => proj.Id != projectId)
                 );
+
+            personsQuery = personsQuery.OrderBy(p => p.LastName);
 
             return await personsQuery
                 .Select(p => new PersonData
@@ -216,6 +220,15 @@ namespace Projector.Core.Projects
             await _db.SaveChangesAsync();
 
             return "OK";
+        }
+
+        public bool PersonBelongsToProject(int personId, int projectId)
+        {
+            return _db.Projects
+                .Where(proj => proj.Id == projectId)
+                .Where(proj => proj.Assignees
+                    .Any(person => person.Id == personId)
+                ).Any();
         }
 
     }
