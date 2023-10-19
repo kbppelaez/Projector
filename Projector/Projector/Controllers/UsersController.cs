@@ -81,7 +81,8 @@ namespace Projector.Controllers
             CommandResult result = await _commands.ExecuteAsync(
                 new RegisterCommand
                 {
-                    Details = newUser
+                    Details = newUser,
+                    RegisterUserBaseUrl = this.GetRouteAbsoluteUrl("Verify", "Users")
                 });
 
             if(result.IsSuccessful)
@@ -242,7 +243,9 @@ namespace Projector.Controllers
             }
 
             await _commands.ExecuteAsync(new ForgotPasswordCommand {
-                EmailAddress = emailAdd});
+                EmailAddress = emailAdd,
+                ForgotPasswordBaseUrl = this.GetRouteAbsoluteUrl("ResetPassword", "Users")            
+            });
 
             return View("EmailSent", new { emailAddress = emailAdd });
         } 

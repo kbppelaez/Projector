@@ -49,7 +49,8 @@ namespace Projector.Controllers
             CommandResult result = await _commands.ExecuteAsync(
                 new CreatePersonCommand
                 {
-                    NewPerson = newPerson
+                    NewPerson = newPerson,
+                    CreateNewPasswordBaseUrl = this.GetRouteAbsoluteUrl("Create", "Users")
                 });
 
             return result.IsSuccessful ?
