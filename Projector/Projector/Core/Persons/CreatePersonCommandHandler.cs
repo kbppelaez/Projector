@@ -56,12 +56,12 @@ namespace Projector.Core.Persons
 
             //TODO:
             //SEND EMAIL
-            SendEmail(newUser, _authService.GetRoute("CreatePassword", "Users", new {userId = newUser.Id}));
+            SendEmail(newUser, args.CreateNewPasswordBaseUrl, newUser.Id);
 
             return CommandResult.Success(newPerson);
         }
 
-        private void SendEmail(User newUser, string route)
+        private void SendEmail(User newUser, string route, int userId)
         {
             EmailContentData emailContentData = new EmailContentData
             {
@@ -69,7 +69,7 @@ namespace Projector.Core.Persons
                 Subject = "Account Verification and Password Creation Link"
             };
 
-            var link = UsersHelper.CreateLink(route, HttpUtility.UrlEncode(newUser.VerificationLink.ActivationLink));
+            var link = UsersHelper.CreateLink(route + "/" + userId, HttpUtility.UrlEncode(newUser.VerificationLink.ActivationLink));
 
             var content = "<h3>Verify your Account</h3><br/>";
             content += "<p>To start using your account, please verify your email and create a password by clicking this link: ";
