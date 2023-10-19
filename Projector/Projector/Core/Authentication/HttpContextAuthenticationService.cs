@@ -1,4 +1,9 @@
-﻿namespace Projector.Core.Authentication
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Projector.Core.Persons.DTO;
+using System.Security.Claims;
+
+namespace Projector.Core.Authentication
 {
     public class HttpContextAuthenticationService : IAuthenticationService
     {
@@ -11,24 +16,33 @@
             _linkGenerator = generator;
         }
 
-        /*public void SignIn(UserData user)
+        public async Task SignIn(PersonData user)
         {
-            throw new NotImplementedException();
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, user.FullName),
+                new Claim("PersonId", user.Id.ToString())
+            };
+
+            var claimsIdentity = new ClaimsIdentity(claims,
+                CookieAuthenticationDefaults.AuthenticationScheme);
+
+            var authProperties = new AuthenticationProperties
+            {
+                AllowRefresh = true,
+            };
+
+            await _httpContextAccessor.HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(claimsIdentity),
+                authProperties
+                );
         }
 
-        public void SignOut()
+        public async Task SignOut()
         {
-            throw new NotImplementedException();
-        }*/
-
-        public string GetRoute(string actionName, string controllerName, object routeValues)
-        {
-            var path = _linkGenerator.GetPathByAction(actionName, controllerName, routeValues);
-
-            var scheme = _httpContextAccessor.HttpContext.Request.Scheme;
-            var host = _httpContextAccessor.HttpContext.Request.Host;
-
-            return scheme + "://" + host + path;
+            await _httpContextAccessor.HttpContext.SignOutAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme);
         }
     }
 }
