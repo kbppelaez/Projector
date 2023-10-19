@@ -3,5 +3,6 @@
     public class ForgotPasswordCommand
     {
         public string EmailAddress { get; set; }
+        public string ForgotPasswordBaseUrl { get; set; }
     }
 }
