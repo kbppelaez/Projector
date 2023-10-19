@@ -58,7 +58,7 @@ namespace Projector.Core.Users
 
                     //TODO:
                     //SEND LINK VIA EMAIL
-                    SendEmail(userData, _authService.GetRoute("Verify", "Users", new { userId = userData.Id }));
+                    SendEmail(userData, newUser.RegisterUserBaseUrl, userData.Id);
 
                     return CommandResult.Success(person);
                 }
@@ -67,7 +67,7 @@ namespace Projector.Core.Users
             return CommandResult.Error("Invalid email/password given.");
         }
 
-        private void SendEmail(User newUser, string route)
+        private void SendEmail(User newUser, string route, int userId)
         {
             EmailContentData emailContentData = new EmailContentData
             {
@@ -75,7 +75,7 @@ namespace Projector.Core.Users
                 Subject = "Account Verification Link"
             };
 
-            var link = UsersHelper.CreateLink(route, HttpUtility.UrlEncode(newUser.VerificationLink.ActivationLink));
+            var link = UsersHelper.CreateLink(route + "/" + userId, HttpUtility.UrlEncode(newUser.VerificationLink.ActivationLink));
 
             var content = "<h3>Verify your Account</h3><br />";
             content += "<p>To start using your account, please verify your email by clicking this link: ";
@@ -102,7 +102,7 @@ namespace Projector.Core.Users
             return new User
             {
                 UserName = userData.UserName,
-                Password = _usersService.HashPassword(userData.Password),
+                Password = UsersHelper.HashPassword(userData.Password),
             };
         }
 
