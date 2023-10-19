@@ -50,7 +50,7 @@ namespace Projector.Core.Users
                 .Where(u => u.Id == args.UserId)
                 .FirstOrDefault();
 
-            user.Password = _usersService.HashPassword(args.Password.Password);
+            user.Password = UsersHelper.HashPassword(args.Password.Password);
 
             if (isNewAccount(args.Password.Status))
             {

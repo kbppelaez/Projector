@@ -26,7 +26,7 @@ namespace Projector.Core.Users
                     return CommandResult.Error("Invalid credentials given.");
                 }
 
-                bool passwordMatched = _usersService.VerifyPassword(existingUser.Password, user.Details.Password);
+                bool passwordMatched = UsersHelper.VerifyPassword(existingUser.Password, user.Details.Password);
 
                 if (passwordMatched)
                 {
