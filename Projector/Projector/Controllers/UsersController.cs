@@ -13,13 +13,15 @@ namespace Projector.Controllers
         private readonly ICommandBus _commands;
         private readonly IUsersService _usersService;
         private readonly ILogger<UsersController> _logger;
+        private readonly IAuthenticationService _authService;
 
-        
+
         /* CONSTRUCTORS */
-        public UsersController(ICommandBus commands, IUsersService service, ILogger<UsersController> logger) {
+        public UsersController(ICommandBus commands, IUsersService service, ILogger<UsersController> logger, IAuthenticationService authenticationService) {
             _commands = commands;
             _usersService = service;
             _logger = logger;
+            _authService = authenticationService;
         }
 
         /* METHODS */
@@ -51,7 +53,7 @@ namespace Projector.Controllers
                 Person userPerson = (Person)result.Result;
                 user.Password = string.Empty;
 
-                await _usersService.PersistLogin(new PersonData(userPerson));
+                await _authService.SignIn(new PersonData(userPerson));
 
                 return returnUrl == null ?
                     RedirectToAction("Projects", "Projects") :
@@ -96,7 +98,7 @@ namespace Projector.Controllers
         [HttpGet]
         public async Task<IActionResult> LogOut()
         {
-            await _usersService.RemoveLogin();
+            await _authService.SignOut();
             return RedirectToAction("SignIn", "Users");
         }
 
