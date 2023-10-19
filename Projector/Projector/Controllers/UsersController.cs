@@ -78,11 +78,13 @@ namespace Projector.Controllers
                 return View("Register", new RegisterViewModel(newUser, null));
             }
 
+            var link = this.GetRouteAbsoluteUrl("Verify", "Users", new { userId = 0 });
+
             CommandResult result = await _commands.ExecuteAsync(
                 new RegisterCommand
                 {
                     Details = newUser,
-                    RegisterUserBaseUrl = this.GetRouteAbsoluteUrl("Verify", "Users")
+                    RegisterUserBaseUrl = link.Substring(0, link.Length - 1)
                 });
 
             if(result.IsSuccessful)
@@ -242,9 +244,11 @@ namespace Projector.Controllers
                 return View();
             }
 
+            var link = this.GetRouteAbsoluteUrl("ResetPassword", "Users", new { userId = 0 });
+
             await _commands.ExecuteAsync(new ForgotPasswordCommand {
                 EmailAddress = emailAdd,
-                ForgotPasswordBaseUrl = this.GetRouteAbsoluteUrl("ResetPassword", "Users")            
+                ForgotPasswordBaseUrl = link.Substring(0, link.Length - 2)
             });
 
             return View("EmailSent", new { emailAddress = emailAdd });
