@@ -10,7 +10,8 @@ namespace Projector.Controllers
         {
             var url = new StringBuilder();
             url.Append(controllerBase.Request.Scheme + "://");
-            url.Append(controllerBase.Request.Host.Host);
+            url.Append(controllerBase.Request.Host.Host + ":");
+            url.Append(controllerBase.Request.Host.Port);
             url.Append(controllerBase.Url.Action(action, controller, routeValues));
 
             return url.ToString();
