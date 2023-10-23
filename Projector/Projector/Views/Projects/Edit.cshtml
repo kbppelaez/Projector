@@ -2,30 +2,29 @@
 
 @{
     ViewData["Title"] = "Edit Project";
+    Layout = "_Authenticated";
 }
 
-@if (Model.Errors.Any())
-{
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>Errors occured.</strong>
-        <ul>
-            @foreach(var error in Model.Errors)
-            {
-                <li>@error</li>
-            }
-        </ul>
-        <button type="button" class="btn-close" data-bs-dismissible="alert" aria-label="Close"></button>
-    </div>
-}
+<div class="flex flex-col w-full">
+    @if (Model.Errors.Any())
+    {
+        <div class="rounded p-4 bg-red-200 flex-grow w-full" role="alert">
+            <strong class="text-xl">Errors occured.</strong>
+            <ul>
+                @foreach (var error in Model.Errors)
+                {
+                    <li class="text-lg">@error</li>
+                }
+            </ul>
+        </div>
+    }
 
-<div class="row">
-    <div class="col-md-4">
+    <div class="flex-grow w-full">
         <form method="POST" asp-controller="Projects" asp-action="Edit">
-            <partial name="_CreateProjectInput" model="@Model.Project" />
+                <partial name="_CreateProjectInput" model="@Model.Project" />
             <div class="form-group">
-                <input type="submit" value="Edit" class="btn btn-primary" />
-                <a asp-controller="Projects" asp-action="Projects" class="btn btn-secondary">Back to List</a>
-                <a asp-controller="Projects" asp-action="ProjectDetails" asp-route-projectId="@Model.Project.Id" class="btn btn-secondary">Go to Project</a>
+                <input type="submit" value="Edit" class="btn btn-secondary" />
+                <a asp-controller="Projects" asp-action="ProjectDetails" asp-route-projectId="@Model.Project.Id" class="btn btn-neutral">Cancel</a>
             </div>
         </form>
     </div>

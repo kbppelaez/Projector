@@ -2,29 +2,28 @@
 
 @{
     ViewData["Title"] = "Create New Person";
+    Layout = "_Authenticated";
 }
 
-@if (Model.Errors.Any())
-{
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>Errors occured.</strong>
-        <ul>
-            @foreach (var error in Model.Errors)
-            {
-                <li>@error</li>
-            }
-        </ul>
-        <button type="button" class="btn-close" data-bs-dismissible="alert" aria-label="Close"></button>
-    </div>
-}
+<div class="flex flex-col w-full">
+    @if (Model.Errors.Any())
+    {
+        <div class="rounded p-4 bg-red-200 flex-grow w-full" role="alert">
+            <strong class="text-xl">Errors occured.</strong>
+            <ul>
+                @foreach (var error in Model.Errors)
+                {
+                    <li class="text-lg">@error</li>
+                }
+            </ul>
+        </div>
+    }
 
-<div class="row">
-    <div class="col-md-4">
+    <div class="flex-grow w-full">
         <form method="POST" asp-controller="Persons" asp-action="Create">
             <partial name="_CreatePersonInput" model="@Model.NewPerson" />
-            <br />
             <div class="form-group">
-                <input type="submit" value="Create Account" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-secondary" />
             </div>
         </form>
     </div>

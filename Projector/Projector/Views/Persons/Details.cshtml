@@ -2,52 +2,60 @@
 
 @{
     ViewData["Title"] = "Details - " + Model.Details.FullName;
+    Layout = "_Authenticated";
 }
 
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h2>@Model.Details.FullName</h2>
-            <dl>
-                <dt>First Name</dt>
-                <dd>@Model.Details.FirstName</dd>
-                <dt>Last Name</dt>
-                <dd>@Model.Details.LastName</dd>
-                <dt>Email Address</dt>
-                <dd>
-                    @Model.Details.User.UserName
-                    @if (Model.Details.User.IsVerified)
-                    {
-                        <span class="badge alert-success">Verified</span>
-                    }
-                    else
-                    {
-                        <span class="badge alert-danger">Not Verified</span>
-                    }
-                </dd>
-            </dl>
-            @if (Model.Details.Id != Model.UserPersonId)
-            {
-                <a asp-controller="Persons" asp-action="Edit" asp-route-personId="@Model.Details.Id" class="btn btn-primary">Edit</a>
-                <a asp-controller="Persons" asp-action="ConfirmDelete" asp-route-personId="@Model.Details.Id" class="btn btn-danger">Delete</a>
-                <br />
-                <br />
-            }
-            <a asp-controller="Persons" asp-action="Persons" class="btn btn-secondary">Back to List</a>
+<div class="flex flex-col w-full h-full space-y-4">
+    <div class="grid grid-cols-3 gap-10">
+        <div class="col-span-1">
+            <div class="card card-compact bg-base-100 shadow h-full ">
+                <div class="card-body">
+                    <h2 class="card-title">@Model.Details.FullName</h2>
+                    <dl>
+                        <dt class="text-lg font-semibold">First Name</dt>
+                        <dd class="text-lg">@Model.Details.FirstName</dd>
+                        <dt class="text-lg font-semibold">Last Name</dt>
+                        <dd class="text-lg">@Model.Details.LastName</dd>
+                        <dt class="text-lg font-semibold">Email Address</dt>
+                        <dd class="text-lg">
+                            @Model.Details.User.UserName
+                            @if (Model.Details.User.IsVerified)
+                            {
+                                <span class="badge badge-primary gap-2">Verified</span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-error gap-2">Not Verified</span>
+                            }
+                        </dd>
+                    </dl>
+                    <div class="card-actions justify-start">
+                        @if (Model.Details.Id != Model.UserPersonId)
+                        {
+                            <a asp-controller="Persons" asp-action="Edit" asp-route-personId="@Model.Details.Id" class="btn btn-info">Edit</a>
+                            <a asp-controller="Persons" asp-action="ConfirmDelete" asp-route-personId="@Model.Details.Id" class="btn btn-accent">Delete</a>
+                            <br />
+                            <br />
+                        }
+                        <a asp-controller="Persons" asp-action="Persons" class="btn btn-neutral">Back to List</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col">
-            <h4>Current Projects</h4>
-            @if(Model.Details.Projects == null || Model.Details.Projects.Length == 0)
+        <div class="col-span-2">
+            <h2 class="text-2xl">Current Projects</h2>
+            <hr />
+            @if (Model.Details.Projects == null || Model.Details.Projects.Length == 0)
             {
-                <h6>Not Assigned to Any Projects</h6>
+                <h6 class="text-xl">Not Assigned to Any Projects</h6>
             }
             else
             {
                 <ul class="list-group">
                     @foreach (var proj in Model.Details.Projects)
                     {
-                        <li class="list-group-item">
-                            [@proj.Code] @proj.Name
+                        <li class="text-xl">
+                            <b>[@proj.Code]</b> @proj.Name
                         </li>
                     }
                 </ul>

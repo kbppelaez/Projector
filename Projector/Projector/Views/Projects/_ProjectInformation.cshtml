@@ -8,14 +8,14 @@
 
 <h2 class="card-title">@Model.Name</h2>
 <dl>
-    <dt class="font-semibold">Code</dt>
-    <dd>@Model.Code</dd>
+    <dt class="text-lg font-semibold">Code</dt>
+    <dd class="text-lg">@Model.Code</dd>
 
-    <dt class="font-semibold">Budget</dt>
-    <dd>@Model.Budget.ToString("C2", CultureInfo.CurrentCulture)</dd>
+    <dt class="text-lg font-semibold">Budget</dt>
+    <dd class="text-lg">@Model.Budget.ToString("C2", CultureInfo.CurrentCulture)</dd>
 
-    <dt class="font-semibold">Remarks</dt>
-    <dd>
+    <dt class="text-lg font-semibold">Remarks</dt>
+    <dd class="text-lg">
         @if (string.IsNullOrEmpty(@Model.Remarks))
         {
             @EmptyRemarks
