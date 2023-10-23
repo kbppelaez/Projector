@@ -21,6 +21,12 @@
     <Folder Include="Migrations\" />
   </ItemGroup>
 
+	<ItemGroup>
+		<UpToDateCheckBuilt Include="wwwroot/css/styles.css" Original="Frontend/site.css" Set="Css" />
+		<UpToDateCheckBuilt Include="postcss.config.js" Set="Css" />
+		<UpToDateCheckBuilt Include="Frontend/tailwind.config.js" Set="Css" />
+	</ItemGroup>
+
 
 	<Target Name="CheckForNPM" BeforeTargets="NpmInstall">
 		<Exec Command="npm -v" ContinueOnError="true">
@@ -32,6 +38,10 @@
 	<Target Name="NpmInstall" BeforeTargets="BuildCSS" Inputs="package.json" Outputs="$(NpmLastInstall)">
 		<Exec Command="npm install" />
 		<Touch Files="$(NpmLastInstall)" AlwaysCreate="true" />
+	</Target>
+
+	<Target Name="ModifiedTailwind" BeforeTargets="Build">
+		<Exec Command="npm run build"/>
 	</Target>
 
 	<Target Name="BuildCSS" BeforeTargets="Build">
