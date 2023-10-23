@@ -3,5 +3,5 @@
 @import "tailwindcss/utilities";
 
 .card-title{
-    @apply font-bold text-red-700;
+    @apply font-bold text-blue-700;
 }
