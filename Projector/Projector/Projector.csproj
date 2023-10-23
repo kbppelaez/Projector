@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
 	<ImplicitUsings>enable</ImplicitUsings>
+
+	  <NpmLastInstall>node_modules/.last-install</NpmLastInstall>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,5 +20,23 @@
   <ItemGroup>
     <Folder Include="Migrations\" />
   </ItemGroup>
+
+
+	<Target Name="CheckForNPM" BeforeTargets="NpmInstall">
+		<Exec Command="npm -v" ContinueOnError="true">
+			<Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+		</Exec>
+		<Error Condition="'$(ErrorCode)' != '0'" Text="You must install NPM to build this project." />
+	</Target>
+
+	<Target Name="NpmInstall" BeforeTargets="BuildCSS" Inputs="package.json" Outputs="$(NpmLastInstall)">
+		<Exec Command="npm install" />
+		<Touch Files="$(NpmLastInstall)" AlwaysCreate="true" />
+	</Target>
+
+	<Target Name="BuildCSS" BeforeTargets="Build">
+		<Exec Command="npm run build" Condition="'$(Configuration)' == 'Debug'" />
+		<Exec Command="npm run release" Condition="'$(Configuration)' == 'Release'" />
+	</Target>
 
 </Project>
