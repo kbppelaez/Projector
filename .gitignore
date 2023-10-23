@@ -409,3 +409,6 @@ FodyWeavers.xsd
 **/wwwroot/css/*
 **/wwwroot/js/*
 **/wwwroot/lib/*
+
+# ignore package lock of package.json
+**/package-lock.json
