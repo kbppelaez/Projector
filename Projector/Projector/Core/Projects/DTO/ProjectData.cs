@@ -22,6 +22,7 @@ namespace Projector.Core.Projects.DTO
 
         [Required]
         [DataType(DataType.Currency)]
+        [Display(Name="Budget")]
         [Column(TypeName = "decimal(18,4)")]
         public string BudgetString { get; set; }
         public string Remarks { get; set; }
