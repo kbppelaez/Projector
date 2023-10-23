@@ -46,7 +46,7 @@ namespace Projector.Controllers
                 return View("Create", new CreatePersonViewModel(newPerson, null));
             }
 
-            var link = this.GetRouteAbsoluteUrl("Create", "Users", new { userId = 0 });
+            var link = this.GetRouteAbsoluteUrl("CreatePassword", "Users", new { userId = 0 });
 
             CommandResult result = await _commands.ExecuteAsync(
                 new CreatePersonCommand
