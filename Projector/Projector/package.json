@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-css": "postcss ./Frontend/site.css -c ./Frontend/tailwind.config.js -o ./wwwroot/css/styles.css"
+    "build": "postcss ./Frontend/site.css -c ./Frontend/tailwind.config.js -o ./wwwroot/css/styles.css",
+    "watch": "postcss ./Frontend/site.css -c ./Frontend/tailwind.config.js -o ./wwwroot/css/styles.css --watch",
+    "release": "postcss ./Frontend/site.css -c ./Frontend/tailwind.config.js -o ./wwwroot/css/styles.css --minify"
   },
   "keywords": [],
   "author": "",
