@@ -19,6 +19,7 @@ namespace Projector.Core.Users.DTO
 
         [Required]
         [DataType(DataType.Password)]
+        [Display(Name = "Confirm Password")]
         [StringLength(11, MinimumLength = 7, ErrorMessage = "Password should be 7-11 characters only.")]
         [RegularExpression(@"^[!-~]{7,11}$", ErrorMessage = "Please input alphanumeric or special characters only.")]
         public string ConfirmPassword { get; set; }
