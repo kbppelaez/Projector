@@ -3,13 +3,11 @@
 
     @if (Model.Unassigned.Length == 0)
     {
-        <div class="input-group">
-            <select class="custom-select" id="addPerson" disabled style="width:50%">
+        <div class="join flex flex-grow w-full">
+            <select class="select w-full join-item" id="addPerson" disabled>
                 <option selected> No employee available </option>
             </select>
-            <div class="input-group-append" style="width:50%">
-                <button style="width:100%" class="btn btn-outline-secondary disabled" type="button">Add Employee to Project</button>
-            </div>
+            <button class="btn join-item disabled" disabled type="button">Assign to Project</button>
         </div>
     }
     else
@@ -17,18 +15,16 @@
         <form id="addPersonToProjectForm" action="@Url.Action("Assign", "Projects")" method="post">
             @Html.AntiForgeryToken()
             <input type="hidden" id="projectId" name="projectId" value="@Model.UnassignedProjectId" />
-            <div class="input-group">
-                <select class="custom-select" id="addPerson" style="width:50%">
+            <div class="join flex flex-grow w-full">
+                <select class="select w-full join-item" id="addPerson">
                     <option selected value="0">Choose Employee...</option>
                     @foreach (var employee in Model.Unassigned)
                     {
                         <option value="@employee.Id">@employee.FullName</option>
                     }
                 </select>
-                <div class="input-group-append" style="width:50%">
-                <button style="width:100%" class="btn btn-primary" id="addPersonToProjectButton" type="button">Add Employee to Project</button>
-                </div>
+                <button class="btn btn-primary join-item" id="addPersonToProjectButton" type="button">Assign to Project</button>
             </div>
-            <span id="selectError" class="text-danger"></span>
+            <span id="selectError" class="text-red-300"></span>
         </form>
     }

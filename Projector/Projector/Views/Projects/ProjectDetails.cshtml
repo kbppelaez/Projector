@@ -1,19 +1,24 @@
 ﻿@model ProjectDetailsViewModel
 @{
     ViewData["Title"] = "ProjectDetails";
+    Layout = "_Authenticated";
 }
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm-5">
-            <partial name="_ProjectInformation" model="@Model.Details" />
-            <a asp-controller="Projects" asp-action="Edit" asp-route-projectId="@Model.Details.Id" class="btn btn-primary">Edit</a>
-            <a asp-controller="Projects" asp-action="Delete" asp-route-projectId="@Model.Details.Id" class="btn btn-danger">Delete</a>
-            <br />
-            <br />
-            <a asp-controller="Projects" asp-action="Projects" class="btn btn-secondary">Back to List</a>
+<div class="flex flex-col w-full h-full space-y-4">
+    <div class="grid grid-cols-3 gap-10">
+        <div class="col-span-1">
+            <div class="card card-compact bg-base-100 shadow h-full ">
+                <div class="card-body">
+                    <partial name="_ProjectInformation" model="@Model.Details" />
+                    <div class="card-actions justify-start">
+                        <a asp-controller="Projects" asp-action="Edit" asp-route-projectId="@Model.Details.Id" class="btn btn-info">Edit</a>
+                        <a asp-controller="Projects" asp-action="Delete" asp-route-projectId="@Model.Details.Id" class="btn btn-accent">Delete</a>
+                        <a asp-controller="Projects" asp-action="Projects" class="btn btn-neutral">Back to List</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div id="Assignments" class="col-sm-7">
+        <div id="Assignments" class="col-span-2">
             <partial name="_Assignments" model="@Model" />
         </div>
     </div>

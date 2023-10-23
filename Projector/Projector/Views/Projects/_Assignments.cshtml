@@ -1,11 +1,11 @@
 ﻿@model ProjectDetailsViewModel
 
-<div class="col">
-    <div class="row" id="Unassigned">
+<div class="flex flex-col w-full space-y-4">
+    <div class="flex-grow w-full" id="Unassigned">
         <partial name="_UnassignedEmployees" model="@Model.People" />
     </div>
     <hr />
-    <div class="row" id="Assigned">
+    <div class="flex-col flex-grow" id="Assigned">
         <partial name="_AssignedEmployees" model="@Model.Details" />
     </div>
 </div>

@@ -1,26 +1,28 @@
 ﻿@using Projector.Core.Projects.DTO
 @model ProjectDetailsData
 
-<h6><strong>Assigned Employees</strong></h6>
-<ul class="list-group">
-    @foreach (var member in Model.Assigned)
-    {
-        <li class="list-group-item">
+<h2 class="text-1xl font-semibold space-y-4">Assigned Employees</h2>
+<div class="flex-grow w-full">
+    <div class="flex flex-col w-full space-y-2">
+        @foreach(var member in Model.Assigned)
+        {
             <form id="Remove-@member.Id" class="RemovePersonFromProjectForm" method="post" asp-action="Remove" asp-controller="Projects">
-                <span id="removeError-@member.Id" class="text-danger RemoveError"></span>
-                <div class="row">
-                    <div class="col align-self-center" style="width:80%">
-                        <label>@member.FullName</label>
-                    </div>
-                    <div class="col-2" style="width:20%">
-                        @Html.AntiForgeryToken()
-                        <input type="hidden" id="projectId-@member.Id" class="projectId" value="@Model.Id" />
-                        <button style="width:100%" class="btn btn-danger RemoveButton" type="button" value="@member.Id">
-                            Remove
-                        </button>
+                <div class="rounded-md p-2 bg-base-100 shadow">
+                    <div class="grid grid-cols-2">
+                        <div class="col-span-1 flex-grow w-full self-center">
+                            <h2 class="card-title self-center">@member.FullName</h2>
+                        </div>
+                        <div class="col-span-1 justify-self-end">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" id="projectId-@member.Id" class="projectId" value="@Model.Id" />
+                            <button class="btn btn-accent RemoveButton" type="button" value="@member.Id">
+                                Remove
+                            </button>
+                        </div>
+                        <span id="removeError-@member.Id" class="text-red-400 RemoveError"></span>
                     </div>
                 </div>
             </form>
-        </li>
-    }
-</ul>
+        }
+    </div>
+</div>
