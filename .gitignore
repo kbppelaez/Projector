@@ -403,3 +403,9 @@ FodyWeavers.xsd
 # ignore any files in /bin and /ojb Folders
 ***/bin/*
 ***/obj/*
+
+# ignore wwwroot
+**/wwwroot/*
+**/wwwroot/css/*
+**/wwwroot/js/*
+**/wwwroot/lib/*
