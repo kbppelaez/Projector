@@ -23,7 +23,7 @@ module.exports = {
     ],
     daisyui: {
         themes: [
-            "emerald"
+            "corporate"
         ]
     }
 }
