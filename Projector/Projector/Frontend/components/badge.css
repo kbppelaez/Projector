@@ -1,0 +1,7 @@
+﻿.Verified {
+    @apply badge badge-primary gap-2;
+}
+
+.NotVerified {
+    @apply badge badge-error gap-2;
+}

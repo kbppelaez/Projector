@@ -1,0 +1,11 @@
+﻿.AuthenticationCardTitle {
+	@apply card-title justify-center text-3xl;
+}
+
+.CardDetails {
+	@apply bg-base-100 shadow h-full;
+}
+
+.CardPrompt-Danger {
+	@apply flex-grow bg-red-100 shadow w-full;
+}

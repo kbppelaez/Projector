@@ -1,0 +1,7 @@
+﻿.CardHeader, .DetailsHeader {
+    @apply text-xl font-semibold;
+}
+
+.SubHeader {
+    @apply text-base font-medium;
+}

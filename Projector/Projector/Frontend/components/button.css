@@ -1,0 +1,19 @@
+﻿input.Primary, button.Primary, a.Primary {
+    @apply btn btn-primary w-full;
+}
+
+input.Secondary, button.Secondary, a.Secondary {
+    @apply btn btn-secondary w-full text-white;
+}
+
+input.Neutral, button.Neutral, a.Neutral {
+    @apply btn btn-neutral w-full;
+}
+
+input.Danger, button.Danger, a.Danger {
+    @apply btn bg-red-400 w-full text-white hover:bg-red-600;
+}
+
+.FormButton{
+    @apply max-w-fit;
+}

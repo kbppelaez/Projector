@@ -1,0 +1,39 @@
+﻿.EmptyList{
+    @apply text-4xl font-bold;
+}
+
+/* CSS for collapsible list */
+div.ListEntry {
+    @apply collapse collapse-arrow bg-base-100 shadow-md flex-grow w-full;
+}
+
+div.ListTitle {
+    @apply collapse-title text-xl font-medium flex-grow w-full;
+}
+
+/* CSS for Description List <dl><dt> */
+dl{
+    @apply text-lg;
+}
+
+dt{
+    @apply text-sm font-semibold;
+}
+
+dd{
+    word-wrap: break-word;
+}
+
+/* CSS for List of Assigned Employees */
+
+.EmployeeEntry {
+    @apply rounded-md p-2 bg-base-100 shadow;
+}
+
+.EmployeeName {
+    @apply col-span-1 flex-grow w-full self-center text-lg;
+}
+
+.EmployeeAction {
+    @apply col-span-1 justify-self-end;
+}
