@@ -2,6 +2,11 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-.card-title{
-    @apply font-bold text-blue-700;
-}
+@import "./components/badge.css";
+@import "./components/button.css";
+@import "./components/card.css";
+@import "./components/error.css";
+@import "./components/heading.css";
+@import "./components/inputgroup.css";
+@import "./components/link.css";
+@import "./components/list.css";
