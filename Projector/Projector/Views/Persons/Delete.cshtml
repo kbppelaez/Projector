@@ -7,25 +7,25 @@
 
 
 <div class="flex flex-col w-full h-full space-y-4">
-    <div class="card card-compact flex-grow bg-red-100 shadow w-full ">
-        <div class="card-body bg-red-100">
-            <h2 class="card-title">Are you sure you want to remove this person?</h2>
+    <div class="card card-compact CardPrompt-Danger">
+        <div class="card-body">
+            <h2 class="CardHeader">Are you sure you want to remove this person?</h2>
             <p>This person will be removed from all project they are currently assigned to.</p>
         </div>
     </div>
     <div>
-        <h2 class="card-title">@Model.Person.FullName</h2>
+        <h2 class="DetailsHeader">@Model.Person.FullName</h2>
         <dl>
-            <dt class="text-lg font-semibold">Email Address</dt>
-            <dd class="text-lg">@Model.Person.User.UserName</dd>
+            <dt>Email Address</dt>
+            <dd>@Model.Person.User.UserName</dd>
         </dl>
     </div>
     <div>
         <form method="POST" asp-controller="Persons" asp-action="Delete">
             <div>
                 <input asp-for="@Model.Person.Id" type="hidden" class="form-control" />
-                <input type="submit" value="Yes, Delete" class="btn btn-accent" />
-                <a asp-controller="Persons" asp-action="Details" asp-route-personId="@Model.Person.Id" class="btn btn-neutral">Cancel</a>
+                <input type="submit" value="Yes, Delete" class="Danger FormButton" />
+                <a asp-controller="Persons" asp-action="Details" asp-route-personId="@Model.Person.Id" class="Neutral FormButton">Cancel</a>
             </div>
         </form>
     </div>

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
 </head>
 <body>
-    <div class="container mx-auto">
+    <div class="container mx-auto" style="z-index:1">
         <div class="drawer">
             <input id="my-drawer" type="checkbox" class="drawer-toggle" />
             <div class="drawer-content flex flex-col space-y-4">
@@ -69,7 +69,7 @@
                     &copy; 2023 - Projector
                 </footer>
             </div>
-            <div class="drawer-side">
+            <div class="drawer-side" style="z-index:2">
                 <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
                 <ul class="menu p-4 w-80 min-h-full bg-base-200">
                     <!-- Sidebar content here -->

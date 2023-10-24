@@ -7,26 +7,26 @@
 
 <div class="flex flex-col w-full space-y-4">
     <form method="GET" asp-controller="Persons" asp-action="Persons" class="flex flex-grow w-full">
-        <div class="flex flex-grow w-full">
+        <div class="SearchBar join">
             @if (Model.Args == null || string.IsNullOrEmpty(Model.Args.Term))
             {
                 <input type="text" value="" placeholder="Search Persons" name="term"
-                    class="input input-bordered join-item flex flex-grow w-full"
+                    class="SearchBar join-item"
                     />
             }
             else
             {
                 <input type="text" value="@Model.Args.Term" placeholder="Search" name="term"
-                       class="input input-bordered join-item flex flex-grow w-full" />
+                       class="SearchBar join-item" />
             }
-            <input type="submit" class="btn join-item" value="Search" />
+            <input type="submit" class="SearchBar join-item" value="Search" />
         </div>
     </form>
 
     @if (Model.Results.TotalPersons == 0)
     {
         <div align="center">
-            <h2 class="text-4xl font-bold">No Person Available</h2>
+            <h2 class="EmptyList">No Person Available</h2>
         </div>
         <!-- Impossible ?? since the current user is a person -->
     }
@@ -35,35 +35,41 @@
         <div class="flex flex-col flex-grow w-full gap-4">
             @foreach (var person in Model.Results.People)
             {
-                <div class="collapse collapse-arrow bg-base-200 shadow-md flex-grow w-full">
+                <div class="ListEntry">
                     <input class="flex-grow w-full" type="checkbox" />
-                    <div class="collapse-title text-xl font-medium flex-grow w-full">
-                        <h2 class="card-title">@person.FullName
-                            @if (person.User.IsVerified)
+                    <div class="ListTitle">
+                        @person.FullName
+                        @if (person.User.IsVerified)
+                        {
+                            <span class="Verified">Verified</span>
+                        }
+                        else
+                        {
+                            <span class="NotVerified">Not Verified</span>
+                        }
+                    </div>
+                    <div class="collapse-content">
+                        <div class="grid grid-cols-2">
+                        <p class="col-span-1">@person.User.UserName</p>
+                            @if (Model.PersonId != person.Id)
                             {
-                                <span class="badge badge-primary gap-2">Verified</span>
+                                <div class="grid grid-cols-3 col-span-1 justify-items-stretch gap-2">
+                                    <a asp-controller="Persons" asp-action="Details" asp-route-personId="@person.Id"
+                                       class="Primary">Projects</a>
+
+                                    <a asp-controller="Persons" asp-action="Edit" asp-route-personId="@person.Id"
+                                       class="Secondary">Edit</a>
+                                    <a asp-controller="Persons" asp-action="ConfirmDelete" asp-route-personId="@person.Id"
+                                       class="Danger">Delete</a>
+                                </div>
                             }
                             else
                             {
-                                <span class="badge badge-error gap-2">Not Verified</span>
+                                <div class="col-span-1 flex justify-end gap-2">
+                                    <a asp-controller="Persons" asp-action="Details" asp-route-personId="@person.Id"
+                                       class="Primary FormButton">Projects</a>
+                                </div>
                             }
-                        </h2>
-                    </div>
-                    <div class="collapse-content">
-                        <div class="grid grid-cols-3">
-                        <p class="col-span-2">@person.User.UserName</p>
-                        <div class="grid grid-cols-3 col-span-1 justify-items-stretch gap-4">
-                            <a asp-controller="Persons" asp-action="Details" asp-route-personId="@person.Id"
-                               class="btn btn-secondary">Projects</a>
-
-                            @if (Model.PersonId != person.Id)
-                            {
-                                <a asp-controller="Persons" asp-action="Edit" asp-route-personId="@person.Id"
-                                   class="btn btn-info">Edit</a>
-                                <a asp-controller="Persons" asp-action="ConfirmDelete" asp-route-personId="@person.Id"
-                                   class="btn btn-accent">Delete</a>
-                            }
-                        </div>
                         </div>
                     </div>
                 </div>
@@ -99,8 +105,8 @@
                         }
                     </div>
                     <div class="max-w-fit">
-                        <a asp-controller="Persons" asp-action="Persons" asp-route-PageSize="5" asp-route-Term="@Model.Args.Term" class="btn btn-primary">View 5</a>
-                        <a asp-controller="Persons" asp-action="Persons" asp-route-PageSize="10" asp-route-Term="@Model.Args.Term" class="btn btn-primary">View 10</a>
+                        <a asp-controller="Persons" asp-action="Persons" asp-route-PageSize="5" asp-route-Term="@Model.Args.Term" class="Primary FormButton">View 5</a>
+                        <a asp-controller="Persons" asp-action="Persons" asp-route-PageSize="10" asp-route-Term="@Model.Args.Term" class="Primary FormButton">View 10</a>
                     </div>
                 </div>
             </div>

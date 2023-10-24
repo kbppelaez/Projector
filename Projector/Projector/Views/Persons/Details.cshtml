@@ -8,53 +8,53 @@
 <div class="flex flex-col w-full h-full space-y-4">
     <div class="grid grid-cols-3 gap-10">
         <div class="col-span-1">
-            <div class="card card-compact bg-base-100 shadow h-full ">
+            <div class="card card-compact CardDetails">
                 <div class="card-body">
-                    <h2 class="card-title">@Model.Details.FullName</h2>
+                    <h2 class="DetailsHeader">@Model.Details.FullName</h2>
                     <dl>
-                        <dt class="text-lg font-semibold">First Name</dt>
-                        <dd class="text-lg">@Model.Details.FirstName</dd>
-                        <dt class="text-lg font-semibold">Last Name</dt>
-                        <dd class="text-lg">@Model.Details.LastName</dd>
-                        <dt class="text-lg font-semibold">Email Address</dt>
-                        <dd class="text-lg">
+                        <dt>First Name</dt>
+                        <dd>@Model.Details.FirstName</dd>
+                        <dt>Last Name</dt>
+                        <dd>@Model.Details.LastName</dd>
+                        <dt>Email Address</dt>
+                        <dd>
                             @Model.Details.User.UserName
                             @if (Model.Details.User.IsVerified)
                             {
-                                <span class="badge badge-primary gap-2">Verified</span>
+                                <span class="Verified">Verified</span>
                             }
                             else
                             {
-                                <span class="badge badge-error gap-2">Not Verified</span>
+                                <span class="NotVerified">Not Verified</span>
                             }
                         </dd>
                     </dl>
                     <div class="card-actions justify-start">
                         @if (Model.Details.Id != Model.UserPersonId)
                         {
-                            <a asp-controller="Persons" asp-action="Edit" asp-route-personId="@Model.Details.Id" class="btn btn-info">Edit</a>
-                            <a asp-controller="Persons" asp-action="ConfirmDelete" asp-route-personId="@Model.Details.Id" class="btn btn-accent">Delete</a>
+                            <a asp-controller="Persons" asp-action="Edit" asp-route-personId="@Model.Details.Id" class="Primary FormButton">Edit</a>
+                            <a asp-controller="Persons" asp-action="ConfirmDelete" asp-route-personId="@Model.Details.Id" class="Danger FormButton">Delete</a>
                             <br />
                             <br />
                         }
-                        <a asp-controller="Persons" asp-action="Persons" class="btn btn-neutral">Back to List</a>
+                        <a asp-controller="Persons" asp-action="Persons" class="Neutral FormButton">Back to List</a>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-span-2">
-            <h2 class="text-2xl">Current Projects</h2>
+            <h2 class="DetailsHeader">Current Projects</h2>
             <hr />
             @if (Model.Details.Projects == null || Model.Details.Projects.Length == 0)
             {
-                <h6 class="text-xl">Not Assigned to Any Projects</h6>
+                <h6 class="SubHeader">Not Assigned to Any Projects</h6>
             }
             else
             {
-                <ul class="list-group">
+                <ul>
                     @foreach (var proj in Model.Details.Projects)
                     {
-                        <li class="text-xl">
+                        <li>
                             <b>[@proj.Code]</b> @proj.Name
                         </li>
                     }

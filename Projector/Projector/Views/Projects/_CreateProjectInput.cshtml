@@ -3,33 +3,33 @@
 @using Projector.Core.Projects.DTO;
 @model ProjectData
 
-<div asp-validation-summary="ModelOnly" class=" text-red-300"></div>
+<div asp-validation-summary="ModelOnly" class="InputError"></div>
 <input asp-for="@Model.Id" type="hidden" />
 <div class="flex flex-col w-full gap-3">
-    <div>
-        <label for="Code" class="flex-none"><b>Project Code</b></label>
-        <input asp-for="@Model.Code" class="input input-bordered flex flex-grow w-full max-w-md" />
-        <span asp-validation-for="@Model.Code" class=" text-red-300"></span>
+    <div class="InputGroupMD">
+        <label class="Input" for="Code">Project Code</label>
+        <input asp-for="@Model.Code" class="InputMD" />
+        <span asp-validation-for="@Model.Code" class="InputError"></span>
     </div>
-    <div>
-        <label for="Name"><b>Project Name</b></label>
-        <input asp-for="@Model.Name" class="input input-bordered flex flex-grow w-full max-w-md" />
-        <span asp-validation-for="@Model.Name" class=" text-red-300"></span>
+    <div class="InputGroupMD">
+        <label class="Input" for="Name">Project Name</label>
+        <input asp-for="@Model.Name" class="InputMD" />
+        <span asp-validation-for="@Model.Name" class="InputError"></span>
     </div>
-    <div>
-        <label for="Budget"><b>Budget</b></label><br />
+    <div class="InputGroupMD">
+        <label class="Input" for="Budget">Budget</label><br />
         <div class="join flex flex-grow w-full max-w-md">
             <div class="btn disabled join-item justify-self-center max-h-fit">
                 <span class="max-h-fit justify-self-center">@NumberFormatInfo.CurrentInfo.CurrencySymbol</span>
             </div>
-            <input asp-for="@Model.BudgetString" type="text" class="input input-bordered join-item flex flex-grow w-full max-w-md">
+            <input asp-for="@Model.BudgetString" type="text" class="InputMD">
         </div>
         <span asp-validation-for="@Model.BudgetString" class="text-red-300"></span>
     </div>
-    <div>
-        <label for="Remarks"><b>Remarks</b></label>
-        <textarea asp-for="@Model.Remarks" class="textarea textarea-bordered flex flex-grow w-full max-w-md" rows="5"></textarea>
-        <span asp-validation-for="@Model.Remarks" class=" text-red-300"></span>
+    <div class="InputGroupMD">
+        <label class="Input" for="Remarks">Remarks</label>
+        <textarea asp-for="@Model.Remarks" class="InputMD" rows="5"></textarea>
+        <span asp-validation-for="@Model.Remarks" class="InputError"></span>
     </div>
 </div>
 <br />

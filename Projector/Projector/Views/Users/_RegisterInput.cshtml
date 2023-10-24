@@ -3,38 +3,38 @@
 
 <form method="POST" asp-controller="Users" asp-action="Register">
     <div asp-validation-summary="ModelOnly" class="text-error"></div>
-    <div class="form-control w-full max-w-md">
-        <label class="font-bold label" asp-for="@Model.UserName"></label>
-        <input class="input input-bordered w-full max-w-md" asp-for="@Model.UserName" />
-        <span class="text-red-600 required:border-red-500" asp-validation-for="@Model.UserName"></span>
+    <div class="InputGroupMD">
+        <label class="Input" asp-for="@Model.UserName"></label>
+        <input class="InputMD" asp-for="@Model.UserName" />
+        <span class="InputError" asp-validation-for="@Model.UserName"></span>
     </div>
-    <div class="form-control w-full max-w-md">
-        <label class="font-bold label" asp-for="@Model.Password"></label>
-        <input class="input input-bordered w-full w-max-md" asp-for="@Model.Password" />
-        <span class="text-red-600" asp-validation-for="@Model.Password" ></span>
+    <div class="InputGroupMD">
+        <label class="Input" asp-for="@Model.Password"></label>
+        <input class="InputMD" asp-for="@Model.Password" />
+        <span class="InputError" asp-validation-for="@Model.Password" ></span>
     </div>
-    <div class="form-control w-full max-w-md">
-        <label class="font-bold label" asp-for="@Model.ConfirmPassword"></label>
-        <input class="input input-bordered w-full w-max-md" asp-for="@Model.ConfirmPassword" />
-        <span class="text-red-600" asp-validation-for="@Model.ConfirmPassword" ></span>
+    <div class="InputGroupMD">
+        <label class="Input" asp-for="@Model.ConfirmPassword"></label>
+        <input class="InputMD" asp-for="@Model.ConfirmPassword" />
+        <span class="InputError" asp-validation-for="@Model.ConfirmPassword" ></span>
     </div>
-    <div class="form-control w-full max-w-md">
-        <label class="font-bold label" asp-for="@Model.FirstName"></label>
-        <input class="input input-bordered w-full w-max-md" asp-for="@Model.FirstName" />
-        <span class="text-red-600" asp-validation-for="@Model.FirstName"></span>
+    <div class="InputGroupMD">
+        <label class="Input" asp-for="@Model.FirstName"></label>
+        <input class="InputMD" asp-for="@Model.FirstName" />
+        <span class="InputError" asp-validation-for="@Model.FirstName"></span>
     </div>
-    <div class="form-control w-full max-w-md">
-        <label class="font-bold label" asp-for="@Model.LastName"></label>
-        <input class="input input-bordered w-full w-max-md" asp-for="@Model.LastName" />
-        <span class="text-red-600" asp-validation-for="@Model.LastName"></span>
+    <div class="InputGroupMD">
+        <label class="Input" asp-for="@Model.LastName"></label>
+        <input class="InputMD" asp-for="@Model.LastName" />
+        <span class="InputError" asp-validation-for="@Model.LastName"></span>
     </div>
     <br />
     <div>
-        <input type="submit" value="Register" class="btn btn-primary w-full" />
+        <input type="submit" value="Register" class="Primary" />
     </div>
     <br />
     <div class="text-center">
         <span>Already have an account?</span><br />
-        <a asp-controller="Users" asp-action="SignIn" class="btn btn-secondary w-full">Login</a>
+        <a asp-controller="Users" asp-action="SignIn" class="Secondary">Login</a>
     </div>
 </form>

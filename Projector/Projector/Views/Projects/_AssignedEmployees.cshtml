@@ -1,25 +1,25 @@
 ﻿@using Projector.Core.Projects.DTO
 @model ProjectDetailsData
 
-<h2 class="text-1xl font-semibold space-y-4">Assigned Employees</h2>
+<h2 class="DetailsHeader space-y-4">Assigned Employees</h2>
 <div class="flex-grow w-full">
     <div class="flex flex-col w-full space-y-2">
         @foreach(var member in Model.Assigned)
         {
             <form id="Remove-@member.Id" class="RemovePersonFromProjectForm" method="post" asp-action="Remove" asp-controller="Projects">
-                <div class="rounded-md p-2 bg-base-100 shadow">
+                <div class="EmployeeEntry">
                     <div class="grid grid-cols-2">
-                        <div class="col-span-1 flex-grow w-full self-center">
-                            <h2 class="card-title self-center text-xl">@member.FullName</h2>
+                        <div class="EmployeeName">
+                            @member.FullName
                         </div>
-                        <div class="col-span-1 justify-self-end">
+                        <div class="EmployeeAction">
                             @Html.AntiForgeryToken()
                             <input type="hidden" id="projectId-@member.Id" class="projectId" value="@Model.Id" />
-                            <button class="btn btn-accent RemoveButton" type="button" value="@member.Id">
+                            <button class="Danger FormButton RemoveButton" type="button" value="@member.Id">
                                 Remove
                             </button>
                         </div>
-                        <span id="removeError-@member.Id" class="text-red-400 RemoveError"></span>
+                        <span id="removeError-@member.Id" class="InputError RemoveError"></span>
                     </div>
                 </div>
             </form>

@@ -3,26 +3,26 @@
 
 <form method="POST" asp-controller="Users" asp-action="SignIn">
     <div asp-validation-summary="ModelOnly" class="text-error"></div>
-    <div class="form-control w-full max-w-xs">
-        <label class="font-bold label" asp-for="@Model.UserName"></label>
-        <input class="input input-bordered w-full max-w-xs" asp-for="@Model.UserName" />
-        <span class="text-red-600" asp-validation-for="@Model.UserName"></span>
+    <div class="InputGroupXS">
+        <label class="Input" asp-for="@Model.UserName"></label>
+        <input class="InputXS" asp-for="@Model.UserName" />
+        <span class="InputError" asp-validation-for="@Model.UserName"></span>
     </div>
-    <div class="form-control w-full max-w-xs">
-        <label class="font-bold label" asp-for="@Model.Password"></label>
-        <input class="input input-bordered w-full max-w-xs" asp-for="@Model.Password" />
-        <span class="text-red-600" asp-validation-for="@Model.Password"></span>
+    <div class="InputGroupXS">
+        <label class="Input" asp-for="@Model.Password"></label>
+        <input class="InputXS" asp-for="@Model.Password" />
+        <span class="InputError" asp-validation-for="@Model.Password"></span>
     </div>
     <br />
     <div>
-        <input type="submit" value="Log In" class="btn btn-secondary w-full" />
+        <input type="submit" value="Log In" class="Primary" />
         <br />
-        <a class="link link-accent" asp-controller="Users" asp-action="ForgotPassword">Forgot Password?</a>
+        <a class="RedirectLink" asp-controller="Users" asp-action="ForgotPassword">Forgot Password?</a>
     </div>
     <br />
     <div class="text-center">
         <span>Does not have an account?</span><br />
-        <a asp-controller="Users" asp-action="Register" class="btn btn-neutral w-full">Register</a>
+        <a asp-controller="Users" asp-action="Register" class="Neutral">Register</a>
     </div>
 </form>
 

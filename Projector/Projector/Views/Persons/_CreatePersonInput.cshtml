@@ -2,22 +2,22 @@
 @model NewPersonData
 
 
-<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div asp-validation-summary="ModelOnly" class="InputError"></div>
 <div class="flex flex-col w-full gap-3">
-    <div>
-        <label class="flex-none font-bold" asp-for="@Model.UserName"></label>
-        <input asp-for="@Model.UserName" class="input input-bordered flex flex-grow w-full max-w-md" />
-        <span asp-validation-for="@Model.UserName" class="text-red-300"></span>
+    <div class="InputGroupMD">
+        <label class="Input" asp-for="@Model.UserName"></label>
+        <input asp-for="@Model.UserName" class="InputMD" />
+        <span asp-validation-for="@Model.UserName" class="InputError"></span>
     </div>
-    <div>
-        <label class="flex-none font-bold" asp-for="@Model.FirstName"></label>
-        <input asp-for="@Model.FirstName" class="input input-bordered flex flex-grow w-full max-w-md" />
-        <span asp-validation-for="@Model.FirstName" class="text-red-300"></span>
+    <div class="InputGroupMD">
+        <label class="Input" asp-for="@Model.FirstName"></label>
+        <input asp-for="@Model.FirstName" class="InputMD" />
+        <span asp-validation-for="@Model.FirstName" class="InputError"></span>
     </div>
-    <div>
-        <label class="flex-none font-bold" asp-for="@Model.LastName"></label>
-        <input asp-for="@Model.LastName" class="input input-bordered flex flex-grow w-full max-w-md" />
-        <span asp-validation-for="@Model.LastName" class="text-red-300"></span>
+    <div class="InputGroupMD">
+        <label class="Input" asp-for="@Model.LastName"></label>
+        <input asp-for="@Model.LastName" class="InputMD" />
+        <span asp-validation-for="@Model.LastName" class="InputError"></span>
     </div>
 </div>
 <br/>

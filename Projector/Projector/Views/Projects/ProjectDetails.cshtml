@@ -7,13 +7,13 @@
 <div class="flex flex-col w-full h-full space-y-4">
     <div class="grid grid-cols-3 gap-10">
         <div class="col-span-1">
-            <div class="card card-compact bg-base-100 shadow h-full ">
+            <div class="card card-compact CardDetails">
                 <div class="card-body">
                     <partial name="_ProjectInformation" model="@Model.Details" />
                     <div class="card-actions justify-start">
-                        <a asp-controller="Projects" asp-action="Edit" asp-route-projectId="@Model.Details.Id" class="btn btn-info">Edit</a>
-                        <a asp-controller="Projects" asp-action="Delete" asp-route-projectId="@Model.Details.Id" class="btn btn-accent">Delete</a>
-                        <a asp-controller="Projects" asp-action="Projects" class="btn btn-neutral">Back to List</a>
+                        <a asp-controller="Projects" asp-action="Edit" asp-route-projectId="@Model.Details.Id" class="Primary FormButton">Edit</a>
+                        <a asp-controller="Projects" asp-action="Delete" asp-route-projectId="@Model.Details.Id" class="Danger FormButton">Delete</a>
+                        <a asp-controller="Projects" asp-action="Projects" class="Neutral FormButton">Back to List</a>
                     </div>
                 </div>
             </div>
