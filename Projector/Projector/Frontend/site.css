@@ -10,3 +10,8 @@
 @import "./components/inputgroup.css";
 @import "./components/link.css";
 @import "./components/list.css";
+
+@import "./shadcn-components/card.css";
+@import "./shadcn-components/button.css";
+@import "./shadcn-components/input.css";
+@import "./shadcn-components/form.css";
