@@ -148,7 +148,7 @@ namespace Projector.Controllers
             passwordData.Password = passwordData.ConfirmPassword = string.Empty;
             return result.Errors[0] == "INVALID" ?
                 NotFound() :
-                View("ResetPassword", new ResetPasswordViewModel(passwordData, result.Errors));
+                View("CreatePassword", new ResetPasswordViewModel(passwordData, result.Errors));
         }
 
         [Route("/projector/resetpassword/{userId}")]
@@ -225,7 +225,7 @@ namespace Projector.Controllers
 
             return result.IsSuccessful ?
                 RedirectToAction("SignIn", "Users") :
-                NotFound();
+                View(new VerifyUserViewModel(vData, result.Errors));
         }
 
         [Route("/projector/forgotpassword")]
