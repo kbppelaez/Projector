@@ -19,12 +19,12 @@ namespace Projector.Core.Users
         {
             if (!_usersService.UserExists(args.ValidationData.UserId))
             {
-                return CommandResult.Error("INVALID");
+                return CommandResult.Error("Invalid Verification Code.");
             }
 
             if(!_usersService.VerifyRegistration(args.ValidationData.UserId, args.ValidationData.Token, args.ValidationData.Code))
             {
-                return CommandResult.Error("INVALID");
+                return CommandResult.Error("Invalid Verification Code.");
             }
 
             return await VerifyUser(args.ValidationData);
