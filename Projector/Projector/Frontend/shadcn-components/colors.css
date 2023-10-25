@@ -1,0 +1,38 @@
+﻿/* Background Colors */
+.bg-card{
+    background-color: white;
+}
+
+.bg-destructive {
+    background-color: red;
+}
+
+.bg-destructive-90 {
+    background-color: red;
+    opacity: 0.9;
+}
+
+/* Text/Foreground Colors */
+.text-card-foreground{
+    color: black;
+}
+
+.text-muted-foreground{
+    color: #808080;
+}
+
+.text-primary-foreground{
+    color: white;
+}
+
+.text-warning-foreground {
+    color: black;
+}
+
+.text-secondary-foreground {
+    color: white;
+}
+
+.text-accent-foreground {
+    color: black;
+}

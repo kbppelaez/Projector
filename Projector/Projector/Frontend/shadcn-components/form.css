@@ -1,0 +1,33 @@
+﻿/*
+    Form Structure:
+    - Form (form)
+        - FormField (div)
+            - FormItem (div)
+                - FormLabel (label)
+                - FormDescription (p)
+                - FormMessage (p)
+*/
+
+.pr-form{
+    @apply space-y-2;
+}
+
+.pr-form-field{
+    @apply space-y-1;
+}
+
+.pr-form-item{
+    
+}
+
+.pr-form-item-label {
+    @apply text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70;
+}
+
+.pr-form-description{
+    @apply text-[0.8rem] text-muted-foreground;
+}
+
+.pr-form-message{
+    @apply text-[0.8rem] font-medium text-error;
+}
