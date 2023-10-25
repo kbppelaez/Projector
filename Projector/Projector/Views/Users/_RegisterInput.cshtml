@@ -1,40 +1,30 @@
 ﻿@using Projector.Core.Users.DTO
 @model NewUserData
 
-<form method="POST" asp-controller="Users" asp-action="Register">
-    <div asp-validation-summary="ModelOnly" class="text-error"></div>
-    <div class="InputGroupMD">
-        <label class="Input" asp-for="@Model.UserName"></label>
-        <input class="InputMD" asp-for="@Model.UserName" />
-        <span class="InputError" asp-validation-for="@Model.UserName"></span>
+<div class="pr-form-field">
+    <div class="pr-form-item">
+        <label class="pr-form-item-label" asp-for="@Model.UserName"></label>
+        <input class="pr-input" asp-for="@Model.UserName" />
+        <span class="pr-form-message" asp-validation-for="@Model.UserName"></span>
     </div>
-    <div class="InputGroupMD">
-        <label class="Input" asp-for="@Model.Password"></label>
-        <input class="InputMD" asp-for="@Model.Password" />
-        <span class="InputError" asp-validation-for="@Model.Password" ></span>
+    <div class="pr-form-item">
+        <label class="pr-form-item-label" asp-for="@Model.Password"></label>
+        <input class="pr-input" asp-for="@Model.Password" />
+        <span class="pr-form-message" asp-validation-for="@Model.Password"></span>
     </div>
-    <div class="InputGroupMD">
-        <label class="Input" asp-for="@Model.ConfirmPassword"></label>
-        <input class="InputMD" asp-for="@Model.ConfirmPassword" />
-        <span class="InputError" asp-validation-for="@Model.ConfirmPassword" ></span>
+    <div class="pr-form-item">
+        <label class="pr-form-item-label" asp-for="@Model.ConfirmPassword"></label>
+        <input class="pr-input" asp-for="@Model.ConfirmPassword" />
+        <span class="pr-form-message" asp-validation-for="@Model.ConfirmPassword"></span>
     </div>
-    <div class="InputGroupMD">
-        <label class="Input" asp-for="@Model.FirstName"></label>
-        <input class="InputMD" asp-for="@Model.FirstName" />
-        <span class="InputError" asp-validation-for="@Model.FirstName"></span>
+    <div class="pr-form-item">
+        <label class="pr-form-item-label" asp-for="@Model.FirstName"></label>
+        <input class="pr-input" asp-for="@Model.FirstName" />
+        <span class="pr-form-message" asp-validation-for="@Model.FirstName"></span>
     </div>
-    <div class="InputGroupMD">
-        <label class="Input" asp-for="@Model.LastName"></label>
-        <input class="InputMD" asp-for="@Model.LastName" />
-        <span class="InputError" asp-validation-for="@Model.LastName"></span>
+    <div class="pr-form-item">
+        <label class="pr-form-item-label" asp-for="@Model.LastName"></label>
+        <input class="pr-input" asp-for="@Model.LastName" />
+        <span class="pr-form-message" asp-validation-for="@Model.LastName"></span>
     </div>
-    <br />
-    <div>
-        <input type="submit" value="Register" class="Primary" />
-    </div>
-    <br />
-    <div class="text-center">
-        <span>Already have an account?</span><br />
-        <a asp-controller="Users" asp-action="SignIn" class="Secondary">Login</a>
-    </div>
-</form>
+</div>

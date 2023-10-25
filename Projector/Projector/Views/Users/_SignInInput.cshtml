@@ -1,28 +1,15 @@
 ﻿@using Projector.Core.Users.DTO
 @model UserData
 
-<form method="POST" asp-controller="Users" asp-action="SignIn">
-    <div asp-validation-summary="ModelOnly" class="text-error"></div>
-    <div class="InputGroupXS">
-        <label class="Input" asp-for="@Model.UserName"></label>
-        <input class="InputXS" asp-for="@Model.UserName" />
-        <span class="InputError" asp-validation-for="@Model.UserName"></span>
+<div class="pr-form-field">
+    <div class="pr-form-item">
+        <label class="pr-form-item-label" asp-for="@Model.UserName"></label>
+        <input class="pr-input" asp-for="@Model.UserName" />
+        <span class="pr-form-message" asp-validation-for="@Model.UserName"></span>
     </div>
-    <div class="InputGroupXS">
-        <label class="Input" asp-for="@Model.Password"></label>
-        <input class="InputXS" asp-for="@Model.Password" />
-        <span class="InputError" asp-validation-for="@Model.Password"></span>
+    <div class="pr-form-item w-full">
+        <label class="pr-form-item-label w-full" asp-for="@Model.Password"></label>
+        <input class="pr-input w-full" asp-for="@Model.Password" />
+        <span class="pr-form-message" asp-validation-for="@Model.Password"></span>
     </div>
-    <br />
-    <div>
-        <input type="submit" value="Log In" class="Primary" />
-        <br />
-        <a class="RedirectLink" asp-controller="Users" asp-action="ForgotPassword">Forgot Password?</a>
-    </div>
-    <br />
-    <div class="text-center">
-        <span>Does not have an account?</span><br />
-        <a asp-controller="Users" asp-action="Register" class="Neutral">Register</a>
-    </div>
-</form>
-
+</div>
