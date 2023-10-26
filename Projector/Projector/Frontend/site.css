@@ -12,6 +12,11 @@
 @import "./components/list.css";
 
 @import "./shadcn-components/card.css";
-@import "./shadcn-components/button.css";
 @import "./shadcn-components/input.css";
+@import "./shadcn-components/button.css";
 @import "./shadcn-components/form.css";
+@import "./shadcn-components/table.css";
+
+.empty-table{
+    @apply font-bold text-xl;
+}
