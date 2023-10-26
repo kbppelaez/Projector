@@ -7,7 +7,7 @@
             <select class="select w-full join-item" id="addPerson" disabled>
                 <option selected> No employee available </option>
             </select>
-            <button class="btn join-item disabled" disabled type="button">Assign to Project</button>
+            <button class="pr-btn-primary-outline-thin join-item" disabled type="button">Assign</button>
         </div>
     }
     else
@@ -16,15 +16,15 @@
             @Html.AntiForgeryToken()
             <input type="hidden" id="projectId" name="projectId" value="@Model.UnassignedProjectId" />
             <div class="join flex flex-grow w-full">
-                <select class="select w-full join-item" id="addPerson">
-                    <option selected value="0">Choose Employee...</option>
+                <select class="select border-input w-full join-item" id="addPerson">
+                    <option selected value="" disabled hidden>Add Person to this Project</option>
                     @foreach (var employee in Model.Unassigned)
                     {
                         <option value="@employee.Id">@employee.FullName</option>
                     }
                 </select>
-                <button class="SearchBar join-item" id="addPersonToProjectButton" type="button">Assign to Project</button>
+                <button class="pr-btn-primary-outline-thin join-item" id="addPersonToProjectButton" type="button">Assign</button>
             </div>
-            <span id="selectError" class="text-red-300"></span>
+            <span id="selectError" class="pr-form-message"></span>
         </form>
     }

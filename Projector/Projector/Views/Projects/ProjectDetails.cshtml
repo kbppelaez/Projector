@@ -5,20 +5,20 @@
 }
 
 <div class="flex flex-col w-full h-full space-y-4">
-    <div class="grid grid-cols-3 gap-10">
-        <div class="col-span-1">
-            <div class="card card-compact CardDetails">
-                <div class="card-body">
-                    <partial name="_ProjectInformation" model="@Model.Details" />
-                    <div class="card-actions justify-start">
-                        <a asp-controller="Projects" asp-action="Edit" asp-route-projectId="@Model.Details.Id" class="Primary FormButton">Edit</a>
-                        <a asp-controller="Projects" asp-action="Delete" asp-route-projectId="@Model.Details.Id" class="Danger FormButton">Delete</a>
-                        <a asp-controller="Projects" asp-action="Projects" class="Neutral FormButton">Back to List</a>
-                    </div>
+    <div class="flex flex-row flex-wrap gap-5 justify-center">
+        <div class="md:w-96 w-full md:max-w-sm max-w-full">
+            <div class="pr-card w-full max-w-full md:max-w-sm md:w-96">
+
+                <partial name="_ProjectInformation" model="@Model.Details" />
+
+                <div class="pr-card-footer space-x-2">
+                    <a asp-controller="Projects" asp-action="Edit" asp-route-projectId="@Model.Details.Id" class="pr-btn-primary-outline">Edit</a>
+                    <a asp-controller="Projects" asp-action="Delete" asp-route-projectId="@Model.Details.Id" class="pr-btn-warning-outline">Delete</a>
+                    <a asp-controller="Projects" asp-action="Projects" class="pr-btn-secondary-outline">Back to List</a>
                 </div>
             </div>
         </div>
-        <div id="Assignments" class="col-span-2">
+        <div id="Assignments" class="flex md:w-2/3 w-full md:max-w-xl">
             <partial name="_Assignments" model="@Model" />
         </div>
     </div>

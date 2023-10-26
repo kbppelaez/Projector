@@ -1,28 +1,26 @@
 ﻿@using Projector.Core.Projects.DTO
 @model ProjectDetailsData
 
-<h2 class="DetailsHeader space-y-4">Assigned Employees</h2>
-<div class="flex-grow w-full">
-    <div class="flex flex-col w-full space-y-2">
-        @foreach(var member in Model.Assigned)
-        {
-            <form id="Remove-@member.Id" class="RemovePersonFromProjectForm" method="post" asp-action="Remove" asp-controller="Projects">
-                <div class="EmployeeEntry">
-                    <div class="grid grid-cols-2">
-                        <div class="EmployeeName">
-                            @member.FullName
-                        </div>
-                        <div class="EmployeeAction">
-                            @Html.AntiForgeryToken()
-                            <input type="hidden" id="projectId-@member.Id" class="projectId" value="@Model.Id" />
-                            <button class="Danger FormButton RemoveButton" type="button" value="@member.Id">
-                                Remove
-                            </button>
-                        </div>
-                        <span id="removeError-@member.Id" class="InputError RemoveError"></span>
-                    </div>
+
+<div class="pr-list">
+    @foreach (var member in Model.Assigned)
+    {
+        <form id="Remove-@member.Id" class="RemovePersonFromProjectForm" method="post" asp-action="Remove" asp-controller="Projects">
+            <div class="pr-list-item">
+                <div>
+                    <p class="pr-list-item-text">
+                        @member.FullName
+                    </p>
+                    <span id="removeError-@member.Id" class="pr-form-message"></span>
                 </div>
-            </form>
-        }
-    </div>
+                <div>
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" id="projectId-@member.Id" class="projectId" value="@Model.Id" />
+                    <button class="pr-btn-warning-outline ml-auto RemoveButton" type="button" value="@member.Id">
+                        Remove
+                    </button>
+                </div>
+            </div>
+        </form>
+    }
 </div>

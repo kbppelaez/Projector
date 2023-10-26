@@ -1,11 +1,16 @@
 ﻿@model ProjectDetailsViewModel
 
-<div class="flex flex-col w-full space-y-4">
-    <div class="flex-grow w-full" id="Unassigned">
-        <partial name="_UnassignedEmployees" model="@Model.People" />
+<div class="flex flex-col w-full pr-card">
+    <div class="pr-card-header">
+        <h3 class="pr-card-title">Project Members</h3>
+        <p class="pr-card-description">List of members assigned to this project.</p>
     </div>
-    <hr />
-    <div class="flex-col flex-grow" id="Assigned">
-        <partial name="_AssignedEmployees" model="@Model.Details" />
+    <div class="pr-card-content space-y-2">
+        <div id="Unassigned">
+            <partial name="_UnassignedEmployees" model="@Model.People" />
+        </div>
+        <div id="Assigned">
+            <partial name="_AssignedEmployees" model="@Model.Details" />
+        </div>
     </div>
 </div>
