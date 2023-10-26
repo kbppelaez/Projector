@@ -16,7 +16,22 @@
 @import "./shadcn-components/button.css";
 @import "./shadcn-components/form.css";
 @import "./shadcn-components/table.css";
+@import "./shadcn-components/menu.css";
+@import "./shadcn-components/badge.css";
+@import "./shadcn-components/list.css";
 
 .empty-table{
     @apply font-bold text-xl;
+}
+
+sup.pr-required{
+    @apply text-red-400 font-bold;
+}
+
+.pr-select-default{
+    @apply text-gray-400;
+}
+
+select:invalid{
+    color: gray;
 }
