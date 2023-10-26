@@ -4,6 +4,14 @@
     @apply border border-gray-300 px-4 py-2 shadow-sm;
 }
 
+.border-input-thin {
+    @apply border border-gray-300 px-4 shadow-sm;
+}
+
 .pr-input {
     @apply flex h-9 w-full rounded-md border border-input bg-transparent p-3 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50 placeholder-gray-600 focus:placeholder-gray-400;
+}
+
+.pr-textarea {
+    @apply flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50;
 }

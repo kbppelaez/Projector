@@ -12,7 +12,11 @@
     @apply space-y-2;
 }
 
-.pr-form-field{
+.pr-form-field {
+    @apply space-y-3;
+}
+
+.pr-form-field-auth{
     @apply space-y-1;
 }
 
@@ -20,14 +24,26 @@
     
 }
 
+.pr-form-item-fixed{
+    @apply md:w-2/3 space-y-2 w-full;
+}
+
 .pr-form-item-label {
     @apply text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70;
 }
 
 .pr-form-description{
-    @apply text-[0.8rem] text-muted-foreground;
+    @apply text-[0.8rem] text-muted-foreground block;
 }
 
 .pr-form-message{
     @apply text-[0.8rem] font-medium text-error;
+}
+
+.pr-form-header {
+    @apply text-lg font-bold;
+}
+
+.pr-form-header-description {
+    @apply text-base text-muted-foreground;
 }
