@@ -3,33 +3,42 @@
 @using Projector.Core.Projects.DTO;
 @model ProjectData
 
-<div asp-validation-summary="ModelOnly" class="InputError"></div>
-<input asp-for="@Model.Id" type="hidden" />
-<div class="flex flex-col w-full gap-3">
-    <div class="InputGroupMD">
-        <label class="Input" for="Code">Project Code</label>
-        <input asp-for="@Model.Code" class="InputMD" />
-        <span asp-validation-for="@Model.Code" class="InputError"></span>
+    <!-- ID of the current user; they are automatically a part of the project. -->
+    <input asp-for="@Model.Id" type="hidden" />
+
+    <div class="pr-form-item-fixed">
+        <label class="pr-form-item-label" for="Code">
+            Project Code<sup class="pr-required">*</sup>
+        </label>
+        <input asp-for="@Model.Code" class="pr-input" />
+        <span class="pr-form-description">This is the unique identifier of your project. This only accepts numbers and letters from the English alphabet, and is case-insensitive (i.e., uppercase and lowercase of a letter is the same).</span>
+        <span asp-validation-for="@Model.Code" class="pr-form-message"></span>
     </div>
-    <div class="InputGroupMD">
-        <label class="Input" for="Name">Project Name</label>
-        <input asp-for="@Model.Name" class="InputMD" />
-        <span asp-validation-for="@Model.Name" class="InputError"></span>
+    <div class="pr-form-item-fixed">
+        <label class="pr-form-item-label" for="Name">
+            Project Name<sup class="pr-required">*</sup>
+        </label>
+        <input asp-for="@Model.Name" class="pr-input" />
+        <span class="pr-form-description">This is the actual name of your project, and may contain special characters.</span>
+        <span asp-validation-for="@Model.Name" class="pr-form-message"></span>
     </div>
-    <div class="InputGroupMD">
-        <label class="Input" for="Budget">Budget</label><br />
-        <div class="join flex flex-grow w-full max-w-md">
-            <div class="btn disabled join-item justify-self-center max-h-fit">
-                <span class="max-h-fit justify-self-center">@NumberFormatInfo.CurrentInfo.CurrencySymbol</span>
-            </div>
-            <input asp-for="@Model.BudgetString" type="text" class="InputMD">
+    <div class="pr-form-item-fixed">
+        <label class="pr-form-item-label" for="Budget">
+            Budget<sup class="pr-required">*</sup>
+        </label>
+        <br />
+        <div class="join flex flex-grow w-full">
+            <span class="join-item justify-self-center pr-btn-outline-thin">
+                @NumberFormatInfo.CurrentInfo.CurrencySymbol
+            </span>
+            <input asp-for="@Model.BudgetString" type="text" class="pr-input join-item">
         </div>
-        <span asp-validation-for="@Model.BudgetString" class="text-red-300"></span>
+        <span class="pr-form-description">The budget for your project.</span>
+        <span asp-validation-for="@Model.BudgetString" class="pr-form-message"></span>
     </div>
-    <div class="InputGroupMD">
-        <label class="Input" for="Remarks">Remarks</label>
-        <textarea asp-for="@Model.Remarks" class="InputMD" rows="5"></textarea>
-        <span asp-validation-for="@Model.Remarks" class="InputError"></span>
+    <div class="pr-form-item-fixed">
+        <label class="pr-form-item-label" for="Remarks">Remarks</label>
+        <textarea asp-for="@Model.Remarks" class="pr-textarea" rows="5"></textarea>
+        <span class="pr-form-description">Put here other details related to the project.</span>
+        <span asp-validation-for="@Model.Remarks" class="pr-form-message"></span>
     </div>
-</div>
-<br />
