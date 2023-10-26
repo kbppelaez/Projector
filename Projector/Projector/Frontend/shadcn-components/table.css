@@ -1,0 +1,39 @@
+﻿/*
+    Table Structure:
+    - Table (div)
+        - Table (table)
+            - Header (thead)
+                - row (tr)
+                    - head (th)
+            - Body (tbody)
+                - row (tr)
+                    - cell (td)
+*/
+
+div.pr-table{
+    @apply rounded-md border relative w-full overflow-auto px-2;
+}
+
+table.pr-table {
+    @apply w-full text-sm;
+}
+
+.pr-table-header{
+    @apply border-b;
+}
+
+.pr-table-body{
+    @apply last:border-0;
+}
+
+.pr-table-row {
+    @apply border-b transition-colors hover:bg-accent/50 data-[state=selected]:bg-accent;
+}
+
+.pr-table-head {
+    @apply h-10 px-2 text-left align-middle font-medium text-muted-foreground;
+}
+
+.pr-table-cell{
+    @apply p-2 align-middle;
+}
