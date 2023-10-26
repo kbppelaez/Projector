@@ -1,0 +1,54 @@
+﻿@import "colors.css";
+/*
+    Menubar Structure
+        - menubar (div)
+            - menubar menu (div)
+                - trigger (button?) (menu item title)
+                - content (div? or ul?)
+                    - item or separator
+
+    ** one menubar menu per menu item
+*/
+
+.pr-header{
+    @apply flex flex-row rounded-md border p-2 shadow-sm mt-2;
+}
+
+/* Dropdown Menu
+    - dropdown (div)
+        - [menu] label (label; should have tabindex="0")
+        - menu (ul; accompanying class: dropdown-content; should have tabindex="0")
+            - item (li)
+*/
+
+.pr-app-name{
+    @apply text-lg font-bold px-3 py-1;
+}
+
+.pr-dropdown {
+    @apply dropdown w-auto max-w-md;
+}
+
+.pr-dropdown-end {
+    @apply dropdown dropdown-end w-auto max-w-md;
+}
+
+.pr-dropdown-label {
+    @apply flex flex-row w-full px-3 py-2 select-none focus:bg-accent rounded-md text-sm;
+}
+
+.pr-dropdown-menu {
+    @apply menu menu-sm z-[1] p-2 shadow bg-gray-100 text-black rounded w-36 max-w-md;
+}
+
+.pr-dropdown-menu-item {
+    @apply w-full hover:bg-accent hover:text-black;
+}
+
+.pr-menu-link{
+    @apply justify-center text-primary px-2;
+}
+
+.pr-user-name{
+    @apply font-semibold;
+}
