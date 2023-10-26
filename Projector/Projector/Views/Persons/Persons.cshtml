@@ -26,87 +26,110 @@
     @if (Model.Results.TotalPersons == 0)
     {
         <div align="center">
-            <h2 class="EmptyList">No Person Available</h2>
+            <h2 class="empty-table">No Person Available</h2>
         </div>
         <!-- Impossible ?? since the current user is a person -->
     }
     else
     {
-        <div class="flex flex-col flex-grow w-full gap-4">
-            @foreach (var person in Model.Results.People)
-            {
-                <div class="ListEntry">
-                    <input class="flex-grow w-full" type="checkbox" />
-                    <div class="ListTitle">
-                        @person.FullName
-                        @if (person.User.IsVerified)
-                        {
-                            <span class="Verified">Verified</span>
-                        }
-                        else
-                        {
-                            <span class="NotVerified">Not Verified</span>
-                        }
-                    </div>
-                    <div class="collapse-content">
-                        <div class="grid grid-cols-2">
-                        <p class="col-span-1">@person.User.UserName</p>
-                            @if (Model.PersonId != person.Id)
-                            {
-                                <div class="grid grid-cols-3 col-span-1 justify-items-stretch gap-2">
-                                    <a asp-controller="Persons" asp-action="Details" asp-route-personId="@person.Id"
-                                       class="Primary">Projects</a>
+        <div class="pr-table">
+            <table class="pr-table">
+                <thead class="pr-table-header">
+                    <tr class="pr-table-row">
+                        <th class="pr-table-head">Last Name</th>
+                        <th class="pr-table-head">Given Name</th>
+                        <th class="pr-table-head">Email Address</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="pr-table-body">
+                    @foreach (var person in Model.Results.People)
+                    {
+                        <tr class="pr-table-row">
+                            <td class="pr-table-cell">@person.LastName</td>
+                            <td class="pr-table-cell">@person.FirstName</td>
+                            <td class="pr-table-cell">
+                                @person.User.UserName@if (person.User.IsVerified)
+                                {
+                                    <span class="pr-badge-primary">Verified</span>
+                                }
+                                else
+                                {
+                                    <span class="pr-badge-secondary">Not Verified</span>
+                                }
+                            </td>
+                            <td class="pr-table-cell">
+                                <span class="inline-block flex w-full justify-center gap-2">
+                                    <!--Info-->
+                                    <a asp-controller="Persons" asp-action="Details" asp-route-personId="@person.Id">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="inline-block w-6 h-6 pr-btn-icon">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                        </svg>
+                                    </a>
+                                    @if (Model.PersonId != person.Id)
+                                    {
+                                        <!--Edit-->
+                                        <a asp-controller="Persons" asp-action="Edit" asp-route-personId="@person.Id">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="inline-block pr-btn-icon w-6 h-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                                            </svg>
 
-                                    <a asp-controller="Persons" asp-action="Edit" asp-route-personId="@person.Id"
-                                       class="Secondary">Edit</a>
-                                    <a asp-controller="Persons" asp-action="ConfirmDelete" asp-route-personId="@person.Id"
-                                       class="Danger">Delete</a>
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="col-span-1 flex justify-end gap-2">
-                                    <a asp-controller="Persons" asp-action="Details" asp-route-personId="@person.Id"
-                                       class="Primary FormButton">Projects</a>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                </div>
-            }
+                                        </a>
+                                        <!--Delete-->
+                                        <a asp-controller="Persons" asp-action="ConfirmDelete" asp-route-personId="@person.Id">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-6 h-6 inline-block pr-btn-icon-warning">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                            </svg>
+                                        </a>
+                                    }
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
         @if (Model.PageArgs.Count > 0)
         {
             <div class="flex flex-grow w-full">
                 <div class="flex flex-grow w-full">
-                    <div class="join flex flex-grow">
+                    <div class="flex flex-grow gap-2">
+                        <a asp-controller="Persons" asp-action="Persons" asp-route-PageSize="5" asp-route-Term="@Model.Args.Term" class="pr-btn-primary">View 5</a>
+                        <a asp-controller="Persons" asp-action="Persons" asp-route-PageSize="10" asp-route-Term="@Model.Args.Term" class="pr-btn-primary">View 10</a>
+                    </div>
+
+                    <div class="join max-w-fit">
                         @for (int i = 0; i < Model.PageArgs.Count; i += 1)
                         {
                             //if previous button
                             if (i == 0 && Model.HasPreviousPage)
                             {
-                                <a asp-controller="Persons" asp-action="Persons" asp-all-route-data="@Model.PageArgs[i]" class="join-item btn">«</a>
+                                <a asp-controller="Persons" asp-action="Persons" asp-all-route-data="@Model.PageArgs[i]" class="join-item pr-btn-outline">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="pr-btn-icon">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                                    </svg>
+                                </a>
                                 continue;
                             }
                             //if current page
                             if (Model.Args.Page.ToString() == Model.PageArgs[i]["Page"])
                             {
-                                <a class="join-item btn btn-disabled">@Model.Args.ViewPage</a>
+                                <a class="join-item pr-btn-outline">@Model.Args.ViewPage</a>
                                 continue;
                             }
                             // if next button
                             if (i == Model.PageArgs.Count - 1 && Model.HasNextPage)
                             {
-                                <a asp-controller="Persons" asp-action="Persons" asp-all-route-data="@Model.PageArgs[i]" class="join-item btn">»</a>
+                                <a asp-controller="Persons" asp-action="Persons" asp-all-route-data="@Model.PageArgs[i]" class="join-item pr-btn-outline">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="pr-btn-icon">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                    </svg>
+                                </a>
                                 continue;
                             }
 
-                            <a asp-controller="Persons" asp-action="Persons" asp-all-route-data="@Model.PageArgs[i]" class="join-item btn">@Model.GetPageNumber(Model.PageArgs[i]["Page"])</a>
+                            <a asp-controller="Persons" asp-action="Persons" asp-all-route-data="@Model.PageArgs[i]" class="join-item pr-btn-outline"> @Model.GetPageNumber(Model.PageArgs[i]["Page"]) </a>
                         }
-                    </div>
-                    <div class="max-w-fit">
-                        <a asp-controller="Persons" asp-action="Persons" asp-route-PageSize="5" asp-route-Term="@Model.Args.Term" class="Primary FormButton">View 5</a>
-                        <a asp-controller="Persons" asp-action="Persons" asp-route-PageSize="10" asp-route-Term="@Model.Args.Term" class="Primary FormButton">View 10</a>
                     </div>
                 </div>
             </div>
