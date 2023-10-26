@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en" data-theme="corporate" class="bg-gray-100">
+<html lang="en" data-theme="corporate">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,64 +8,81 @@
     <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
 </head>
 <body>
-    <div class="container mx-auto" style="z-index:1">
-        <div class="drawer">
+    <div class="container mx-auto max-w-screen-lg h-screen min-h-full" style="z-index:1">
+        <div class="drawer h-full">
             <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-            <div class="drawer-content flex flex-col space-y-4">
-                <header class="w-full navbar bg-neutral text-neutral-content rounded-b-md shadow">
+            <div class="drawer-content flex flex-col space-y-4 h-full">
+                <header class="pr-header">
+                    <!-- DRAWER BUTTON for when window is small -->
                     <div class="flex-none lg:hidden">
                         <label for="my-drawer" aria-label="open sidebar" class="btn btn-square btn-ghost">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-6 h-6 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="pr-btn-icon">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                            </svg>
                         </label>
                     </div>
-                    <div class="flex-1 px-2 mx-2">Projector</div>
 
+                    <!-- Menubar -->
+                    <div class="flex-1 hidden lg:block ">
+                        <div class="flex h-9 items-start space-x-1">
+                            <div class="pr-dropdown">
+                                <label tabindex="0" class="pr-dropdown-label">
+                                    Projects
+                                </label>
+                                <ul tabindex="0" class="dropdown-content pr-dropdown-menu">
+                                    <li class="pr-dropdown-menu-item">
+                                        <a class="pr-menu-link" asp-controller="Projects" asp-action="Projects">My Projects</a>
+                                    </li>
+                                    <li class="pr-dropdown-menu-item">
+                                        <a class="pr-menu-link" asp-controller="Projects" asp-action="Create">New Project</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="pr-dropdown">
+                                <label tabindex="0" class="pr-dropdown-label">
+                                    People
+                                </label>
+                                <ul tabindex="0" class="dropdown-content pr-dropdown-menu">
+                                    <li class="pr-dropdown-menu-item">
+                                        <a class="pr-menu-link" asp-controller="Persons" asp-action="Persons">All Persons</a>
+                                    </li>
+                                    <li class="pr-dropdown-menu-item">
+                                        <a class="pr-menu-link" asp-controller="Persons" asp-action="Create">Add a Person</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Logout -->
                     <div class="flex-none hidden lg:block">
-                        <div class="dropdown dropdown-end">
-                            <label tabindex="0" class="w-full btn btn-ghost btn-circle avatar px-3">
-                                <span class="font-bold ">@User.Identity?.Name</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="white" height="24" viewBox="0 -960 960 960" width="24"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" /></svg>
-                            </label>
-                            <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-gray-100 text-black-500 rounded w-full">
-                                <li class="w-full hover:bg-default hover:text-default-content">
-                                    <a class="justify-between text-black px-2" asp-controller="Users" asp-action="LogOut"> Logout</a>
-                                </li>
-                            </ul>
+                        <div class="flex h-9 items-center space-x-1">
+                            <div class="pr-dropdown-end">
+                                <label tabindex="0" class="pr-dropdown-label">
+                                    <span class="pr-user-name">@User.Identity?.Name</span>
+                                </label>
+                                <ul tabindex="0" class="dropdown-content pr-dropdown-menu">
+                                    <li class="pr-dropdown-menu-item">
+                                        <a class="pr-menu-link" asp-controller="Users" asp-action="LogOut">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="pr-btn-icon">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+                                            </svg>
+                                            Logout
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </header>
-                <main class="flex w-full space-x-4">
-                    <div class="flex-none hidden lg:block shadow bg-base-200 rounded-md ">
-                        <ul class="menu w-56 rounded-box">
-                            <li>
-                                <h2 class="menu-title">Projects</h2>
-                                <ul>
-                                    <li>
-                                        <a asp-controller="Projects" asp-action="Projects">My Projects</a>
-                                    </li>
-                                    <li>
-                                        <a asp-controller="Projects" asp-action="Create">New Project</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <h2 class="menu-title">People</h2>
-                                <ul>
-                                    <li>
-                                        <a asp-controller="Persons" asp-action="Persons">All Persons</a>
-                                    </li>
-                                    <li>
-                                        <a asp-controller="Persons" asp-action="Create">Add a Person</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
+
+                <main class="flex w-full h-full space-x-4 px-2">
                     <div class="w-full">
                         @RenderBody()
                     </div>
                 </main>
-                <footer class="flex w-full">
+                <div class="divider"></div>
+                <footer class="flex w-full pb-3">
                     &copy; 2023 - Projector
                 </footer>
             </div>
