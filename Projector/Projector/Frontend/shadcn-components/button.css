@@ -28,14 +28,15 @@
     @apply pr-btn text-primary underline-offset-4 hover:underline;
 }
 
-.border-btn{
-    @apply border-solid border-2 px-4 py-2;
-}
-
 .pr-btn-outline {
-    @apply pr-btn border border-btn bg-transparent shadow-sm hover:bg-accent/90;
+    @apply pr-btn border-input bg-transparent hover:bg-accent/90;
 }
 
-.pr-btn-outline:hover {
-    @apply text-accent-foreground;
+
+.pr-btn-icon {
+    @apply stroke-primary hover:stroke-info;
+}
+
+.pr-btn-icon-warning {
+    @apply stroke-primary hover:stroke-error;
 }
