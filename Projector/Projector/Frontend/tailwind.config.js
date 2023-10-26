@@ -22,7 +22,8 @@ module.exports = {
             black: colors.black,
             gray: colors.gray,  //for drop shadow
             white: colors.white,
-            red: colors.red
+            red: colors.red,
+            slate: colors.slate,
         }
     },
     variants: {
@@ -39,7 +40,7 @@ module.exports = {
                     "accent": "#e5e7eb",
                     "neutral": "#6b7280",
                     "base-100": "#ffffff",
-                    "info": "#e0f2fe",
+                    "info": "#2563eb",
                     "success": "#065f46",
                     "warning": "#fecaca",
                     "error": "#dc2626"
