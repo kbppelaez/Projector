@@ -8,23 +8,31 @@
 <div class="flex flex-col w-full">
     @if (Model.Errors.Any())
     {
-        <div class="FormError" role="alert">
-            <strong class="FormErrorHeader">Errors occured.</strong>
-            <ul>
-                @foreach (var error in Model.Errors)
-                {
-                    <li class="FormErrorContent">@error</li>
-                }
-            </ul>
+        <div class="pr-form-message" role="alert">
+            @foreach (var error in Model.Errors)
+            {
+                <span>@error</span>
+            }
         </div>
     }
 
     <div class="flex-grow w-full">
         <form method="POST" asp-controller="Persons" asp-action="Create">
-            <partial name="_CreatePersonInput" model="@Model.NewPerson" />
-            <div class="form-group">
-                <input type="submit" value="Create" class="Primary FormButton" />
-                <a asp-controller="Persons" asp-action="Persons" class="Neutral FormButton">Cancel</a>
+            <div class="pr-form-field pl-5">
+                <div>
+                    <div class="pr-form-header">
+                        Add a Member
+                    </div>
+                    <div class="pr-form-header-description">
+                        Create an account for a new member of your organization. Their account can be added to projects even if they are not verified yet.
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <partial name="_CreatePersonInput" model="@Model.NewPerson" />
+                <div class="mt-5">
+                    <input type="submit" value="Add Member" class="pr-btn-primary" />
+                    <a asp-controller="Persons" asp-action="Persons" class="pr-btn-secondary">Back to List</a>
+                </div>
             </div>
         </form>
     </div>
