@@ -26,9 +26,9 @@
                                 <span class="font-bold ">@User.Identity?.Name</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="white" height="24" viewBox="0 -960 960 960" width="24"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" /></svg>
                             </label>
-                            <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-gray-100 text-black-500 rounded w-52">
-                                <li class="hover:bg-default hover:text-default-content">
-                                    <a class="justify-between text-black" asp-controller="Users" asp-action="LogOut"> Logout</a>
+                            <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-gray-100 text-black-500 rounded w-full">
+                                <li class="w-full hover:bg-default hover:text-default-content">
+                                    <a class="justify-between text-black px-2" asp-controller="Users" asp-action="LogOut"> Logout</a>
                                 </li>
                             </ul>
                         </div>
