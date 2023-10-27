@@ -5,7 +5,13 @@
 }
 
 <div class="flex flex-col w-full h-full space-y-4">
-    <div class="flex flex-row flex-wrap gap-5 justify-center">
+    <div class="pr-breadcrumbs">
+        <ul>
+            <li><a asp-controller="Projects" asp-action="Projects">Projects</a></li>
+            <li>@Model.Details.Name</li>
+        </ul>
+    </div>
+    <div class="flex flex-row flex-wrap gap-5 justify-start">
         <div class="md:w-96 w-full md:max-w-sm max-w-full">
             <div class="pr-card w-full max-w-full md:max-w-sm md:w-96">
 
