@@ -24,33 +24,22 @@
 
                     <!-- Menubar -->
                     <div class="flex-1 hidden lg:block ">
-                        <div class="flex h-9 items-start space-x-1">
-                            <div class="pr-dropdown">
-                                <label tabindex="0" class="pr-dropdown-label">
-                                    Projects
-                                </label>
-                                <ul tabindex="0" class="dropdown-content pr-dropdown-menu">
-                                    <li class="pr-dropdown-menu-item">
-                                        <a class="pr-menu-link" asp-controller="Projects" asp-action="Projects">My Projects</a>
-                                    </li>
-                                    <li class="pr-dropdown-menu-item">
-                                        <a class="pr-menu-link" asp-controller="Projects" asp-action="Create">New Project</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="pr-dropdown">
-                                <label tabindex="0" class="pr-dropdown-label">
-                                    People
-                                </label>
-                                <ul tabindex="0" class="dropdown-content pr-dropdown-menu">
-                                    <li class="pr-dropdown-menu-item">
-                                        <a class="pr-menu-link" asp-controller="Persons" asp-action="Persons">All Persons</a>
-                                    </li>
-                                    <li class="pr-dropdown-menu-item">
-                                        <a class="pr-menu-link" asp-controller="Persons" asp-action="Create">Add a Person</a>
-                                    </li>
-                                </ul>
-                            </div>
+                        <div class="flex h-9 items-start space-x-2">
+                            @if(ViewData["Area"].Equals("Projects")){
+                                <div class="pr-dropdown">
+                                    <a asp-controller="Projects" asp-action="Projects" class="pr-btn-ghost-selected uppercase">Projects</a>
+                                </div>
+                                <div class="pr-dropdown">
+                                    <a asp-controller="Persons" asp-action="Persons" class="pr-btn-ghost uppercase">People</a>
+                                </div>
+                            }else{
+                                <div class="pr-dropdown">
+                                    <a asp-controller="Projects" asp-action="Projects" class="pr-btn-ghost uppercase">Projects</a>
+                                </div>
+                                <div class="pr-dropdown">
+                                    <a asp-controller="Persons" asp-action="Persons" class="pr-btn-ghost-selected uppercase">People</a>
+                                </div>
+                            }
                         </div>
                     </div>
 
