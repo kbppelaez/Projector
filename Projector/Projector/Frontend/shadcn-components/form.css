@@ -7,17 +7,8 @@
                 - FormDescription (p)
                 - FormMessage (p)
 */
-
-.pr-form{
-    @apply space-y-2;
-}
-
 .pr-form-field {
     @apply space-y-3;
-}
-
-.pr-form-field-auth{
-    @apply space-y-1;
 }
 
 .pr-form-item{
@@ -28,22 +19,22 @@
     @apply md:w-2/3 space-y-2 w-full;
 }
 
-.pr-form-item-label {
+.pr-form-item label, .pr-form-item-fixed label {
     @apply text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70;
 }
 
-.pr-form-description{
+span.description{
     @apply text-[0.8rem] text-muted-foreground block;
 }
 
-.pr-form-message{
+span.error-message{
     @apply text-[0.8rem] font-medium text-error;
 }
 
-.pr-form-header {
+.pr-form-field div.header {
     @apply text-lg font-bold;
 }
 
-.pr-form-header-description {
+.pr-form-field div.description {
     @apply text-base text-muted-foreground;
 }
