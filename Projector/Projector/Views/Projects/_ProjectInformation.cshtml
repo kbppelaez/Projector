@@ -3,10 +3,10 @@
 @model ProjectDetailsData
 
 <div class="pr-card-header">
-    <h3 class="pr-card-title">@Model.Name</h3>
+    <h3>@Model.Name</h3>
     @if (!string.IsNullOrEmpty(Model.Remarks))
     {
-        <p class="pr-card-description">@Model.Remarks</p>    
+        <p>@Model.Remarks</p>    
     }
 </div>
 <div class="pr-card-content">

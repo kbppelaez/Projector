@@ -18,8 +18,8 @@
     </div>
     <div class="pr-card-warning w-full max-w-full">
         <div class="pr-card-header">
-            <h3 class="pr-card-title">Are you really sure you want to delete this project?</h3>
-            <p class="pr-card-description">This project will then be removed from the project list of all assigned employees.</p>
+            <h3>Are you really sure you want to delete this project?</h3>
+            <p>This project will then be removed from the project list of all assigned employees.</p>
         </div>
         <div class="pr-card-footer space-x-2">
             <form method="POST" asp-controller="Projects" asp-action="Delete">
@@ -31,10 +31,10 @@
     </div>
     <div class="pr-card w-full max-w-full">
         <div class="pr-card-header">
-            <h3 class="pr-card-title">@Model.Project.Name</h3>
+            <h3>@Model.Project.Name</h3>
             @if (!string.IsNullOrEmpty(Model.Project.Remarks))
             {
-                <p class="pr-card-description">@Model.Project.Remarks</p>
+                <p>@Model.Project.Remarks</p>
             }
         </div>
         <div class="pr-card-content">

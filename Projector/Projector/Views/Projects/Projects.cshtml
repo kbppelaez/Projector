@@ -43,23 +43,23 @@
     {
         <div class="pr-table">
             <table class="pr-table">
-                <thead class="pr-table-header">
-                    <tr class="pr-table-row">
-                        <th class="pr-table-head">Code</th>
-                        <th class="pr-table-head">Name</th>
-                        <th class="pr-table-head">Remarks</th>
-                        <th class="pr-table-head">Budget</th>
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Remarks</th>
+                        <th>Budget</th>
                         <th></th>
                     </tr>
                 </thead>
-                <tbody class="pr-table-body">
+                <tbody>
                     @foreach(var item in Model.Results.Projects){
-                        <tr class="pr-table-row">
-                            <td class="pr-table-cell">@item.Code</td>
-                            <td class="pr-table-cell">@item.Name</td>
-                            <td class="pr-table-cell">@item.Remarks</td>
-                            <td class="pr-table-cell text-right">@item.Budget.ToString("C2", CultureInfo.CurrentCulture)</td>
-                            <td class="pr-table-cell max-w-fit">
+                        <tr>
+                            <td>@item.Code</td>
+                            <td>@item.Name</td>
+                            <td>@item.Remarks</td>
+                            <td class="text-right">@item.Budget.ToString("C2", CultureInfo.CurrentCulture)</td>
+                            <td class="max-w-fit">
                                 <span class="inline-block flex w-full justify-center gap-2">
                                     <!--Info-->
                                     <a asp-controller="Projects" asp-action="ProjectDetails" asp-route-projectId="@item.Id">

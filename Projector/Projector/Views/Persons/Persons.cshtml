@@ -43,21 +43,21 @@
     {
         <div class="pr-table">
             <table class="pr-table">
-                <thead class="pr-table-header">
-                    <tr class="pr-table-row">
-                        <th class="pr-table-head">Last Name</th>
-                        <th class="pr-table-head">Given Name</th>
-                        <th class="pr-table-head">Email Address</th>
+                <thead>
+                    <tr>
+                        <th>Last Name</th>
+                        <th>Given Name</th>
+                        <th>Email Address</th>
                         <th></th>
                     </tr>
                 </thead>
-                <tbody class="pr-table-body">
+                <tbody>
                     @foreach (var person in Model.Results.People)
                     {
-                        <tr class="pr-table-row">
-                            <td class="pr-table-cell">@person.LastName</td>
-                            <td class="pr-table-cell">@person.FirstName</td>
-                            <td class="pr-table-cell">
+                        <tr>
+                            <td>@person.LastName</td>
+                            <td>@person.FirstName</td>
+                            <td>
                                 @person.User.UserName
                                 @if (person.User.IsVerified)
                                 {
@@ -68,7 +68,7 @@
                                     <span class="pr-badge-secondary">Not Verified</span>
                                 }
                             </td>
-                            <td class="pr-table-cell">
+                            <td>
                                 <span class="inline-block flex w-full justify-center gap-2">
                                     <!--Info-->
                                     <a asp-controller="Persons" asp-action="Details" asp-route-personId="@person.Id">

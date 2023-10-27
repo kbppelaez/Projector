@@ -17,8 +17,8 @@
     </div>
     <div class="pr-card-warning w-full max-w-full">
         <div class="pr-card-header">
-            <h3 class="pr-card-title">Are you really sure you want to delete this person's account?</h3>
-            <p class="pr-card-description">This person will then be removed from all projects there are assigned to.</p>
+            <h3>Are you really sure you want to delete this person's account?</h3>
+            <p>This person will then be removed from all projects there are assigned to.</p>
         </div>
         <div class="pr-card-footer space-x-2">
             <form method="POST" asp-controller="Persons" asp-action="Delete">
@@ -30,7 +30,7 @@
     </div>
     <div class="pr-card w-full max-w-full">
         <div class="pr-card-header">
-            <h3 class="pr-card-title">
+            <h3>
                 @Model.Person.FullName
                 @if (Model.Person.User.IsVerified)
                 {
