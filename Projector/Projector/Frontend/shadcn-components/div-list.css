@@ -1,0 +1,21 @@
+﻿/* Lists that uses divs */
+.pr-list {
+    @apply grid gap-1;
+}
+
+.pr-list-item {
+    @apply flex items-center pl-4 py-1 border-b-2 border-white justify-between space-x-4 hover:bg-accent/50 hover:border-gray-300;
+}
+
+.pr-list-item-text {
+    @apply text-sm font-medium leading-none;
+}
+
+.pr-list-item-description {
+    @apply text-sm font-normal text-muted-foreground leading-none;
+}
+
+/* Select Option List */
+.pr-selection-option {
+    @apply text-sm py-4;
+}

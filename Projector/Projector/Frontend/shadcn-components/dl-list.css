@@ -1,0 +1,17 @@
+﻿
+/* Description Lists */
+.pr-description-list{
+    @apply divide-y divide-gray-100;
+}
+
+.pr-description-list div{
+    @apply px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0;
+}
+
+.pr-description-list dt{
+    @apply text-sm font-medium leading-6 text-gray-900;
+}
+
+.pr-description-list dd {
+    @apply mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0;
+}
