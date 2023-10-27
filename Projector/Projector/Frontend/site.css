@@ -9,7 +9,8 @@
 @import "./shadcn-components/table.css";
 @import "./shadcn-components/menu.css";
 @import "./shadcn-components/badge.css";
-@import "./shadcn-components/list.css";
+@import "./shadcn-components/dl-list.css";
+@import "./shadcn-components/div-list.css";
 
 .empty-table{
     @apply font-bold text-xl;
