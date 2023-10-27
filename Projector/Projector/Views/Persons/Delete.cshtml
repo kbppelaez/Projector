@@ -7,26 +7,55 @@
 
 
 <div class="flex flex-col w-full h-full space-y-4">
-    <div class="card card-compact CardPrompt-Danger">
-        <div class="card-body">
-            <h2 class="CardHeader">Are you sure you want to remove this person?</h2>
-            <p>This person will be removed from all project they are currently assigned to.</p>
+    <div class="pr-breadcrumbs">
+        <ul>
+            <li><a asp-controller="Persons" asp-action="Persons">People</a></li>
+            <li><a asp-controller="Persons" asp-action="Details" asp-route-personId="@Model.Person.Id">@Model.Person.FullName</a></li>
+            <li>Delete Account</li>
+        </ul>
+    </div>
+    <div class="pr-card-warning w-full max-w-full">
+        <div class="pr-card-header">
+            <h3 class="pr-card-title">Are you really sure you want to delete this person's account?</h3>
+            <p class="pr-card-description">This person will then be removed from all projects there are assigned to.</p>
+        </div>
+        <div class="pr-card-footer space-x-2">
+            <form method="POST" asp-controller="Persons" asp-action="Delete">
+                <input asp-for="@Model.Person.Id" type="hidden" class="form-control" />
+                <input type="submit" value="Yes, Delete" class="pr-btn-warning" />
+                <a asp-controller="Persons" asp-action="Details" asp-route-personId="@Model.Person.Id" class="pr-btn-secondary">View Details</a>
+            </form>
         </div>
     </div>
-    <div>
-        <h2 class="DetailsHeader">@Model.Person.FullName</h2>
-        <dl>
-            <dt>Email Address</dt>
-            <dd>@Model.Person.User.UserName</dd>
-        </dl>
-    </div>
-    <div>
-        <form method="POST" asp-controller="Persons" asp-action="Delete">
-            <div>
-                <input asp-for="@Model.Person.Id" type="hidden" class="form-control" />
-                <input type="submit" value="Yes, Delete" class="Danger FormButton" />
-                <a asp-controller="Persons" asp-action="Details" asp-route-personId="@Model.Person.Id" class="Neutral FormButton">Cancel</a>
-            </div>
-        </form>
+    <div class="pr-card w-full max-w-full">
+        <div class="pr-card-header">
+            <h3 class="pr-card-title">
+                @Model.Person.FullName
+                @if (Model.Person.User.IsVerified)
+                {
+                    <span class="pr-badge-primary">Verified</span>
+                }
+                else
+                {
+                    <span class="pr-badge-secondary">Not Verified</span>
+                }
+            </h3>
+        </div>
+        <div class="pr-card-content">
+            <dl class="pr-description-list">
+                <div class="pr-description-item">
+                    <dt class="pr-description-term">First Name</dt>
+                    <dd class="pr-description-data">@Model.Person.FirstName</dd>
+                </div>
+                <div class="pr-description-item">
+                    <dt class="pr-description-term">Last Name</dt>
+                    <dd class="pr-description-data">@Model.Person.LastName</dd>
+                </div>
+                <div class="pr-description-item">
+                    <dt class="pr-description-term">Email Address</dt>
+                    <dd class="pr-description-data">@Model.Person.User.UserName</dd>
+                </div>
+            </dl>
+        </div>
     </div>
 </div>

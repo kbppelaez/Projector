@@ -6,60 +6,95 @@
 }
 
 <div class="flex flex-col w-full h-full space-y-4">
-    <div class="grid grid-cols-3 gap-10">
-        <div class="col-span-1">
-            <div class="card card-compact CardDetails">
-                <div class="card-body">
-                    <h2 class="DetailsHeader">@Model.Details.FullName</h2>
-                    <dl>
-                        <dt>First Name</dt>
-                        <dd>@Model.Details.FirstName</dd>
-                        <dt>Last Name</dt>
-                        <dd>@Model.Details.LastName</dd>
-                        <dt>Email Address</dt>
-                        <dd>
-                            @Model.Details.User.UserName
-                            @if (Model.Details.User.IsVerified)
-                            {
-                                <span class="Verified">Verified</span>
-                            }
-                            else
-                            {
-                                <span class="NotVerified">Not Verified</span>
-                            }
-                        </dd>
-                    </dl>
-                    <div class="card-actions justify-start">
-                        @if (Model.Details.Id != Model.UserPersonId)
+    <div class="pr-breadcrumbs">
+        <ul>
+            <li><a asp-controller="Persons" asp-action="Persons">People</a></li>
+            <li>@Model.Details.FullName</li>
+        </ul>
+    </div>
+    <div class="flex flex-row flex-wrap gap-5 justify-start">
+        <div class="md:w-96 w-full md:max-w-sm max-w-full">
+            <div class="pr-card w-full max-w-full md:max-w-sm md:w-96">
+                <div class="pr-card-header">
+                    <h3 class="pr-card-title">
+                        @Model.Details.FullName
+                        @if (Model.Details.User.IsVerified)
                         {
-                            <a asp-controller="Persons" asp-action="Edit" asp-route-personId="@Model.Details.Id" class="Primary FormButton">Edit</a>
-                            <a asp-controller="Persons" asp-action="ConfirmDelete" asp-route-personId="@Model.Details.Id" class="Danger FormButton">Delete</a>
-                            <br />
-                            <br />
+                            <span class="pr-badge-primary">Verified</span>
                         }
-                        <a asp-controller="Persons" asp-action="Persons" class="Neutral FormButton">Back to List</a>
-                    </div>
+                        else
+                        {
+                            <span class="pr-badge-secondary">Not Verified</span>
+                        }
+                    </h3>
+                </div>
+                <div class="pr-card-content">
+                    <dl class="pr-description-list">
+                        <div class="pr-description-item">
+                            <dt class="pr-description-term">First Name</dt>
+                            <dd class="pr-description-data">@Model.Details.FirstName</dd>
+                        </div>
+                        <div class="pr-description-item">
+                            <dt class="pr-description-term">Last Name</dt>
+                            <dd class="pr-description-data">@Model.Details.LastName</dd>
+                        </div>
+                        <div class="pr-description-item">
+                            <dt class="pr-description-term">Email Address</dt>
+                            <dd class="pr-description-data">
+                                @Model.Details.User.UserName
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
+
+                <div class="pr-card-footer space-x-2">
+                    @if (Model.Details.Id != Model.UserPersonId)
+                    {
+                        <a asp-controller="Persons" asp-action="Edit" asp-route-personId="@Model.Details.Id" class="pr-btn-primary-outline">Edit</a>
+                        <a asp-controller="Persons" asp-action="ConfirmDelete" asp-route-personId="@Model.Details.Id" class="pr-btn-warning-outline">Delete</a>
+                    }
+                    <a asp-controller="Persons" asp-action="Persons" class="pr-btn-secondary-outline">Back to List</a>
                 </div>
             </div>
         </div>
-        <div class="col-span-2">
-            <h2 class="DetailsHeader">Current Projects</h2>
-            <hr />
-            @if (Model.Details.Projects == null || Model.Details.Projects.Length == 0)
-            {
-                <h6 class="SubHeader">Not Assigned to Any Projects</h6>
-            }
-            else
-            {
-                <ul>
-                    @foreach (var proj in Model.Details.Projects)
-                    {
-                        <li>
-                            <b>[@proj.Code]</b> @proj.Name
-                        </li>
-                    }
-                </ul>
-            }
+        <div class="flex md:w-2/3 w-full md:max-w-xl">
+            <div class="pr-card flex flex-col w-full">
+                <div class="pr-card-header">
+                    <h3 class="pr-card-title">Projects</h3>
+                    <p class="pr-card-description">List of projects this person is currently assigned to.</p>
+                </div>
+                <div class="pr-card-content">
+                    <div class="pr-list">
+                        @if (Model.Details.Projects == null || Model.Details.Projects.Length == 0)
+                        {
+                            <h3 class="pr-empty-list">Not Assigned to Any Projects</h3>
+                        }
+                        else
+                        {
+                            @foreach (var proj in Model.Details.Projects)
+                            {
+                                <div class="pr-list-item">
+                                    <div class="flex flex-col w-full gap-1">
+                                        <p class="pr-list-item-text">
+                                            @proj.Name
+                                        </p>
+                                        <p class="pr-list-item-description">
+                                            @proj.Code
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <a asp-controller="Projects" asp-action="ProjectDetails" asp-route-projectId="@proj.Id">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="pr-btn-icon">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

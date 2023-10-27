@@ -6,22 +6,28 @@
 }
 
 <div class="flex flex-col w-full space-y-4">
-    <form method="GET" asp-controller="Persons" asp-action="Persons" class="flex flex-grow w-full">
-        <div class="SearchBar join">
-            @if (Model.Args == null || string.IsNullOrEmpty(Model.Args.Term))
-            {
-                <input type="text" value="" placeholder="Search Persons" name="term"
-                    class="SearchBar join-item"
-                    />
-            }
-            else
-            {
-                <input type="text" value="@Model.Args.Term" placeholder="Search" name="term"
-                       class="SearchBar join-item" />
-            }
-            <input type="submit" class="SearchBar join-item" value="Search" />
+    <div class="flex flex-row space-between w-full">
+        <div class="pr-breadcrumbs">
+            <ul>
+                <li><a asp-controller="Persons" asp-action="Persons">People</a></li>
+                <li>List People</li>
+            </ul>
         </div>
-    </form>
+        <div class="md:w-fit w-full">
+            <form method="GET" asp-controller="Persons" asp-action="Persons" class="flex flex-grow w-full">
+                @if (Model.Args == null || string.IsNullOrEmpty(Model.Args.Term))
+                {
+                    <input type="text" value="" placeholder="Search..." name="term"
+                           class="pr-input" />
+                }
+                else
+                {
+                    <input type="text" value="@Model.Args.Term" placeholder="Search..." name="term"
+                           class="pr-input" />
+                }
+            </form>
+        </div>
+    </div>
 
     @if (Model.Results.TotalPersons == 0)
     {
@@ -114,7 +120,7 @@
                             //if current page
                             if (Model.Args.Page.ToString() == Model.PageArgs[i]["Page"])
                             {
-                                <a class="join-item pr-btn-outline">@Model.Args.ViewPage</a>
+                                <a class="join-item pr-btn-outline-disabled">@Model.Args.ViewPage</a>
                                 continue;
                             }
                             // if next button
