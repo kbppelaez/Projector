@@ -10,6 +10,10 @@
     @apply pr-btn bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2;
 }
 
+.pr-btn-primary-thin {
+    @apply pr-btn border-none bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-4;
+}
+
 .pr-btn-primary-outline {
     @apply pr-btn border-input bg-white text-primary shadow hover:bg-primary/90 hover:text-white h-9 px-4 py-2;
 }
@@ -38,6 +42,10 @@
 
 .pr-btn-ghost {
     @apply pr-btn hover:bg-accent text-accent-foreground h-9 px-4 py-2;
+}
+
+.pr-btn-ghost-selected {
+    @apply pr-btn underline font-bold decoration-4 decoration-gray-500/30 hover:bg-accent text-accent-foreground h-9 px-4 py-2;
 }
 
 .pr-btn-link {
