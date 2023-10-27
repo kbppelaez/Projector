@@ -3,26 +3,26 @@
 
 
     <div class="pr-form-item-fixed">
-        <label class="pr-form-item-label" asp-for="@Model.UserName">
+        <label asp-for="@Model.UserName">
             Email Address<sup class="pr-required">*</sup>
         </label>
         <input asp-for="@Model.UserName" class="pr-input" />
-        <span class="pr-form-description">This is the email address of the new member. Further instructions about account creation will be sent to this email address.</span>
-        <span asp-validation-for="@Model.UserName" class="pr-form-message"></span>
+        <span class="description">This is the email address of the new member. Further instructions about account creation will be sent to this email address.</span>
+        <span asp-validation-for="@Model.UserName" class="error-message"></span>
     </div>
     <div class="pr-form-item-fixed">
-        <label class="pr-form-item-label" asp-for="@Model.FirstName">
+        <label asp-for="@Model.FirstName">
             First Name<sup class="pr-required">*</sup>
         </label>
         <input asp-for="@Model.FirstName" class="pr-input" />
-        <span class="pr-form-description">The given name of the person.</span>
-        <span asp-validation-for="@Model.FirstName" class="pr-form-message"></span>
+        <span class="description">The given name of the person.</span>
+        <span asp-validation-for="@Model.FirstName" class="error-message"></span>
     </div>
     <div class="pr-form-item-fixed">
-        <label class="pr-form-item-label" asp-for="@Model.LastName">
+        <label asp-for="@Model.LastName">
             Last Name<sup class="pr-required">*</sup>
         </label>
         <input asp-for="@Model.LastName" class="pr-input" />
-        <span class="pr-form-description">The last name of the person.</span>
-        <span asp-validation-for="@Model.LastName" class="pr-form-message"></span>
+        <span class="description">The last name of the person.</span>
+        <span asp-validation-for="@Model.LastName" class="error-message"></span>
     </div>

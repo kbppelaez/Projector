@@ -3,9 +3,10 @@
 @{
     ViewData["Title"] = "Create New Person";
     Layout = "_Authenticated";
+    ViewData["Area"] = "Persons";
 }
 
-<div class="flex flex-col w-full">
+<div class="flex flex-col w-full space-y-4">
     <div class="pr-breadcrumbs">
         <ul>
             <li><a asp-controller="Persons" asp-action="Persons">People</a></li>
@@ -14,10 +15,10 @@
     </div>
     @if (Model.Errors.Any())
     {
-        <div class="pr-form-message" role="alert">
+        <div role="alert">
             @foreach (var error in Model.Errors)
             {
-                <span>@error</span>
+                <span class="error-message">@error</span>
             }
         </div>
     }
@@ -26,10 +27,10 @@
         <form method="POST" asp-controller="Persons" asp-action="Create">
             <div class="pr-form-field pl-5">
                 <div>
-                    <div class="pr-form-header">
+                    <div class="header">
                         Add a Member
                     </div>
-                    <div class="pr-form-header-description">
+                    <div class="description">
                         Create an account for a new member of your organization. Their account can be added to projects even if they are not verified yet.
                     </div>
                 </div>

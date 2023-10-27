@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Create New Project";
     Layout = "_Authenticated";
+    ViewData["Area"] = "Projects";
 }
 <div class="flex flex-col w-full space-y-4">
     <div class="pr-breadcrumbs">
@@ -13,10 +14,10 @@
     </div>
     @if (Model.Errors.Any())
     {
-        <div class="pr-form-message" role="alert">
+        <div role="alert">
             @foreach (var error in Model.Errors)
             {
-                <span>@error</span>
+                <span class="error-message">@error</span>
             }
         </div>
     }
@@ -24,12 +25,11 @@
     <div class="flex-grow w-full">
         <form method="POST" asp-controller="Projects" asp-action="Create">
             <div class="pr-form-field pl-5">
-
                 <div>
-                    <div class="pr-form-header">
+                    <div class="header">
                         New Project
                     </div>
-                    <div class="pr-form-header-description">
+                    <div class="description">
                         Add a new project for your team.
                     </div>
                 </div>

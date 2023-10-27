@@ -7,38 +7,37 @@
     <input asp-for="@Model.Id" type="hidden" />
 
     <div class="pr-form-item-fixed">
-        <label class="pr-form-item-label" for="Code">
+        <label for="Code">
             Project Code<sup class="pr-required">*</sup>
         </label>
         <input asp-for="@Model.Code" class="pr-input" />
-        <span class="pr-form-description">This is the unique identifier of your project. This only accepts numbers and letters from the English alphabet, and is case-insensitive (i.e., uppercase and lowercase of a letter is the same).</span>
-        <span asp-validation-for="@Model.Code" class="pr-form-message"></span>
+        <span class="description">This is the unique identifier of your project. This only accepts numbers and letters from the English alphabet, and is case-insensitive (i.e., uppercase and lowercase of a letter is the same).</span>
+        <span asp-validation-for="@Model.Code" class="error-message"></span>
     </div>
     <div class="pr-form-item-fixed">
-        <label class="pr-form-item-label" for="Name">
+        <label for="Name">
             Project Name<sup class="pr-required">*</sup>
         </label>
         <input asp-for="@Model.Name" class="pr-input" />
-        <span class="pr-form-description">This is the actual name of your project, and may contain special characters.</span>
-        <span asp-validation-for="@Model.Name" class="pr-form-message"></span>
+        <span class="description">This is the actual name of your project, and may contain special characters.</span>
+        <span asp-validation-for="@Model.Name" class="error-message"></span>
     </div>
     <div class="pr-form-item-fixed">
-        <label class="pr-form-item-label" for="Budget">
+        <label for="Budget">
             Budget<sup class="pr-required">*</sup>
         </label>
-        <br />
         <div class="join flex flex-grow w-full">
             <span class="join-item justify-self-center pr-btn-outline-thin">
                 @NumberFormatInfo.CurrentInfo.CurrencySymbol
             </span>
             <input asp-for="@Model.BudgetString" type="text" class="pr-input join-item">
         </div>
-        <span class="pr-form-description">The budget for your project.</span>
-        <span asp-validation-for="@Model.BudgetString" class="pr-form-message"></span>
+        <span class="description">The budget for your project.</span>
+        <span asp-validation-for="@Model.BudgetString" class="error-message"></span>
     </div>
     <div class="pr-form-item-fixed">
-        <label class="pr-form-item-label" for="Remarks">Remarks</label>
+        <label for="Remarks">Remarks</label>
         <textarea asp-for="@Model.Remarks" class="pr-textarea" rows="5"></textarea>
-        <span class="pr-form-description">Put here other details related to the project.</span>
-        <span asp-validation-for="@Model.Remarks" class="pr-form-message"></span>
+        <span class="description">Put here other details related to the project.</span>
+        <span asp-validation-for="@Model.Remarks" class="error-message"></span>
     </div>

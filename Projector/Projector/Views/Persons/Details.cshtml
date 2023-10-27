@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Details - " + Model.Details.FullName;
     Layout = "_Authenticated";
+    ViewData["Area"] = "Persons";
 }
 
 <div class="flex flex-col w-full h-full space-y-4">
@@ -10,14 +11,17 @@
         <ul>
             <li><a asp-controller="Persons" asp-action="Persons">People</a></li>
             <li>@Model.Details.FullName</li>
+            <li>Member Details</li>
         </ul>
     </div>
     <div class="flex flex-row flex-wrap gap-5 justify-start">
         <div class="md:w-96 w-full md:max-w-sm max-w-full">
             <div class="pr-card w-full max-w-full md:max-w-sm md:w-96">
-                <div class="pr-card-header">
-                    <h3 class="pr-card-title">
-                        @Model.Details.FullName
+                <div class="pr-card-header align-middle">
+                    <div class="flex flex-row align-middle gap-2">
+                        <h3 class="pr-card-title max-w-fit">
+                            @Model.Details.FullName
+                        </h3>
                         @if (Model.Details.User.IsVerified)
                         {
                             <span class="pr-badge-primary">Verified</span>
@@ -26,21 +30,21 @@
                         {
                             <span class="pr-badge-secondary">Not Verified</span>
                         }
-                    </h3>
+                    </div>
                 </div>
                 <div class="pr-card-content">
                     <dl class="pr-description-list">
-                        <div class="pr-description-item">
-                            <dt class="pr-description-term">First Name</dt>
-                            <dd class="pr-description-data">@Model.Details.FirstName</dd>
+                        <div>
+                            <dt>First Name</dt>
+                            <dd>@Model.Details.FirstName</dd>
                         </div>
-                        <div class="pr-description-item">
-                            <dt class="pr-description-term">Last Name</dt>
-                            <dd class="pr-description-data">@Model.Details.LastName</dd>
+                        <div>
+                            <dt>Last Name</dt>
+                            <dd>@Model.Details.LastName</dd>
                         </div>
-                        <div class="pr-description-item">
-                            <dt class="pr-description-term">Email Address</dt>
-                            <dd class="pr-description-data">
+                        <div>
+                            <dt>Email Address</dt>
+                            <dd>
                                 @Model.Details.User.UserName
                             </dd>
                         </div>
@@ -82,7 +86,7 @@
                                             @proj.Code
                                         </p>
                                     </div>
-                                    <div>
+                                    <div class="pr-4">
                                         <a asp-controller="Projects" asp-action="ProjectDetails" asp-route-projectId="@proj.Id">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="pr-btn-icon">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />

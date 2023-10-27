@@ -4,6 +4,7 @@
 @{
     ViewData["Title"] = "Home Page";
     Layout = "_Authenticated";
+    ViewData["Area"] = "Projects";
 }
 
 <div class="flex flex-col w-full space-y-4">
@@ -14,25 +15,27 @@
                 <li>List Projects</li>
             </ul>
         </div>
-        <div class="md:w-fit w-full">
+        <div class="flex flex-row space-x-1 md:w-fit w-full">
             <form method="GET" asp-controller="Projects" asp-action="Projects">
                 @if (Model.Args == null || string.IsNullOrEmpty(Model.Args.Term))
                 {
                     <input type="text" value="" name="term"
-                            class="pr-input" placeholder="Search..." />
+                           class="pr-input md:w-96" placeholder="Search..." />
                 }
                 else
                 {
                     <input type="text" value="@Model.Args.Term" name="term"
-                            class="pr-input" placeholder="Search..." />
+                           class="pr-input md:w-96" placeholder="Search..." />
                 }
             </form>
+            <div class="divider divider-horizontal"></div>
+            <a class="pr-btn-primary-thin" asp-controller="Projects" asp-action="Create">New Project</a>
         </div>
     </div>
     
     @if(Model.Results.TotalProjects == 0)
     {
-        <div align="center">
+        <div align="center" class="pt-5">
             <h2 class="empty-table">No Projects Available</h2>
         </div>
     }

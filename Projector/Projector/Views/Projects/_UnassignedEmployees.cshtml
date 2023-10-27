@@ -3,7 +3,7 @@
 
     @if (Model.Unassigned.Length == 0)
     {
-        <div class="join flex flex-grow w-full">
+        <div class="join flex flex-grow w-full mr-2">
             <select class="select w-full join-item" id="addPerson" disabled>
                 <option selected> No employee available </option>
             </select>
@@ -25,6 +25,6 @@
                 </select>
                 <button class="pr-btn-primary-outline-thin join-item" id="addPersonToProjectButton" type="button">Assign</button>
             </div>
-            <span id="selectError" class="pr-form-message"></span>
+            <span id="selectError" class="error-message"></span>
         </form>
     }

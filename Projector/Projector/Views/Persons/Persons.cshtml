@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "List of Persons";
     Layout = "_Authenticated";
+    ViewData["Area"] = "Persons";
 }
 
 <div class="flex flex-col w-full space-y-4">
@@ -13,19 +14,21 @@
                 <li>List People</li>
             </ul>
         </div>
-        <div class="md:w-fit w-full">
+        <div class="flex flex-row space-x-1 md:w-fit w-full">
             <form method="GET" asp-controller="Persons" asp-action="Persons" class="flex flex-grow w-full">
                 @if (Model.Args == null || string.IsNullOrEmpty(Model.Args.Term))
                 {
                     <input type="text" value="" placeholder="Search..." name="term"
-                           class="pr-input" />
+                           class="pr-input md:w-96" />
                 }
                 else
                 {
                     <input type="text" value="@Model.Args.Term" placeholder="Search..." name="term"
-                           class="pr-input" />
+                           class="pr-input md:w-96" />
                 }
             </form>
+            <div class="divider divider-horizontal"></div>
+            <a class="pr-btn-primary-thin" asp-controller="Persons" asp-action="Create">Add Member</a>
         </div>
     </div>
 
@@ -55,7 +58,8 @@
                             <td class="pr-table-cell">@person.LastName</td>
                             <td class="pr-table-cell">@person.FirstName</td>
                             <td class="pr-table-cell">
-                                @person.User.UserName@if (person.User.IsVerified)
+                                @person.User.UserName
+                                @if (person.User.IsVerified)
                                 {
                                     <span class="pr-badge-primary">Verified</span>
                                 }

@@ -5,6 +5,7 @@
     ViewData["Title"] = "Delete Project";
     var EmptyRemarks = "None";
     Layout = "_Authenticated";
+    ViewData["Area"] = "Projects";
 }
 
 <div class="flex flex-col w-full h-full space-y-4">
@@ -22,7 +23,7 @@
         </div>
         <div class="pr-card-footer space-x-2">
             <form method="POST" asp-controller="Projects" asp-action="Delete">
-                <input asp-for="@Model.Project.Id" type="hidden" class="form-control" />
+                <input asp-for="@Model.Project.Id" type="hidden" />
                 <input type="submit" value="Yes, Delete" class="pr-btn-warning" />
                 <a asp-controller="Projects" asp-action="ProjectDetails" asp-route-projectId="@Model.Project.Id" class="pr-btn-secondary">View Details</a>
             </form>
@@ -38,13 +39,13 @@
         </div>
         <div class="pr-card-content">
             <dl class="pr-description-list">
-                <div class="pr-description-item">
-                    <dt class="pr-description-term">Code</dt>
-                    <dd class="pr-description-data">@Model.Project.Code</dd>
+                <div>
+                    <dt>Code</dt>
+                    <dd>@Model.Project.Code</dd>
                 </div>
-                <div class="pr-description-item">
-                    <dt class="pr-description-term">Budget</dt>
-                    <dd class="pr-description-data">@Model.Project.Budget.ToString("C2", CultureInfo.CurrentCulture)</dd>
+                <div>
+                    <dt>Budget</dt>
+                    <dd>@Model.Project.Budget.ToString("C2", CultureInfo.CurrentCulture)</dd>
                 </div>
             </dl>
         </div>
