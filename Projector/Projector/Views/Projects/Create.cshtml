@@ -5,6 +5,12 @@
     Layout = "_Authenticated";
 }
 <div class="flex flex-col w-full space-y-4">
+    <div class="pr-breadcrumbs">
+        <ul>
+            <li><a asp-controller="Projects" asp-action="Projects">Projects</a></li>
+            <li>New Project</li>
+        </ul>
+    </div>
     @if (Model.Errors.Any())
     {
         <div class="pr-form-message" role="alert">

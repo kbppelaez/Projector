@@ -6,6 +6,13 @@
 }
 
 <div class="flex flex-col w-full space-y-4">
+    <div class="pr-breadcrumbs">
+        <ul>
+            <li><a asp-controller="Projects" asp-action="Projects">Projects</a></li>
+            <li><a asp-controller="Projects" asp-action="ProjectDetails" asp-route-projectId="@Model.Project.Id">@Model.Project.Name</a></li>
+            <li>Modify Project</li>
+        </ul>
+    </div>
     @if (Model.Errors.Any())
     {
         <div class="pr-form-message" role="alert">
