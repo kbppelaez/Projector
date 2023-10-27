@@ -7,19 +7,28 @@
 }
 
 <div class="flex flex-col w-full space-y-4">
-    <form method="GET" asp-controller="Projects" asp-action="Projects" class="flex flex-grow w-full">
-        <div class="SearchBar join">
-            @if(Model.Args == null || string.IsNullOrEmpty(Model.Args.Term))
-            {
-                <input type="text" value="" name="term"
-                    class="SearchBar join-item" placeholder="Search Project" />
-            }else{
-                <input type="text" value="@Model.Args.Term" name="term"
-                    class="SearchBar" placeholder="Search Project" />
-            }
-            <input type="submit" class="SearchBar join-item" value="Search">
+    <div class="flex flex-row space-between w-full">
+        <div class="pr-breadcrumbs">
+            <ul>
+                <li>Projects</li>
+                <li>List Projects</li>
+            </ul>
         </div>
-    </form>
+        <div class="md:w-fit w-full">
+            <form method="GET" asp-controller="Projects" asp-action="Projects">
+                @if (Model.Args == null || string.IsNullOrEmpty(Model.Args.Term))
+                {
+                    <input type="text" value="" name="term"
+                            class="pr-input" placeholder="Search..." />
+                }
+                else
+                {
+                    <input type="text" value="@Model.Args.Term" name="term"
+                            class="pr-input" placeholder="Search..." />
+                }
+            </form>
+        </div>
+    </div>
     
     @if(Model.Results.TotalProjects == 0)
     {
@@ -100,7 +109,7 @@
                             //if current page
                             if (Model.Args.Page.ToString() == Model.PageArgs[i]["Page"])
                             {
-                                <a class="join-item pr-btn-outline" disabled>@Model.Args.ViewPage</a>
+                                <a class="join-item pr-btn-outline-disabled" disabled>@Model.Args.ViewPage</a>
                                 continue;
                             }
                             // if next button
