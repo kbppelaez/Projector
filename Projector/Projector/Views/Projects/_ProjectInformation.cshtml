@@ -2,9 +2,6 @@
 @using System.Globalization;
 @model ProjectDetailsData
 
-@{
-    var EmptyRemarks = "None";
-}
 <div class="pr-card-header">
     <h3 class="pr-card-title">@Model.Name</h3>
     @if (!string.IsNullOrEmpty(Model.Remarks))
