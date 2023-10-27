@@ -18,22 +18,22 @@ table.pr-table {
     @apply w-full text-sm;
 }
 
-.pr-table-header{
+table.pr-table thead{
     @apply border-b;
 }
 
-.pr-table-body{
+table.pr-table tbody{
     @apply last:border-0;
 }
 
-.pr-table-row {
+table.pr-table tr {
     @apply border-b transition-colors hover:bg-accent/50 data-[state=selected]:bg-accent;
 }
 
-.pr-table-head {
+table.pr-table th {
     @apply h-10 px-2 text-left align-middle font-medium text-muted-foreground;
 }
 
-.pr-table-cell{
+table.pr-table td{
     @apply p-2 align-middle;
 }

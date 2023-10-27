@@ -18,15 +18,15 @@
     @apply rounded-md border bg-warning/50 text-card-foreground shadow;
 }
 
-.pr-card-header{
+.pr-card-header {
     @apply flex flex-col space-y-1.5 p-6;
 }
 
-.pr-card-title{
+.pr-card-header h3 {
     @apply font-bold text-xl leading-none tracking-tight;
 }
 
-.pr-card-description{
+.pr-card-header p {
     @apply text-sm text-muted-foreground;
 }
 
