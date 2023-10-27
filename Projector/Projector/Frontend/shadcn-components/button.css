@@ -20,7 +20,7 @@
 
 /* For Warning Buttons */
 .pr-btn-warning {
-    @apply pr-btn bg-warning text-warning-foreground shadow-sm hover:bg-warning/90 h-9 px-4 py-2;
+    @apply pr-btn bg-error text-white shadow-sm hover:bg-error/90 h-9 px-4 py-2;
 }
 
 .pr-btn-warning-outline {
@@ -46,6 +46,10 @@
 
 .pr-btn-outline {
     @apply pr-btn border-input bg-transparent hover:bg-accent/90;
+}
+
+.pr-btn-outline-disabled {
+    @apply pr-btn pointer-events-none opacity-50 border-input bg-transparent;
 }
 
 .pr-btn-outline-thin {
