@@ -16,21 +16,21 @@
                         <div class="w-full">
                             @if (Model.Errors.Any())
                             {
-                                <div role="alert" class="pr-form-message">
+                                <div role="alert">
                                     @foreach (var error in Model.Errors)
                                     {
-                                        <span>@error</span>
+                                        <span class="error-message">@error</span>
                                     }
                                 </div>
                             }
 
-                            <div class="pr-form-field-auth">
+                            <div class="pr-form-field">
                                 <input type="hidden" asp-for="@Model.Token" />
                                 <input type="hidden" asp-for="@Model.UserId" />
                                 <div class="pr-form-item">
-                                    <label asp-for="@Model.Code" class="pr-form-item-label">Verification Code</label>
+                                    <label asp-for="@Model.Code">Verification Code</label>
                                     <input type="text" required asp-for="@Model.Code" class="pr-input" />
-                                    <span asp-validation-for="@Model.Code" class="pr-form-message"></span>
+                                    <span asp-validation-for="@Model.Code" class="error-message"></span>
                                 </div>
                             </div>
                         </div>
