@@ -2,15 +2,6 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-@import "./components/badge.css";
-@import "./components/button.css";
-@import "./components/card.css";
-@import "./components/error.css";
-@import "./components/heading.css";
-@import "./components/inputgroup.css";
-@import "./components/link.css";
-@import "./components/list.css";
-
 @import "./shadcn-components/card.css";
 @import "./shadcn-components/input.css";
 @import "./shadcn-components/button.css";
@@ -28,10 +19,6 @@ sup.pr-required{
     @apply text-red-400 font-bold;
 }
 
-.pr-select-default{
-    @apply text-gray-400;
-}
-
-select:invalid{
-    color: gray;
+.pr-breadcrumbs {
+    @apply text-sm breadcrumbs w-full pl-2;
 }
