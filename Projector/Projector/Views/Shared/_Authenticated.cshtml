@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
 </head>
 <body>
-    <div class="container mx-auto max-w-screen-lg h-screen min-h-full" style="z-index:1">
+    <div class="container mx-auto max-w-screen-lg h-screen min-h-full px-2" style="z-index:1">
         <div class="drawer h-full">
             <input id="my-drawer" type="checkbox" class="drawer-toggle" />
             <div class="drawer-content flex flex-col space-y-4 h-full">
@@ -61,7 +61,7 @@
                                 <label tabindex="0" class="pr-dropdown-label">
                                     <span class="pr-user-name">@User.Identity?.Name</span>
                                 </label>
-                                <ul tabindex="0" class="dropdown-content pr-dropdown-menu">
+                                <ul tabindex="0" class="dropdown-content pr-dropdown-menu-end">
                                     <li class="pr-dropdown-menu-item">
                                         <a class="pr-menu-link" asp-controller="Users" asp-action="LogOut">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="pr-btn-icon">
@@ -76,7 +76,7 @@
                     </div>
                 </header>
 
-                <main class="flex w-full h-full space-x-4 px-2">
+                <main class="flex w-full h-full space-x-4">
                     <div class="w-full">
                         @RenderBody()
                     </div>
