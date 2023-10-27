@@ -34,11 +34,15 @@
 }
 
 .pr-dropdown-label {
-    @apply flex flex-row w-full px-3 py-2 select-none focus:bg-accent rounded-md text-sm;
+    @apply flex flex-row w-full px-3 py-2 select-none focus:bg-accent rounded-t-md text-sm;
 }
 
 .pr-dropdown-menu {
-    @apply menu menu-sm z-[1] p-2 shadow bg-gray-100 text-black rounded w-36 max-w-md;
+    @apply menu menu-sm z-[1] py-2 shadow bg-gray-100 text-black rounded-r-md rounded-bl-md w-36 max-w-md;
+}
+
+.pr-dropdown-menu-end {
+    @apply menu menu-sm z-[1] py-2 shadow bg-gray-100 text-black rounded-l-md rounded-br-md w-36 max-w-md;
 }
 
 .pr-dropdown-menu-item {
@@ -46,7 +50,7 @@
 }
 
 .pr-menu-link{
-    @apply justify-center text-primary px-2;
+    @apply justify-start text-primary;
 }
 
 .pr-user-name{
