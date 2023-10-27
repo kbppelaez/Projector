@@ -25,6 +25,15 @@
     @apply flex items-center px-2 py-1 rounded-md justify-between space-x-4 hover:bg-accent/90;
 }
 
-.pr-list-item-text{
+.pr-list-item-text {
     @apply text-sm font-medium leading-none;
+}
+
+.pr-list-item-description {
+    @apply text-sm font-normal text-muted-foreground leading-none;
+}
+
+/* Select Option List */
+.pr-selection-option{
+    @apply text-sm py-4;
 }
