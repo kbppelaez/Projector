@@ -8,42 +8,46 @@
 }
 
 <div class="flex flex-col w-full h-full space-y-4">
-    <div class="card card-compact CardPrompt-Danger">
-        <div class="card-body">
-            <h2 class="CardHeader">Are you really sure you want to delete this project?</h2>
-            <p>This project will then be removed from each assigned employee's project list.</p>
+    <div class="pr-breadcrumbs">
+        <ul>
+            <li><a asp-controller="Projects" asp-action="Projects">Projects</a></li>
+            <li><a asp-controller="Projects" asp-action="ProjectDetails" asp-route-projectId="@Model.Project.Id">@Model.Project.Name</a></li>
+            <li>Delete Project</li>
+        </ul>
+    </div>
+    <div class="pr-card-warning w-full max-w-full">
+        <div class="pr-card-header">
+            <h3 class="pr-card-title">Are you really sure you want to delete this project?</h3>
+            <p class="pr-card-description">This project will then be removed from the project list of all assigned employees.</p>
+        </div>
+        <div class="pr-card-footer space-x-2">
+            <form method="POST" asp-controller="Projects" asp-action="Delete">
+                <input asp-for="@Model.Project.Id" type="hidden" class="form-control" />
+                <input type="submit" value="Yes, Delete" class="pr-btn-warning" />
+                <a asp-controller="Projects" asp-action="ProjectDetails" asp-route-projectId="@Model.Project.Id" class="pr-btn-secondary">View Details</a>
+            </form>
         </div>
     </div>
-    <div>
-        <h2 class="DetailsHeader">@Model.Project.Name</h2>
-        <dl>
-            <dt>Code</dt>
-            <dd>@Model.Project.Code</dd>
-
-            <dt>Budget</dt>
-            <dd>@Model.Project.Budget.ToString("C2", CultureInfo.CurrentCulture)</dd>
-
-            <dt>Remarks</dt>
-            <dd>
-                @if (string.IsNullOrEmpty(@Model.Project.Remarks))
-                {
-                    @EmptyRemarks
-                }
-                else
-                {
-                    @Model.Project.Remarks
-                }
-            </dd>
-        </dl>
-    </div>
-    <div>
-        <form method="POST" asp-controller="Projects" asp-action="Delete">
-            <div>
-                <input asp-for="@Model.Project.Id" type="hidden" class="form-control" />
-                <input type="submit" value="Yes, Delete" class="Danger FormButton" />
-                <a asp-controller="Projects" asp-action="ProjectDetails" asp-route-projectId="@Model.Project.Id" class="Neutral FormButton">Cancel</a>
-            </div>
-        </form>
+    <div class="pr-card w-full max-w-full">
+        <div class="pr-card-header">
+            <h3 class="pr-card-title">@Model.Project.Name</h3>
+            @if (!string.IsNullOrEmpty(Model.Project.Remarks))
+            {
+                <p class="pr-card-description">@Model.Project.Remarks</p>
+            }
+        </div>
+        <div class="pr-card-content">
+            <dl class="pr-description-list">
+                <div class="pr-description-item">
+                    <dt class="pr-description-term">Code</dt>
+                    <dd class="pr-description-data">@Model.Project.Code</dd>
+                </div>
+                <div class="pr-description-item">
+                    <dt class="pr-description-term">Budget</dt>
+                    <dd class="pr-description-data">@Model.Project.Budget.ToString("C2", CultureInfo.CurrentCulture)</dd>
+                </div>
+            </dl>
+        </div>
     </div>
 </div>
 
