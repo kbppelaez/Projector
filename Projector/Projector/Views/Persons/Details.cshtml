@@ -71,7 +71,7 @@
                     <div class="pr-list">
                         @if (Model.Details.Projects == null || Model.Details.Projects.Length == 0)
                         {
-                            <h3 class="pr-empty-list">Not Assigned to Any Projects</h3>
+                            <h3 class="empty-table">Not Assigned to Any Projects</h3>
                         }
                         else
                         {
@@ -79,10 +79,10 @@
                             {
                                 <div class="pr-list-item">
                                     <div class="flex flex-col w-full gap-1">
-                                        <p class="pr-list-item-text">
+                                        <p>
                                             @proj.Name
                                         </p>
-                                        <p class="pr-list-item-description">
+                                        <p class="description">
                                             @proj.Code
                                         </p>
                                     </div>
