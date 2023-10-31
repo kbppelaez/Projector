@@ -2,15 +2,15 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-@import "./shadcn-components/card.css";
-@import "./shadcn-components/input.css";
-@import "./shadcn-components/button.css";
-@import "./shadcn-components/form.css";
-@import "./shadcn-components/table.css";
-@import "./shadcn-components/menu.css";
-@import "./shadcn-components/badge.css";
-@import "./shadcn-components/dl-list.css";
-@import "./shadcn-components/div-list.css";
+@import "./components/card.css";
+@import "./components/input.css";
+@import "./components/button.css";
+@import "./components/form.css";
+@import "./components/table.css";
+@import "./components/menu.css";
+@import "./components/badge.css";
+@import "./components/dl-list.css"; /* Description List */
+@import "./components/div-list.css"; /* List of <div>s */
 
 .empty-table{
     @apply font-bold text-xl;
